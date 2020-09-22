@@ -1,13 +1,13 @@
 web:
-   image: web
+   image: web-mikel
    environment:
      - ALLOW_OVERRIDE=true
    ports:
      - "80:80"
    links:
      - db
-   volumes:
-     - ./app:/var/www/html/
+  #  volumes:
+  #    - ./app:/var/www/html/
 
 db:
   image: mariadb
