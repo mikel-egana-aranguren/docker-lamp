@@ -1,29 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Servicio Web</title>
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-</head>
+
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <ul class="nav navbar-nav">
-          <li class="nav-item active">
-              <a class="nav-link" href="index.php">Incio</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="#">Productos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="nosotros.php">Nosotros</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="contacto.php">Contacto</a>
-      </li>
-      </ul>
-  </nav>
+  <header class>
+    <br/>
+    <div class="encabezadotitulo"><h1 class="titulo">Titulo</h1></div>
+  </header>
+  <div><nav>
+    <ul class="barramenu">
+        <li class="objmenu"><a href="index.php">Inicio</a></li>
+        <li class="objmenu"><a href="#">Productos</a></li>
+        <li class="objmenu"><a href="#">Alquilar</a></li>
+        <li class="objmenu"><a href="#">Modificar</a></li>
+        <li class="objmenu"><a href="nosotros.php">Nosotros</a></li>
+        <li class="objmenu2"><a href="login.php">Login</a></li>
+        <li class="objmenu2"><a href="registro.php">Registrate</a></li>
+    </ul>
+  </nav></div>
 
   <div class="container">
     <br/>
