@@ -7,7 +7,7 @@
   <div><nav>
     <ul class="barramenu">
         <li class="objmenu"><a href="index.php">Inicio</a></li>
-        <li class="objmenu"><a href="#">Productos</a></li>
+        <li class="objmenu"><a href="listaCasas.php">Productos</a></li>
         <li class="objmenu"><a href="#">Alquilar</a></li>
         <li class="objmenu"><a href="#">Modificar</a></li>
         <li class="objmenu"><a href="nosotros.php">Nosotros</a></li>
