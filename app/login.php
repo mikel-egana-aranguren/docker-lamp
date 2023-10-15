@@ -25,9 +25,15 @@ if ($result->num_rows == 1) {
     
     header('Location: dashboard.php');
 } else {
-    echo "Correo o contraseña incorrectos.";
+    $query = "SELECT * FROM usuarios WHERE email='$email'";
+    $resultado = mysqli_query($conn, $query);
+    if ($resultado->num_rows == 1) {
+        echo '<script type="text/javascript">window.alert("Contraseña incorrecta"); window.location.href = "inicio.html";</script>';
+    } else {
+        echo '<script type="text/javascript">window.alert("Gmail incorrecto."); window.location.href = "inicio.html";</script>';
+    }
+    
 }
-
 
 mysqli_close($conn);
 ?>

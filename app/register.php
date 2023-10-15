@@ -18,14 +18,28 @@ $fechaNacimiento = $_POST['fechaNacimiento'];
 $email = $_POST['email'];
 $password = $_POST['password'];
 
-// Aquí puedes agregar validaciones adicionales para los datos recibidos, como la validación del DNI
+$consulta_dni = "SELECT * FROM usuarios WHERE dni = '$dni'";
+$result_dni = mysqli_query($conn, $consulta_dni);
+
+$consulta_email = "SELECT * FROM usuarios WHERE email = '$email'";
+$result_email = mysqli_query($conn, $consulta_email);
+
+if (mysqli_num_rows($result_dni) > 0) {
+    echo "El DNI ya está en uso.";
+    echo '<script type="text/javascript">window.alert("El dni ya está en uso por otro usuario."); window.location.href = "register.php?error=email_in_use";</script>';
+} elseif (mysqli_num_rows($result_email) > 0) {
+    echo '<script type="text/javascript">window.alert("El correo electrónico ya está en uso por otro usuario."); window.location.href = "register.php?error=email_in_use";</script>';
+    header('Location: register.html?error=email_in_use');
+} else {
+
 
 $sql = "INSERT INTO usuarios (nombre, apellidos, dni, telefono, fechaNacimiento, email, password) VALUES ('$nombre', '$apellidos', '$dni', '$telefono', '$fechaNacimiento', '$email', '$password')";
 
-
+}
 if ($conn->query($sql) === TRUE) {
-	header('Location: index.html?message=registered_successfully');
+	header('Location: inicio.html?message=registered_successfully');
 }else {
+	echo "No se consiguio el registro";
 	header('Location: register.html?error=registration_failed');
 }
 

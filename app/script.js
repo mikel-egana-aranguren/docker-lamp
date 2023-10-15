@@ -1,9 +1,9 @@
-// Validación del formulario de registro
+
 document.getElementById('registerForm').addEventListener('submit', function(e) {
     let dni = document.getElementById('dni').value;
 
     if (!validateDNI(dni)) {
-        alert('DNI inválido');
+        alert('DNI no válido');
         e.preventDefault();
     }
 });
@@ -22,7 +22,7 @@ function validateDNI(dni) {
     return false;
 }
 
-// Modal de Edición de Asignaturas
+
 let editButtons = document.querySelectorAll('.edit-asignatura');
 let modal = document.getElementById('editModal');
 let closeBtn = document.querySelector('.close-modal');
@@ -40,7 +40,7 @@ closeBtn.addEventListener('click', function() {
     modal.style.display = 'none';
 });
 
-// Cierra el modal al hacer clic fuera de él
+
 window.onclick = function(event) {
     if (event.target === modal) {
         modal.style.display = 'none';

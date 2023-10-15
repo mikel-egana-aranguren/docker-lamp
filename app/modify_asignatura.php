@@ -18,6 +18,8 @@ $creditos = $_POST['creditos'];
 $convocatorias_usadas = $_POST['convocatorias_usadas'];
 $dni = $_SESSION['dniUsuario'];
 
+
+
 $query = "UPDATE asignaturas SET nombre = '$nombre', descripcion = '$descripcion', creditos = '$creditos', convocatorias_usadas = '$convocatorias_usadas' WHERE id = '$asignatura_id' AND dni = '$dni'";
 $result = mysqli_query($conn, $query);
 
