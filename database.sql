@@ -37,11 +37,6 @@ CREATE TABLE `usuarios` (
   `password` VARCHAR(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `usuarios` (`nombre`, `apellidos`, `dni`, `telefono`, `fechaNacimiento`, `email`, `password`) VALUES
-('pablo', 'Apellidos1', '123456789', 1234567890, '2000-01-01', 'correo1@example.com', 'contraseña1'),
-('Nombre2', 'Apellidos2', '987654321', 9876543210, '2001-02-02', 'correo2@example.com', 'contraseña2');
-
-
 CREATE TABLE `asignaturas` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
     `nombre` VARCHAR(255) NOT NULL,
@@ -57,10 +52,6 @@ CREATE TABLE `asignaturas` (
 
 
 
-
-ALTER TABLE `asignaturas`
-  ADD PRIMARY KEY (`id`, `dni`);
-COMMIT;
 
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`dni`);
