@@ -16,7 +16,7 @@ Asegúrate de tener Docker instalado. Si no lo tienes, puedes instalarlo con el 
 $ apt-get install docker
 ```
 
-Crea la imagen llamada "web" ejecutando el siguiente comando:
+Crea la imagen llamada "web" ejecutando el siguiente comando:jshdjojdojed
 ```bash
 $ docker build -t="web" .
 ```
