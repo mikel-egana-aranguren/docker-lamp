@@ -9,7 +9,7 @@
 
 ## Como abrir el proyecto
 
-Situar la terminal dentro de la carpeta donde esta el proyecto.
+Situar la terminal dentro de la carpeta donde esta 
 
 Asegúrate de tener Docker instalado. Si no lo tienes, puedes instalarlo con el siguiente comando:
 ```bash
