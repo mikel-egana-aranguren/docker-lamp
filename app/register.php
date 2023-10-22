@@ -40,12 +40,13 @@ $sql = "INSERT INTO usuarios (nombre, apellidos, dni, telefono, fechaNacimiento,
 
 }
 if ($conn->query($sql) === TRUE) {
-	header('Location: inicio.html?message=registered_successfully');
+    echo '<script type="text/javascript">window.alert("Registro exitoso"); window.location.href = "inicio.html";</script>';
 }else 
 {
 	echo "No se consiguio el registro";
 	header('Location: register.html?error=registration_failed');
 }
+
 
 $conn->close();
 
