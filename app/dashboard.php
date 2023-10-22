@@ -51,42 +51,72 @@ mysqli_close($conn);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Asignaturas</title>
-    <link rel="stylesheet" href="styles.css">
+
+    <link rel="stylesheet" href="dashboard.css">
 </head>
 
 <body>
-    <div class="perfil">
-    <h1 class = "perfil" ><?php echo $usuario['nombre']; ?> <?php echo $usuario['apellidos']; ?></h1>
-        <form action="logout.php">
-            <button class="cerrar-sesion">Cerrar Sesion</button>
-        </form>
-        <button class="edit-usuario" onclick="window.location.href='editar_usuario.php'">Editar Usuario</button>
+    <div class="container-perfil">
+        <span class="perfil">
+            <?php echo $usuario['nombre']; ?>
+            <?php echo $usuario['apellidos']; ?>
+        </span>
     </div>
+
+    <form action="logout.php">
+        <button class="cerrar-sesion">Cerrar Sesion</button>
+    </form>
+    <button class="edit-usuario" onclick="window.location.href='editar_usuario.php'">Editar Usuario</button>
+    <button class="add-asignatura" onclick="window.location.href='add_asignatura.html'">Añadir Asignatura</button>
     <div class="asignaturas-list">
-        <button class="add-asignatura" onclick="window.location.href='add_asignatura.html'">Añadir Asignatura</button>
 
 
         <?php foreach ($asignaturas as $asignatura): ?>
-            <div class="asignatura-item">
-                <span class="asignatura-name"><?php echo htmlspecialchars($asignatura['nombre']); ?></span>
-                <span class="asignatura-description"><?php echo htmlspecialchars($asignatura['descripcion']); ?></span>
-                
-                <img src="data:image/png;base64,<?php echo base64_encode($asignatura['imagen']); ?>" alt="Imagen de la asignatura" />
+            <div class="container-asignatura">
+
+                <span class="asignatura-name">
+                    <?php echo htmlspecialchars($asignatura['nombre']); ?>
+                </span>
+                <span class="asignatura-description">
+                    <?php echo htmlspecialchars($asignatura['descripcion']); ?>
+                </span>
+
+                <span class="text-creditos">Creditos:</span>
+                <div class="container-creditos">
+                    <span class="asignatura-creditos">
+                        <?php echo htmlspecialchars($asignatura['creditos']); ?>
+                    </span>
+                </div>
+
+                <span class="text-convocatorias">Convocatorias usadas:</span>
+                <div class="container-convocatorias">
+                    <span class="asignatura-convocatorias">
+                        <?php echo htmlspecialchars($asignatura['convocatorias_usadas']); ?>
+                    </span>
+                </div>
+
+
                 <span class="asignatura-actions">
-                    
-		<form action="edit_asignatura.php" method="post" class="edit_asignatura">
-		    <input type="hidden" name="asignatura_id" value="<?php echo $asignatura['id']; ?>">
-		    <button type="submit" class="edit-asignatura">Editar</button>
-		</form>
+
+                    <form action="edit_asignatura.php" method="post" class="edit_asignatura">
+
+                        <input type="hidden" name="asignatura_id" value="<?php echo $asignatura['id']; ?>">
+                        <button type="submit" class="edit-asignatura">
+                            <img class="edit-icon" src="edit.png">
+                        </button>
+
+                    </form>
 
 
 
-                     
+
                     <form action="delete_asignatura.php" method="post" class="delete-form">
                         <input type="hidden" name="asignatura_id" value="<?php echo $asignatura['id']; ?>">
-                        <button type="submit" class="delete-asignatura">Eliminar</button>
+                        <button type="submit" class="delete-asignatura"></button>
                     </form>
                 </span>
+
+
             </div>
         <?php endforeach; ?>
     </div>

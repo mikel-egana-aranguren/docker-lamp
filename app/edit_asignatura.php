@@ -15,7 +15,7 @@ if (!$conn) {
 $asignatura_id = $_POST['asignatura_id'];
 $dni = $_SESSION['dniUsuario'];
 
-$query ="SELECT nombre, descripcion, creditos, convocatorias_usadas FROM asignaturas WHERE id='$asignatura_id' AND dni= '$dni'";
+$query ="SELECT nombre, descripcion, creditos, convocatorias_usadas, año FROM asignaturas WHERE id='$asignatura_id' AND dni= '$dni'";
 $result = mysqli_query($conn, $query);
 
 if ($result) {
@@ -48,6 +48,8 @@ if ($result) {
         <input type="text" id="creditos" name="creditos" required value="<?php echo $asignatura['creditos']; ?>">
         <label for="convocatorias_usadas">Convocatorias Usadas:</label>
         <input type="text" id="convocatorias_usadas" name="convocatorias_usadas" required value="<?php echo $asignatura['convocatorias_usadas']; ?>">
+        <label for="año">Año:</label>
+        <input type="text" id="año" name="año" required value="<?php echo $asignatura['año']; ?>">
         <button type="submit">Editar</button>
     </form>
 </div>

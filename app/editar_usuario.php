@@ -47,16 +47,13 @@ if ($result) {
         <input type="text" id = "nombre" name="nombre" value="<?php echo $usuario['nombre']; ?>">
        
         <label for="apellidos">APELLIDOS:</label>
-	<input type="text" id="apellidos" name="apellidos" required value="<?php echo $usuario['apellidos']; ?>">
+	    <input type="text" id="apellidos" name="apellidos" required value="<?php echo $usuario['apellidos']; ?>">
         
         <label for="telefono">TELEFONO:</label>
-        <input type="tel" id="telefono" name="telefono" required value="<?php echo $usuario['telefono']; ?>">
+        <input type="text" id="telefono" name="telefono" required pattern= "[0-9]{9}" required value="<?php echo $usuario['telefono']; ?>">
         
         <label for="fechaNacimiento">FECHA NACIMIENTO:</label>
         <input type="date" id="fechaNacimiento" name="fechaNacimiento" required value="<?php echo $usuario['fechaNacimiento']; ?>">
-        
-        <label for="email">EMAIL:</label>
-        <input type="email" id="email" name="email" required value="<?php echo $usuario['email']; ?>">
         
         <label for="password">CONTRASEÑA:</label>
         <input type="password" id="password" name="password" required value="<?php echo $usuario['password']; ?>">

@@ -1,0 +1,314 @@
+:root {
+  --dark-blue-50: rgb(242, 243, 255);
+  --dark-blue-100: rgb(232, 233, 255);
+  --dark-blue-200: rgb(211, 212, 255);
+  --dark-blue-300: rgb(177, 176, 255);
+  --dark-blue-400: rgb(138, 131, 255);
+  --dark-blue-500: rgb(99, 81, 255);
+  --dark-blue-600: rgb(79, 46, 249);
+  --dark-blue-700: rgb(65, 28, 229);
+  --dark-blue-800: rgb(50, 21, 178);
+  --dark-blue-900: rgb(46, 21, 157);
+  --dark-blue-950: rgb(24, 10, 107);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: var(--dark-blue-200)
+}
+
+.container {
+  max-width: 600px;
+  margin: 80px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 1000px;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
+}
+
+.container-asignatura {
+  background-color: var(--dark-blue-400);
+  flex: 0 0 calc(30.333% - 20px); /* Aproximadamente 33.333% de ancho para que haya 3 elementos en una fila */
+  max-width: calc(30.633% - 20px);
+  width: 200px; /* Ajusta este valor según tus necesidades */
+  height: 300px; /* Ajusta este valor según tus necesidades */
+  padding: 20px;
+  left: 12px;
+  top: 220px;
+  border-radius: 40px; /* Mayor valor para hacer que los bordes sean más redondeados */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+  position: relative;
+  color: #fff;
+}
+.container-asignatura:hover {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); 
+}
+
+
+.container-creditos {
+  background-color: var(--dark-blue-500);
+  width: 50px;
+  height: 10px;
+  padding: 20px;
+  border-radius: 100px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+  top: 55px;
+  right: 20px;
+  position: absolute;
+  color: #fff;
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center;
+}
+
+.container-convocatorias {
+  background-color: var(--dark-blue-500);
+  width: 50px;
+  height: 10px;
+  padding: 20px;
+  border-radius: 100px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+  top: 55px;
+  right: 195px;
+  position: absolute;
+  color: #fff;
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold; /* Hace el texto en negrita */
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center;
+}
+
+.container-perfil {
+  background-color: var(--dark-blue-500);
+  width: 1000px;
+  height: 150px;
+  border-radius: 100px;
+  margin: 10px auto;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); 
+  align-items: center;
+  text-align: center;
+  color: #fff;
+}
+
+
+.edit-icon
+{
+  position: absolute;
+  width: 80px;
+  left: 4px;
+  top: 4px;
+}
+
+
+.perfil {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  text-align: center;
+  font-size: 70px; /* Ajusta el tamaño deseado */
+  font-weight: bold; /* Para negrita */
+  line-height: 150px;
+}
+a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Estilos para el inicio de sesión y registro */
+.login-container,
+.register-container {
+  margin-top: 30px;
+}
+
+/* Estilos para el inicio de sesión y registro */
+.login-container,
+.register-container {
+  margin-top: 30px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="temargin: 20px;l"],
+input[type="date"] {
+  width: 97%; /* Puedes ajustar el valor según el tamaño deseado */
+}
+
+button {
+  
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  margin: 10px 0;
+}
+
+button:hover {
+  background-color: var(--dark-blue-500);
+  
+}
+
+.add-asignatura {
+  background-color: var(--dark-blue-700);
+  position: absolute;
+  top: 270px;
+  left: 15px;
+  border-radius: 30px;
+  height: 100px;
+  width: 130px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); 
+  align-items: center;
+  color: #fff;
+  font-weight: bold;
+  font-size: 20px;
+  
+}
+
+/* Estilos para el dashboard */
+.asignaturas-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.asignatura-name {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 20px;
+  font-size: 50px;
+  font-weight: bold;
+  position: absolute;
+  bottom: 150px;
+  left: 10px;
+}
+.asignatura-description {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 20px;
+  font-size: 20px;
+  position: absolute;
+  bottom: 10px;
+  left: 5px;
+}
+
+.asignatura-convocatorias {
+  font-family: Arial, Helvetica, sans-serif;
+}
+.asignatura-creditos {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.asignatura-actions {
+  display: flex;
+  gap: 10px;
+}
+.text-creditos {
+  position: absolute;
+  top: 70px;
+  right: 118px;
+  font-weight: bold;
+}
+.text-convocatorias {
+  position: absolute;
+  top: 70px;
+  right: 290px;
+  font-weight: bold;
+}
+
+.edit-asignatura {
+  position: absolute;
+  top: 2px; /* Ajusta la distancia desde la parte superior según tu preferencia */
+  left: 15px;
+  border-radius: 70px;
+  height: 90px;
+  width: 90px;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.1);
+  background-color: var(--dark-blue-900);
+  
+}
+.delete-asignatura {
+  background-color: #ff1100c7;
+  position: absolute;
+  top: 2px; /* Ajusta la distancia desde la parte superior según tu preferencia */
+  right: 15px;
+  border-radius: 40px;
+  height: 40px;
+  width: 40px;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
+}
+
+.cerrar-sesion {
+  margin: 20px;
+  height: 70px;
+  width: 200px;
+  border-radius: 30px;
+  position: absolute;
+  top: 30px;
+  right: 60px;
+  background-color: #f44336;
+  font-size: 20px;
+  font-weight: bold;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); 
+}
+.edit-usuario {
+  margin: 20px;
+  height: 70px;
+  width: 200px;
+  border-radius: 30px;
+  position: absolute;
+  top: 30px;
+  left: 60px;
+  background-color: var(--dark-blue-700);
+  font-size: 20px;
+  font-weight: bold;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); 
+}
+
+/* Estilos para el modal de edición */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal-content {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+.close-modal {
+  float: right;
+  background-color: #f44336;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  margin: -10px -10px 0 0;
+}
+
+.close-modal:hover {
+  background-color: #d32f2f;
+}
+
+/* Agrega aquí cualquier otro estilo que necesites */

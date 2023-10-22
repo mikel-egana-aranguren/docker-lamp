@@ -1,26 +1,41 @@
+:root {
+    --dark-blue-50: rgb(242, 243, 255);
+    --dark-blue-100: rgb(232, 233, 255);
+    --dark-blue-200: rgb(211, 212, 255);
+    --dark-blue-300: rgb(177, 176, 255);
+    --dark-blue-400: rgb(138, 131, 255);
+    --dark-blue-500: rgb(99, 81, 255);
+    --dark-blue-600: rgb(79, 46, 249);
+    --dark-blue-700: rgb(65, 28, 229);
+    --dark-blue-800: rgb(50, 21, 178);
+    --dark-blue-900: rgb(46, 21, 157);
+    --dark-blue-950: rgb(24, 10, 107);
+  }
+
+
+
 body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color: #ffffff;
-    
-
+    background-color: var(--dark-blue-200);
+    color: black;
+    font-weight: bold;
 }
 
 .container {
     max-width: 600px;
     margin: 80px auto;
     padding: 20px;
-    background-color: #fff;
     border-radius: 1000px;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 100px rgba(0, 0, 0, 3);
 }
 
 .container-comienzo{
     max-width: 600px;
     margin: 80px auto;
     padding: 20px;
-    background-color: #fff;
+    background-color: var(--dark-blue-300);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s;

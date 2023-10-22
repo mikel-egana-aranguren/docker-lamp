@@ -16,16 +16,9 @@ $descripcion = $_POST['descripcion'];
 $creditos = $_POST['creditos'];
 $convocatorias_usadas = $_POST['convocatorias_usadas'];
 $dni = $_SESSION['dniUsuario'];
+$año = $_POST['año'];
 
-if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) {
-    $imagenTmp = $_FILES['imagen']['tmp_name'];
-    $datosBinariosImagen = file_get_contents($imagenTmp);
-} else {
-    $datosBinariosImagen = null; // Si no se selecciona una imagen
-}
-$datosBinariosImagen = mysqli_real_escape_string($conn, $datosBinariosImagen);
-
-$query = "INSERT INTO asignaturas (nombre, descripcion, creditos, convocatorias_usadas , imagen, dni) VALUES ('$nombre', '$descripcion', '$creditos', '$convocatorias_usadas', '$datosBinariosImagen', '$dni')";
+$query = "INSERT INTO asignaturas (nombre, descripcion, creditos, convocatorias_usadas , año, dni) VALUES ('$nombre', '$descripcion', '$creditos', '$convocatorias_usadas', '$año', '$dni')";
 $result = mysqli_query($conn, $query);
 
 if ($result) {

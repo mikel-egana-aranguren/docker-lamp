@@ -15,25 +15,14 @@ $apellidos = $_POST['apellidos'];
 $dni = $_POST['dni'];
 $telefono = $_POST['telefono'];
 $fechaNacimiento = $_POST['fechaNacimiento'];
-$email = $_POST['email'];
 $password = $_POST['password'];
 
 $consulta_email = "SELECT COUNT(*) as count FROM usuarios WHERE email = '$email' AND dni != '$dni'";
 $result_email = mysqli_query($conn, $consulta_email);
 
-if ($result_email) {
-    $row_email = mysqli_fetch_assoc($result_email);
-    $count = $row_email['count'];
-
-    if ($count > 0) {
-        echo '<script type="text/javascript">window.alert("El correo electrónico ya está en uso por otro usuario."); window.location.href = "editar_usuario.php?error=email_in_use";</script>';
-        exit;
-    }
-}
 
 
-
-$query = "UPDATE usuarios SET nombre = '$nombre', apellidos = '$apellidos', telefono = '$telefono' , fechaNacimiento = '$fechaNacimiento' , email = '$email', password = '$password' WHERE  dni = '$dni'";
+$query = "UPDATE usuarios SET nombre = '$nombre', apellidos = '$apellidos', telefono = '$telefono' , fechaNacimiento = '$fechaNacimiento' , password = '$password' WHERE  dni = '$dni'";
 $result = mysqli_query($conn, $query);
 
 if ($result) {

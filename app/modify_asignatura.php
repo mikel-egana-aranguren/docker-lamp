@@ -16,11 +16,12 @@ $nombre = $_POST['nombre'];
 $descripcion = $_POST['descripcion'];
 $creditos = $_POST['creditos'];
 $convocatorias_usadas = $_POST['convocatorias_usadas'];
+$año =$_POST['año'];
 $dni = $_SESSION['dniUsuario'];
 
 
 
-$query = "UPDATE asignaturas SET nombre = '$nombre', descripcion = '$descripcion', creditos = '$creditos', convocatorias_usadas = '$convocatorias_usadas' WHERE id = '$asignatura_id' AND dni = '$dni'";
+$query = "UPDATE asignaturas SET nombre = '$nombre', descripcion = '$descripcion', creditos = '$creditos', convocatorias_usadas = '$convocatorias_usadas', año = '$año' WHERE id = '$asignatura_id' AND dni = '$dni'";
 $result = mysqli_query($conn, $query);
 
 if ($result) {
