@@ -36,8 +36,7 @@ Inicia sesión con las siguientes credenciales:
     Usuario: admin
     Contraseña: test
 
-Haz clic en database y luego selecciona importar. Después, elige el archivo database.sql situado en la carpeta del proyecto.
-
+Haz clic en database y luego selecciona importar. Después, elige el archivo database.sql situado en la carpeta del proyecto. Esta base tiene un gmail:admin@gmail.com contraseña:12 con varias asignaturas añadidas.
 Accede a http://localhost:81/ en tu navegador.
 
 Si deseas detener el proyecto, abre otra terminal y ejecuta el siguiente comando:
