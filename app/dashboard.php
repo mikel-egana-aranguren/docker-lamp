@@ -110,7 +110,7 @@ mysqli_close($conn);
 
 
 
-                    <form action="delete_asignatura.php" method="post" class="delete-form">
+                    <form action="delete_asignatura.php" method="post" class="delete-form" onsubmit="return confirm('¿Seguro que quieres eliminar esta asignatura?');">
                         <input type="hidden" name="asignatura_id" value="<?php echo $asignatura['id']; ?>">
                         <button type="submit" class="delete-asignatura"></button>
                     </form>
