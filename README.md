@@ -8,8 +8,11 @@
 - Eneko Uresandi
 
 ## Como abrir el proyecto
-
-Situar la terminal dentro de la carpeta donde esta el proyecto.
+Clonamos el proyecto con:
+```bash
+$ git clone -b entrega_1 https://github.com/marioech08/ProyectoSGSSi
+```
+Situamos la terminal dentro de la carpeta donde esta el proyecto.
 
 Asegúrate de tener Docker instalado. Si no lo tienes, puedes instalarlo con el siguiente comando:
 ```bash
