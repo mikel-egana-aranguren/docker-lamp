@@ -3,7 +3,7 @@
 ## Integrantes:
 
 - Pablo Martinez Diez
-- Pablo Leclerc
+- Pablo Leclercq
 - Mario Echavarri
 - Eneko Uresandi
 
