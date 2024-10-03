@@ -1,5 +1,5 @@
 <form id="item_add_form" action="procesar_add_item.php" method="POST">
-    <label for="id">Título:</label>
+    <label for="id">ID:</label>
     <input type="text" id="id" name="id" required>
     
     <label for="titulo">Título:</label>
