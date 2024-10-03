@@ -2,7 +2,7 @@
 $servername = "db"; // Nombre del servicio de MariaDB en Docker
 $username = "admin"; // Usuario por defecto
 $password = "test"; // Cambia esto por tu contraseña
-$dbname = "basededatos"; // Nombre de tu base de datos
+$dbname = "database"; // Nombre de tu base de datos
 
 // Crear conexión
 $conn = new mysqli($servername, $username, $password, $dbname);
