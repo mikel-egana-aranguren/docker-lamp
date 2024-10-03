@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 
 ---- "PERTSONAK" taula
 
-CREATE TABLE `PERTSONAK` (
+CREATE TABLE `PERTSONA` (
   `izenAbizenak` varchar(255) NOT NULL,
   `NAN` varchar(10) NOT NULL,
   `telefonoa` INT(9) NOT NULL,
@@ -37,12 +37,12 @@ CREATE TABLE `PERTSONAK` (
 
 -- "ERABILTZAILEAK" taula
 
-CREATE TABLE `ERABILTZAILEAK` (
-  `erabiltzailea` varchar(255) NOT NULL,
-  `pasahitza` CHAR(60) NOT NULL,
+CREATE TABLE `ERABILTZAILEA` (
+  `erabiltzaile` varchar(255) NOT NULL,
+  `pasahitz` CHAR(60) NOT NULL,
   `NAN` varchar(10) NOT NULL,
-  PRIMARY KEY (`erabiltzailea`)
-  FOREIGN KEY (`NAN`) REFERENCES `PERTSONAK`(`NAN`)
+  PRIMARY KEY (`erabiltzaile`)
+  FOREIGN KEY (`NAN`) REFERENCES `PERTSONA`(`NAN`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 -- Estructura de tabla para la tabla `usuarios`
 --
