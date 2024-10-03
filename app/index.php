@@ -1,5 +1,5 @@
 <?php
-  echo '<h1>Ya<h1>';
+  echo '<h1>Hola<h1>';
   // phpinfo();
   $hostname = "db";
   $username = "admin";
