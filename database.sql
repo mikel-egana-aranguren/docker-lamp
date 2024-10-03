@@ -11,12 +11,12 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `telefono` VARCHAR(9) NOT NULL,
   `fecha_nacimiento` DATE NOT NULL,
   `email` VARCHAR(100) NOT NULL UNIQUE,
-  `username` VARCHAR(50) NOT NULL UNIQUE,
+  `nombre_usuario` VARCHAR(50) NOT NULL UNIQUE,
   `password` VARCHAR(255) NOT NULL, -- Se guardará encriptada
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `usuarios` (`nombre`, `apellidos`, `dni`, `telefono`, `fecha_nacimiento`, `email`, `username`, `password`) VALUES
+INSERT INTO `usuarios` (`nombre`, `apellidos`, `dni`, `telefono`, `fecha_nacimiento`, `email`, `nombre_usuario`, `password`) VALUES
 ('Juan', 'Pérez', '12345678-Z', '600123456', '1990-05-10', 'juan.perez@example.com', 'juanp', MD5('password123')),
 ('Ana', 'García', '87654321-X', '600987654', '1985-11-22', 'ana.garcia@example.com', 'anag', MD5('mypassword'));
 
