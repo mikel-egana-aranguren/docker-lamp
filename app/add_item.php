@@ -1,7 +1,4 @@
 <form id="item_add_form" action="procesar_add_item.php" method="POST">
-    <label for="id">ID:</label>
-    <input type="text" id="id" name="id" required>
-    
     <label for="titulo">Título:</label>
     <input type="text" id="titulo" name="titulo" required>
     
