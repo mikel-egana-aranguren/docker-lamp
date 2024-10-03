@@ -1,56 +1,38 @@
--- phpMyAdmin SQL Dump
--- version 5.0.2
--- https://www.phpmyadmin.net/
---
--- Servidor: db
--- Tiempo de generación: 16-09-2020 a las 16:37:17
--- Versión del servidor: 10.5.5-MariaDB-1:10.5.5+maria~focal
--- Versión de PHP: 7.4.9
+-- Crear la base de datos si no existe
+CREATE DATABASE IF NOT EXISTS `database`;
+USE `database`;
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+-- Crear la tabla para los usuarios
+CREATE TABLE IF NOT EXISTS `usuarios` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(100) NOT NULL,
+  `apellidos` VARCHAR(100) NOT NULL,
+  `dni` VARCHAR(10) NOT NULL UNIQUE,
+  `telefono` VARCHAR(9) NOT NULL,
+  `fecha_nacimiento` DATE NOT NULL,
+  `email` VARCHAR(100) NOT NULL UNIQUE,
+  `username` VARCHAR(50) NOT NULL UNIQUE,
+  `password` VARCHAR(255) NOT NULL, -- Se guardará encriptada
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- Insertar algunos usuarios de ejemplo
+INSERT INTO `usuarios` (`nombre`, `apellidos`, `dni`, `telefono`, `fecha_nacimiento`, `email`, `username`, `password`) VALUES
+('Juan', 'Pérez', '12345678-Z', '600123456', '1990-05-10', 'juan.perez@example.com', 'juanp', MD5('password123')),
+('Ana', 'García', '87654321-X', '600987654', '1985-11-22', 'ana.garcia@example.com', 'anag', MD5('mypassword'));
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+-- Crear la tabla para los ítems (por ejemplo, películas)
+CREATE TABLE IF NOT EXISTS `items` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `titulo` VARCHAR(255) NOT NULL,
+  `anio` INT(4) NOT NULL,
+  `director` VARCHAR(100) NOT NULL,
+  `genero` VARCHAR(50) NOT NULL,
+  `descripcion` TEXT NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Base de datos: `database`
---
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `usuarios`
---
-
-CREATE TABLE `usuarios` (
-  `id` int(11) NOT NULL,
-  `nombre` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `usuarios`
---
-
-INSERT INTO `usuarios` (`id`, `nombre`) VALUES
-(1, 'mikel'),
-(2, 'aitor');
-
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- Insertar algunos ítems de ejemplo (películas)
+INSERT INTO `items` (`titulo`, `anio`, `director`, `genero`, `descripcion`) VALUES
+('The Matrix', 1999, 'Lana Wachowski, Lilly Wachowski', 'Ciencia ficción', 'Un hacker descubre la verdadera naturaleza de su realidad.'),
+('Inception', 2010, 'Christopher Nolan', 'Ciencia ficción', 'Un ladrón especializado en el espionaje dentro de los sueños.');
