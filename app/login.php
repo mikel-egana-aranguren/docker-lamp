@@ -6,10 +6,13 @@
 		$erabiltzaile = $_POST['erabiltzaile'];
 		$pasahitz = $_post['pasahitz'];
 	
-	
+		$stmt = $conn->prepare("SELECT pasahitz FROM ERABILTZAILEA WHERE erabiltzaile = ?");	
+		$stmt->bind_param("s", $erabiltzaile);
 
 
+		if($stmt === false) { 
+			echo "Prepare failed: " . $conn->error;
+			
+		}
 
-	
-	
 	}
