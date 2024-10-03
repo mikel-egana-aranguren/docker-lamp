@@ -27,4 +27,4 @@
 </form>
 
 <!-- Incluyendo archivo JS para validaciones de registro -->
-<script src="js/registro.js"></script>
+<script src="registro.js"></script>

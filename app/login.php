@@ -9,4 +9,4 @@
 </form>
 
 <!-- Incluyendo archivo JS para validaciones de login -->
-<script src="js/login.js"></script>
+<script src="login.js"></script>
