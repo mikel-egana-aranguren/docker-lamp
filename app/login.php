@@ -15,4 +15,31 @@
 			
 		}
 
+		$stmt->execute();
+		$result = $stmt->get_result();
+
+		//Orain konprobatzen dugu erabiltzailea existitzen den
+
+
+		if($result->num_rows === 0){
+			echo "Erabiltzaile honek ez dago erregistratuta";
+
+		} else{
+			$userData = $result->fetch_assoc();
+			
+			$passwordOna = password_verify($pasahitz,$userData['pasahitz']);
+		
+			if($passwordOna) {
+				echo "Ongi etorri";
+			} else{
+				
+				echo "Pasahitza okerra";
+			}
+
+		}
+		$stmt->close();
+
+
 	}
+?>	
+
