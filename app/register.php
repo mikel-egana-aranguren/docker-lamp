@@ -4,7 +4,7 @@ include 'databaseConnect.php';
 
 function NANaBalida($nan) {
 	$zenbakiak = substr($nan, 0, 8);
-	$letraerabilgarriak="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	$letraerabilgarriak="TRWAGMYFPDXBNJZSQVHLCKE"
 	$letra = substr($nan, -1);
 	$letraKalkulatu = $letraerabilgarriak[$zenbakiak % 23];
 	return $letraKalkulatu === $letra;
