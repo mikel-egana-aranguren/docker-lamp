@@ -1,5 +1,5 @@
 <?php
-    include "config.php";
+    include 'databaseConnect.php';
     $konexioa = konektatuDatuBasera();
 
     function datuakSartuDatuBasean($titulua, $prezioa, $mota, $deskripzioa, $urtea){
