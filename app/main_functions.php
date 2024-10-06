@@ -4,8 +4,8 @@
 
     function datuakSartuDatuBasean($titulua, $prezioa, $mota, $deskripzioa, $urtea){
         $mysqli = sortuMysqli();
-        $sql = "INSERT INTO bideojokoak (titulua, prezioa, mota, ,deskripzioa, urtea)
-                VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO bideojokoak (titulua, prezioa, mota, deskripzioa, urtea)
+                VALUES (?, ?, ?, ?, ?)";
         $stmt = $mysqli->prepare($sql);
         $stmt->bind_param('sdsi', $titulua, $prezioa, $mota, $deskripzioa, $urtea);
         $stmt->execute();

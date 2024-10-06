@@ -6,11 +6,26 @@
     box-sizing: border-box;
 }
 
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #eaeef1;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    font-family: 'Arial', sans-serif; 
+    border-bottom: 2px solid #0d4a73;
+}
+
 body {
     min-height: 100vh;
     justify-content: center;
     align-items: center;
     display: flex;
+    flex-direction: column;
     padding: 20px;
     background-color: #1564a0;
 }

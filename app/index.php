@@ -19,9 +19,9 @@
 
         while($row = $result->fetch_assoc()) {
             echo "<div class='bideojoko'>";
-            echo "<h2 class='bideojoko-titulua'> . $row["titulua"] . "</h2>";
+            echo "<h2 class='bideojoko-titulua'> ". $row["titulua"] . "</h2>";
             echo "</div>";
-            echo "<table style="display: none;">
+            echo "<table style="display:none;" >";
             echo "<tr>";
             echo "<th></th>";
             echo "<th></th>";

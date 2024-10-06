@@ -7,7 +7,7 @@ function konektatuDatuBasera(){
 	$database = "database";
 
 	//Konexioa sortzen dugu
-	$conn = new mysqli($hostname, $username, $password, $database);
+	$conn = mysqli_connect($hostname, $username, $password, $database);
 
 	//Konexioa konprobatazen dugu behin sortuta
 	if($conn->connect_error){
@@ -18,4 +18,5 @@ function konektatuDatuBasera(){
 function sortuMySqli(){
 	$mysqli = new mysqli("db", "admin", "test", "database");
 	return $mysqli;
+}
 ?>
