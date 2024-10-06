@@ -98,7 +98,7 @@
             <input type="text" id="username" name="username" placeholder="adibidea: erabiltzaile123" required>
         </div>
         <div class="form-group">
-            <label for="password">Contraseña:</label>
+            <label for="password">Pasahitza:</label>
             <input type="password" id="password" name="password" placeholder="Sartu pasahitza" required>
         </div>
         <div class="form-group">
