@@ -21,25 +21,25 @@
             echo "<div class='bideojoko'>";
             echo "<h2 class='bideojoko-titulua'> ". $row["titulua"] . "</h2>";
             echo "</div>";
-            echo "<table style="display:none;" >";
+            echo '<table style="display:none; " >';
             echo "<tr>";
             echo "<th></th>";
             echo "<th></th>";
             echo "</tr>";
             echo "<tr>";
-            echo "<td>Titulua</td>"
+            echo "<td>Titulua</td>";
             echo "<td>" . ($row["titulua"]) . "</td>";
             echo "</tr>";
             echo "<tr>";
-            echo "<td>Prezioa</td>"
+            echo "<td>Prezioa</td>";
             echo "<td>" . ($row["prezioa"]) . "</td>";
             echo "</tr>";
             echo "<tr>";
-            echo "<td>Mota</td>"
+            echo "<td>Mota</td>";
             echo "<td>" . ($row["mota"]) . "</td>";
             echo "</tr>";
             echo "<tr>";
-            echo "<td>Urtea</td>"
+            echo "<td>Urtea</td>";
             echo "<td>" . ($row["urtea"]) . "</td>";
             echo "</tr>";
             echo "</table>";
@@ -48,7 +48,7 @@
        ?>
     </div>
 
-    <button class="aldatu-botoia" onclick="window.location.href='aldatu.html'" style="position: absolute; top: 10px; right: 10px;">Aldatu/Hasi Saioa</button>
+    <button class="aldatu-botoia" onclick="window.location.href='modify_user.php'" style="position: absolute; top: 10px; right: 10px;">Aldatu/Hasi Saioa</button>
     <button class="gehitu-botoia" onclick="erakutsiFormularioaGehitu()" style="position: absolute; top: 50px; right: 10px;">Bideojokoa Gehitu</button>
 
     <div id="modal-gehitu" class="modal">
