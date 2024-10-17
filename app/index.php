@@ -15,7 +15,7 @@
     <h1>Bideojokoen Zerrenda</h1>
     <div class="bideojoko-zerrenda">
        <?php
-        $sql = "SELECT * FROM bideojokoa";
+        $sql = "SELECT * FROM BIDEOJOKOA";
         $result = $konexioa->query($sql);
 
         if (!$result) {
