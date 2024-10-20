@@ -1,6 +1,4 @@
 <?php
-
-function konektatuDatuBasera(){
 	$hostname = "db";
 	$username = "admin";
 	$password = "test";
@@ -13,7 +11,5 @@ function konektatuDatuBasera(){
 	if(!$conn){
 		die("Konexioa galduta: " . mysqli_connect_error());
 	}
-	return $conn;
-}
 
 ?>
