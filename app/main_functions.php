@@ -9,7 +9,7 @@
         $stmt = $conn->prepare("INSERT INTO bideojokoa (titulu, egilea, prezioa, mota, deskripzioa, urtea);
                 VALUES (?, ?, ?, ?, ?)");
         //$stmt->bind_param('ssdss', $titulua, $egilea, $prezioa, $mota, $urtea);
-        
+        $stmt->bind_param("ssdss", $titulua, $egilea, $prezioa, $mota, $urtea);
         if ($stmt->execute()) {
             header("Location: index.php");
             exit();
