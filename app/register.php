@@ -13,10 +13,6 @@ function NANaBalida($nan) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
     
     $izena = $_POST['izena'];
     $abizena = $_POST['abizena'];
@@ -32,29 +28,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 	
     if (NANaBalida($NAN)){
-	    $stmt = $conn->prepare("INSERT INTO erabiltzailea (izena, abizena, NAN, pasahitza, telefonoa, jaiotzeData, email) VALUES (?,?,?,?,?,?,?)");
+	    $stmt = $conn->prepare("INSERT INTO erabiltzailea (izena, abizena, NAN, pasahitza, telefonoa, jaiotzeData, email) 
+                                VALUES (?,?,?,?,?,?,?)");
 	
 	    if($stmt==false){
 		    echo "Error: " . $conn->error;
 	    }
-        else{
-            $stmt->bind_param("sssssss", $izena, $abizena, $NAN, $hashed_pasahitza, $telefonoa, $jaiotzeData, $email);
-	
-	        if($stmt->execute()){
-		        echo "Pertsona honen datuak gorde dira";
-	        }else{
-		        echo "Error: " . $stmt->error;
-	        }
-            $stmt->close();
-        }
+        $stmt->bind_param("sssssss", $izena, $abizena, $NAN, $hashed_pasahitza, $telefonoa, $jaiotzeData, $email);
+	    
+        if($stmt->execute()){
+		    echo "Pertsona honen datuak gorde dira";
+	    }else{
+		    echo "Error: " . $stmt->error;
+	    }
+        $stmt->close();
 	
      }else{
 
 	echo "NAN-a txarto";
-     }
-
-
+    }
 }
+
+
 $conn->close();
 ?>
 <!DOCTYPE html>
