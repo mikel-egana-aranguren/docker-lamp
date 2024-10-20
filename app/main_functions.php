@@ -1,7 +1,7 @@
 <?php
     include 'databaseConnect.php';
 
-    function datuakSartuDatuBasean($titulu, $egilea, $prezioa, $mota, $urtea){
+    function datuakSartuDatuBasean($conn, $titulu, $egilea, $prezioa, $mota, $urtea){
         //$mysqli = sortuMysqli();
        // $sql = "INSERT INTO bideojokoak (titulu, egilea, prezioa, mota, deskripzioa, urtea)
         //        VALUES (?, ?, ?, ?, ?)";
@@ -43,7 +43,7 @@
         $prezioa = $_POST['prezioa'];
         $mota = $_POST['mota'];
         $urtea = $_POST['argitaratze_urtea'];
-        datuakSartuDatuBasean($titulu, $egilea, $prezioa, $mota, $urtea);
+        datuakSartuDatuBasean($conn, $titulu, $egilea, $prezioa, $mota, $urtea);
     }
         else if($akzioa === "aldatu"){
         $titulu = $_POST['aldatuTitulua'];
@@ -52,7 +52,7 @@
         $mota = $_POST['aldatuMota'];
         $deskripzioa = $_POST['aldatuDeskripzioa'];
         $urtea = $_POST['aldatuUrtea'];
-        datuakAldatu($titulu, $egilea, $prezioa, $mota, $urtea);
+        datuakAldatu($conn, $titulu, $egilea, $prezioa, $mota, $urtea);
     }}
     
     $konexioa->close();
