@@ -16,6 +16,8 @@
         } else {
             echo "Errorea datuak gordetzean";
         }
+        $stmt->close();
+
     }
     function datuakAldatu($titulua, $egilea, $prezioa, $mota, $urtea){
         $mysqli = sortuMysqli();
