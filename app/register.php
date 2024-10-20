@@ -13,7 +13,6 @@ function NANaBalida($nan) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $conn = konektatuDatuBasera();
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
@@ -26,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $jaiotzeData = $_POST['jaiotzeData'];
     $jaiotzeData = str_replace('/', '-', $jaiotzeData);
     $email = $_POST['email'];
-    $pasahitza = $_POST['pasahitz'];
+    $pasahitza = $_POST['pasahitza'];
 
 
     $hashed_pasahitza = password_hash($pasahitza, PASSWORD_BCRYPT);
@@ -56,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 }
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
