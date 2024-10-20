@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 	
     if (NANaBalida($NAN)){
-	    $stmt = $conn->prepare("INSERT INTO ERABILTZAILEA (izena, abizena, NAN, pasahitza, telefonoa, jaiotzeData, email) VALUES (?,?,?,?,?,?,?)");
+	    $stmt = $conn->prepare("INSERT INTO erabiltzailea (izena, abizena, NAN, pasahitza, telefonoa, jaiotzeData, email) VALUES (?,?,?,?,?,?,?)");
 	
 	    if($stmt==false){
 		    echo "Error: " . $conn->error;
