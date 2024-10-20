@@ -1,18 +1,18 @@
 <?php
     include 'databaseConnect.php';
-    $konexioa = konektatuDatuBasera();
 
     function datuakSartuDatuBasean($titulu, $egilea, $prezioa, $mota, $urtea){
         //$mysqli = sortuMysqli();
        // $sql = "INSERT INTO bideojokoak (titulu, egilea, prezioa, mota, deskripzioa, urtea)
         //        VALUES (?, ?, ?, ?, ?)";
-        $stmt = $konexioa->prepare("INSERT INTO bideojokoa (titulu, egilea, prezioa, mota, deskripzioa, urtea)
+        $stmt = $conn->prepare("INSERT INTO bideojokoa (titulu, egilea, prezioa, mota, deskripzioa, urtea)
                 VALUES (?, ?, ?, ?, ?)");
-        //$stmt->bind_param('ssdss', $titulua, $egilea, $prezioa, $mota, $urtea);
+        if ($stmt == false) {
+            echo "Errorea datu basearekin: " . $conn->error;
+        }
         $stmt->bind_param("ssdss", $titulu, $egilea, $prezioa, $mota, $urtea);
         if ($stmt->execute()) {
-            header("Location: index.php");
-            exit();
+            echo "Datuak gorde dira";
         } else {
             echo "Errorea datuak gordetzean";
         }
