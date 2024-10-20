@@ -3,11 +3,11 @@
 	
 	if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-		$erabiltzaile = $_POST['email'];
-		$pasahitz = $_post['pasahitza'];
+		$email = $_POST['email'];
+		$pasahitza = $_POST['pasahitza'];
 	
 		$stmt = $conn->prepare("SELECT pasahitza FROM erabiltzailea WHERE email = ?");	
-		$stmt->bind_param("s", $erabiltzaile);
+		$stmt->bind_param("s", $email);
 
 
 		if($stmt === false) { 
@@ -54,15 +54,15 @@
 
 
 <h2>Hasi Saioa</h2>
-<form id="login_form"action="login.php" method="post">
-	<label for="erabiltzailea">Email:</label>
-	<input type="email" id="erabiltzailea" name="erabiltzailea" placeholder="Sartu zure email-a" required><br>
+<form id="login_form" action="login.php" method="post">
+	<label for="email">Email:</label>
+	<input type="email" id="email" name="email" placeholder="Sartu zure email-a" required><br>
     	<label for="pasahitza">Pasahitza:</label>
     	<input type="password" id="pasahitza" name="pasahitza" placeholder="Sartu zure pasahitza" required><br>
 	
 	<br>
 	<div class="botoi_container">
-		<input id= "login_summit" type="summit" value="Hasi Saioa">
+		<input id= "login_submit" type="submit" value="Hasi Saioa">
 		<input id="atzera_botoia" type="button" value="Atzera" onclick="location.href='index.php'">
 
 	</div>
@@ -77,7 +77,7 @@
 	}
 </style>
 <script>
-    document.getElementById('erabiltzailea').addEventListener('input', function(event) {
+    document.getElementById('email').addEventListener('input', function(event) {
         var input = event.target;
         var value = input.value;
 
