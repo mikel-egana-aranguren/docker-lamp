@@ -75,6 +75,9 @@
                 <label for="gehituTitulua">Izenburua:</label>
                 <input type="text" id="gehituTitulua" name="titulua" required><br>
 
+                <label for="gehituEgilea">Egilea:</label>
+                <input type="text" id="gehituEgilea" name="egilea" required><br>
+
                 <label for="gehituPrezioa">Prezioa:</label>
                 <input type="text" id="gehituPrezioa" name="prezioa" required><br>
 
@@ -87,29 +90,12 @@
                 <label for="gehituArgitaratzeData">Argitaratze Urtea:</label>
                 <input type="text" id="gehituArgitaratzeData" name="argitaratze_urtea" required><br>
 
-                <button type="submit" class="gorde-botoia">Gehitu</button>
+                <button type="submit" onclick= "return balioztatuFormularioa()>Gehitu</button>
             </form>
         </div>
     </div>
 
-    <script>
-        function toggleDetalles(game_id) {
-            var table = document.getElementById('detalles-' + game_id);
-            if (table.style.display === 'none') {
-                table.style.display = 'table';
-            } else {
-                table.style.display = 'none';
-            }
-        }
-
-        function erakutsiFormularioaGehitu() {
-            document.getElementById('modal-gehitu').style.display = 'block';
-        }
-
-        function itxiFormularioaGehitu() {
-            document.getElementById('modal-gehitu').style.display = 'none';
-        }
-    </script>
+    <script src="js/main_script.js"></script>
 </body>
 </html>
 

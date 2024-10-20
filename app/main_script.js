@@ -48,3 +48,19 @@ function balioztatuFormularioa() {
 
     return true;
 }
+function toggleDetalles(game_id) {
+    var table = document.getElementById('detalles-' + game_id);
+    if (table.style.display === 'none') {
+        table.style.display = 'table';
+    } else {
+        table.style.display = 'none';
+    }
+}
+
+function erakutsiFormularioaGehitu() {
+    document.getElementById('modal-gehitu').style.display = 'block';
+}
+
+function itxiFormularioaGehitu() {
+    document.getElementById('modal-gehitu').style.display = 'none';
+}
