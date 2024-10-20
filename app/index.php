@@ -37,7 +37,7 @@
                     echo "<tr><td>Prezioa</td><td>" . $row["prezioa"] . "</td></tr>";
                     echo "<tr><td>Mota</td><td>" . $row["mota"] . "</td></tr>";
                     echo "<tr><td>Urtea</td><td>" . $row["urtea"] . "</td></tr>";
-                    echo "<td onclick='erakutsiFormularioaEditatu(\"" . $row["titulu"] . "\",\"" . $row["egilea"] . "\")'>Editatu</td>";
+                    echo "<tr><td onclick='erakutsiFormularioaEditatu(\"" . $row["titulu"] . "\",\"" . $row["egilea"] . "\")'>Editatu</td></tr>";
                     echo "</table>";
 
 
@@ -59,7 +59,7 @@
             echo "<p>Bideojokorik ez dago.</p>";
             }
 
-            $konexioa->close();
+            $conn->close();
        ?>
        </div>
     </div>
