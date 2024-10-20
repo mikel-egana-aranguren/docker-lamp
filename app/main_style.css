@@ -47,13 +47,16 @@ h1 {
 
 
 .bideojoko-taula {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-    background-color: #f9f9f9;
-    border: 2px solid #007bff;
-    border-radius: 8px;
-    text-align: left; 
+        background-color: var(--color2);
+        height: auto;
+        width: 65%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        box-shadow: 0 0 2px var(--color3);
+        padding: 2% 2% 2% 2%;
+    
 }
 
 .bideojoko-taula td {
