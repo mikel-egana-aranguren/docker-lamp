@@ -22,8 +22,8 @@
     }
     function datuakAldatu($conn, $titulu, $egilea, $prezioa, $mota, $urtea){
        $stmt = $conn->prepare("UPDATE bideojokoa
-                SET titulu=$titulu, egilea=$egilea, prezioa=$prezioa, mota=$mota, urtea=$urtea
-                WHERE titulu=$titulu AND egilea=$egilea");
+                SET titulu='$titulu', egilea='$egilea', prezioa='$prezioa', mota='$mota', urtea='$urtea'
+                WHERE titulu='$titulu' AND egilea='$egilea'");
         if ($stmt == false) {
             echo "Errorea datu basearekin: " . $conn->error;
         }
