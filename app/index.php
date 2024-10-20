@@ -16,6 +16,7 @@
     <div class="bideojoko-zerrenda">
        <?php
         $sql = "SELECT * FROM bideojokoa";
+        $sql = "SHOW TABLES";
         $result = $konexioa->query($sql);
 
         if (!$result) {
