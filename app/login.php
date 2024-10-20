@@ -41,6 +41,7 @@
 
 
 	}
+	$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="es">
