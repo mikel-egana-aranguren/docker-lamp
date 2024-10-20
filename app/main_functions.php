@@ -3,14 +3,14 @@
     $konexioa = konektatuDatuBasera();
 
     function datuakSartuDatuBasean($titulua, $egilea, $prezioa, $mota, $urtea){
-        $mysqli = sortuMysqli();
-        $sql = "INSERT INTO bideojokoak (titulu, egilea, prezioa, mota, deskripzioa, urtea)
-                VALUES (?, ?, ?, ?, ?)";
-        $stmt = $mysqli->prepare($sql);
-        $stmt->bind_param('ssdss', $titulua, $egilea, $prezioa, $mota, $urtea);
-        $stmt->execute();
-        if ($stmt->affected_rows === 1) {
-            $stmt->close();
+        //$mysqli = sortuMysqli();
+       // $sql = "INSERT INTO bideojokoak (titulu, egilea, prezioa, mota, deskripzioa, urtea)
+        //        VALUES (?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare(INSERT INTO bideojokoak (titulu, egilea, prezioa, mota, deskripzioa, urtea)
+                VALUES (?, ?, ?, ?, ?));
+        //$stmt->bind_param('ssdss', $titulua, $egilea, $prezioa, $mota, $urtea);
+        
+        if ($stmt->execute()) {
             header("Location: index.php");
             exit();
         } else {
