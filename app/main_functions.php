@@ -55,5 +55,5 @@
         datuakAldatu($conn, $titulu, $egilea, $prezioa, $mota, $urtea);
     }}
     
-    $konexioa->close();
+    $conn->close();
 ?>
