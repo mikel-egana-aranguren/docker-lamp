@@ -91,7 +91,7 @@
                 <label for="gehituArgitaratzeData">Argitaratze Urtea:</label>
                 <input type="text" id="gehituArgitaratzeData" name="argitaratze_urtea" required><br>
 
-                <button type="submit" onclick= "return balioztatuFormularioa()>Gehitu</button>
+                <button type="submit" onclick= "return balioztatuFormularioa()">Gehitu</button>
             </form>
         </div>
     </div>
