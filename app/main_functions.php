@@ -2,7 +2,7 @@
     include 'databaseConnect.php';
     $konexioa = konektatuDatuBasera();
 
-    function datuakSartuDatuBasean($titulua, $egilea, $prezioa, $mota, $urtea){
+    function datuakSartuDatuBasean($titulu, $egilea, $prezioa, $mota, $urtea){
         //$mysqli = sortuMysqli();
        // $sql = "INSERT INTO bideojokoak (titulu, egilea, prezioa, mota, deskripzioa, urtea)
         //        VALUES (?, ?, ?, ?, ?)";
