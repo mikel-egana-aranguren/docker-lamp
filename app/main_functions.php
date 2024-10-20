@@ -20,14 +20,14 @@
         $stmt->close();
 
     }
-    function datuakAldatu($conn, $titulua, $egilea, $prezioa, $mota, $urtea){
+    function datuakAldatu($conn, $titulu, $egilea, $prezioa, $mota, $urtea){
        $stmt = $conn->prepare("UPDATE bideojokoa
                 SET titulu=?, egilea=?, prezioa=?, mota=?, urtea=?
                 WHERE ISBN = ?");
         if ($stmt == false) {
             echo "Errorea datu basearekin: " . $conn->error;
         }
-        $stmt->bind_param("ssdss", $titulua, $egilea, $prezioa, $mota, $urtea);
+        $stmt->bind_param("ssdss", $titulu, $egilea, $prezioa, $mota, $urtea);
         if ($stmt->execute()) {
             header("Location: index.php");
             exit();
