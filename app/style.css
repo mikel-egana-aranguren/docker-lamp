@@ -27,7 +27,7 @@ body {
     display: flex;
     flex-direction: column;
     padding: 20px;
-    background-color: #1564a0;
+    background-image: url('vd.png');
 }
 
 .register_form {
