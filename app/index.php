@@ -36,6 +36,7 @@
                 echo "<tr><td>Prezioa</td><td>" . $row["prezioa"] . "</td></tr>";
                 echo "<tr><td>Mota</td><td>" . $row["mota"] . "</td></tr>";
                 echo "<tr><td>Urtea</td><td>" . $row["urtea"] . "</td></tr>";
+                echo "<td><button onclick='erakutsiFormularioaAldatu(\"$game_id\")'>Aldatu</button></td>";
                 echo "</table>";
 
 
