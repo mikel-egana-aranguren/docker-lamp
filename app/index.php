@@ -101,7 +101,7 @@
         <div class="modal-edukia">
             <span class="itxi" onclick="itxiFormularioaEditatu()">&times;</span>
             <form action="main_functions.php" method="post">
-                <h3>Bideojoko Berria Gehitu</h3>
+                <h3>Editatu Jokoa</h3>
                 <label for="aldatuTitulua">Izenburua:</label>
                 <input type="text" id="aldatuTitulua" name="aldatuTitulua" required><br>
 
