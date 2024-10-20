@@ -8,9 +8,9 @@ function erakutsiFormularioaEditatu(index) {
     const bideojokoa = bideojokoak[index];
     document.getElementById('editatuIndex').value = index;
     document.getElementById('editatuTitulua').value = bideojokoa.titulua;
+    document.getElementById('editatuEgilea').value=bidejokoa.egilea;
     document.getElementById('editatuPrezioa').value = bideojokoa.prezioa;
     document.getElementById('editatuMota').value = bideojokoa.mota;
-    document.getElementById('editatuDeskribapena').value = bideojokoa.deskribapena;
     document.getElementById('editatuArgitaratzeData').value = bideojokoa.argitaratzeData;
     document.getElementById('modal-editatu').style.display = 'block';
 }
@@ -32,11 +32,6 @@ function balioztatuFormularioa() {
 
     if (mota.trim() === "") {
         alert("Bideojokoaren mota ezin da hutsik egon.");
-        return false;
-    }
-
-    if (deskribapena.trim() === "" || deskribapena.length > 500) {
-        alert("Deskribapena ezin da hutsik egon eta gehienez 500 karaktere izan behar ditu.");
         return false;
     }
 

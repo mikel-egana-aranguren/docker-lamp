@@ -35,7 +35,6 @@
                 echo "<tr><td>Egilea</td><td>" . $row["egilea"] . "</td></tr>";
                 echo "<tr><td>Prezioa</td><td>" . $row["prezioa"] . "</td></tr>";
                 echo "<tr><td>Mota</td><td>" . $row["mota"] . "</td></tr>";
-                echo "<tr><td>Deskribapena</td><td>" . $row["deskripzioa"] . "</td></tr>";
                 echo "<tr><td>Urtea</td><td>" . $row["urtea"] . "</td></tr>";
                 echo "</table>";
 
@@ -84,9 +83,6 @@
 
                 <label for="gehituMota">Mota:</label>
                 <input type="text" id="gehituMota" name="mota" required><br>
-
-                <label for="gehituDeskribapena">Deskribapena:</label>
-                <textarea id="gehituDeskribapena" name="deskribapena" required></textarea><br>
 
                 <label for="gehituArgitaratzeData">Argitaratze Urtea:</label>
                 <input type="text" id="gehituArgitaratzeData" name="argitaratze_urtea" required><br>

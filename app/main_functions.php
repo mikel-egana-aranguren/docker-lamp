@@ -2,12 +2,12 @@
     include 'databaseConnect.php';
     $konexioa = konektatuDatuBasera();
 
-    function datuakSartuDatuBasean($titulua, $egilea, $prezioa, $mota, $deskripzioa, $urtea){
+    function datuakSartuDatuBasean($titulua, $egilea, $prezioa, $mota, $urtea){
         $mysqli = sortuMysqli();
         $sql = "INSERT INTO bideojokoak (titulu, egilea, prezioa, mota, deskripzioa, urtea)
                 VALUES (?, ?, ?, ?, ?)";
         $stmt = $mysqli->prepare($sql);
-        $stmt->bind_param('ssdss', $titulua, $egilea, $prezioa, $mota, $deskripzioa, $urtea);
+        $stmt->bind_param('ssdss', $titulua, $egilea, $prezioa, $mota, $urtea);
         $stmt->execute();
         if ($stmt->affected_rows === 1) {
             $stmt->close();
@@ -17,13 +17,13 @@
             echo "Errorea datuak gordetzean";
         }
     }
-    function datuakAldatu($titulua, $egilea, $prezioa, $mota, $deskripzioa, $urtea){
+    function datuakAldatu($titulua, $egilea, $prezioa, $mota, $urtea){
         $mysqli = sortuMysqli();
         $sql = "UPDATE bideojokoak
                 SET titulu=?, egilea=?, prezioa=?, mota=?, deskripzioa=?, urtea=?
                 WHERE ISBN = ?";
         $stmt = $mysqli->prepare($sql);
-        $stmt->bind_param('ssdss', $titulua, $egilea, $prezioa, $mota, $deskripzioa, $urtea);
+        $stmt->bind_param('ssdss', $titulua, $egilea, $prezioa, $mota, $urtea);
         $stmt->execute();
         if (mysqli_stmt_errno($stmt) === 0) {
             $stmt->close();
@@ -38,9 +38,8 @@
         $egilea = $_POST['gehituEgilea'];
         $prezioa = $_POST['gehituPrezioa'];
         $mota = $_POST['gehituMota'];
-        $deskripzioa = $_POST['gehituDeskripzioa'];
         $urtea = $_POST['gehituUrtea'];
-        datuakSartuDatuBasean($titulu, $egilea, $prezioa, $mota, $deskripzioa, $urtea);
+        datuakSartuDatuBasean($titulu, $egilea, $prezioa, $mota, $urtea);
     }
     else if(isset($_POST['aldatu'])){
         $titulu = $_POST['aldatuTitulua'];
@@ -49,7 +48,7 @@
         $mota = $_POST['aldatuMota'];
         $deskripzioa = $_POST['aldatuDeskripzioa'];
         $urtea = $_POST['aldatuUrtea'];
-        datuakAldatu($titulu, $egilea, $prezioa, $mota, $deskripzioa, $urtea);
+        datuakAldatu($titulu, $egilea, $prezioa, $mota, $urtea);
     }
     
     $konexioa->close();

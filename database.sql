@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 
 -- "ERABILTZAILEAK" taula
 
-CREATE TABLE `ERABILTZAILEA` (
+CREATE TABLE `erabiltzailea` (
   `izena` varchar(20) NOT NULL,
   `abizena` varchar(40) NOT NULL,
   `NAN` varchar(10) NOT NULL,

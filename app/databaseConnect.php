@@ -19,4 +19,5 @@ function sortuMySqli(){
 	$mysqli = new mysqli("db", "admin", "test", "database");
 	return $mysqli;
 }
+
 ?>
