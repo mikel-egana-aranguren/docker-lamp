@@ -41,12 +41,11 @@ CREATE TABLE bideojokoa (
   `egilea` varchar(50) NOT NULL,
   `prezioa` float NOT NULL,
   `mota` varchar(20) NOT NULL,
-  `deskripzioa` varchar(255) NOT NULL,
   `urtea` int(4) NOT NULL,
   PRIMARY KEY (`titulu`, `egilea`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO bideojokoa VALUES('The Legend of Zelda: Breath of the Wild', 'Nintendo', 59.99, 'Aventura', 'The Legend of Zelda: Breath of the Wild es un videojuego de acción-aventura de mundo abierto desarrollado y publicado por Nintendo para las consolas de videojuegos Nintendo Switch y Wii U.', 2017);
+INSERT INTO bideojokoa VALUES('The Legend of Zelda: Breath of the Wild', 'Nintendo', 59.99, 'Aventura', 2017);
 -- Estructura de tabla para la tabla `usuarios`
 --
 
