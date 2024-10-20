@@ -38,11 +38,12 @@ CREATE TABLE `ERABILTZAILEA` (
 
 CREATE TABLE `BIDEOJOKOA`{
   `titulu` varchar(50) NOT NULL,
+  `egilea` varchar(50) NOT NULL,
   `prezioa` float NOT NULL,
   `mota` varchar(20) NOT NULL,
   `deskripzioa` varchar(255) NOT NULL,
   `urtea` int(4) NOT NULL,
-  PRIMARY KEY (`titulu`)
+  PRIMARY KEY (`titulu`, `egilea`)
 }ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
