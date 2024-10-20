@@ -13,12 +13,13 @@
         $stmt->bind_param("ssdss", $titulu, $egilea, $prezioa, $mota, $urtea);
         if ($stmt->execute()) {
             echo "Datuak gorde dira";
+            $stmt->close();
             header("Location: index.php");
             exit();
         } else {
             echo "Errorea datuak gordetzean";
         }
-        $stmt->close();
+        
 
     }
     function datuakAldatu($titulua, $egilea, $prezioa, $mota, $urtea){
