@@ -1,6 +1,6 @@
 <?php
     include 'databaseConnect.php';
-    $konexioa = konektatuDatuBasera();
+
 ?>
 <!DOCTYPE html>
 <html lang="eu">
