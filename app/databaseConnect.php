@@ -10,8 +10,8 @@ function konektatuDatuBasera(){
 	$conn = mysqli_connect($hostname, $username, $password, $database);
 
 	//Konexioa konprobatazen dugu behin sortuta
-	if($conn->connect_error){
-		die("Konexioa galduta: " . $conn->connect_error);
+	if(!$conn){
+		die("Konexioa galduta: " . mysqli_connect_error());
 	}
 	return $conn;
 }
