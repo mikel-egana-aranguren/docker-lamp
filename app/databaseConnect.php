@@ -26,10 +26,10 @@ function konektatuDatuBasera() {
     $database = "database";
 
     // Crear la conexión
-    $conn = new mysqli($hostname, $username, $password, $database, 3306);
+    $conn = mysqli_connect($hostname, $username, $password, $database);
 
     // Comprobar si la conexión ha fallado
-    if ($conn->connect_errno) {
+    if (!$conn) {
         die("Konexioa galduta: " . $conn->connect_error);
     }
     return $conn;
