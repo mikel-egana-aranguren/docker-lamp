@@ -36,7 +36,7 @@ CREATE TABLE `ERABILTZAILEA` (
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE BIDEOJOKOA(
+CREATE TABLE bideojokoa (
   `titulu` varchar(50) NOT NULL,
   `egilea` varchar(50) NOT NULL,
   `prezioa` float NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE BIDEOJOKOA(
   PRIMARY KEY (`titulu`, `egilea`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO BIDEOJOKOA VALUES('The Legend of Zelda: Breath of the Wild', 'Nintendo', 59.99, 'Aventura', 'The Legend of Zelda: Breath of the Wild es un videojuego de acción-aventura de mundo abierto desarrollado y publicado por Nintendo para las consolas de videojuegos Nintendo Switch y Wii U.', 2017);
+INSERT INTO bideojokoa VALUES('The Legend of Zelda: Breath of the Wild', 'Nintendo', 59.99, 'Aventura', 'The Legend of Zelda: Breath of the Wild es un videojuego de acción-aventura de mundo abierto desarrollado y publicado por Nintendo para las consolas de videojuegos Nintendo Switch y Wii U.', 2017);
 -- Estructura de tabla para la tabla `usuarios`
 --
 
