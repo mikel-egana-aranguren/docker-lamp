@@ -45,7 +45,10 @@ CREATE TABLE bideojokoa (
   PRIMARY KEY (`titulu`, `egilea`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+INSERT INTO bideojokoa VALUES('Super Mario Odyssey', 'Nintendo', 59.99, 'Plataformas', 2017);
 INSERT INTO bideojokoa VALUES('The Legend of Zelda: Breath of the Wild', 'Nintendo', 59.99, 'Aventura', 2017);
+INSERT INTO bideojokoa VALUES('Mario Kart 8 Deluxe', 'Nintendo', 59.99, 'Carreras', 2017);
+INSERT INTO bideojokoa VALUES('Splatoon 2', 'Nintendo', 59.99, 'Shooter', 2017);
 -- Estructura de tabla para la tabla `usuarios`
 --
 
