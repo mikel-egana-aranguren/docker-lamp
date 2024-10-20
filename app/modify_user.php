@@ -39,12 +39,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         $updateQuery = "UPDATE ERABILTZAILEA (izena, abizena, NAN, telefonoa, jaiotzeData, pasahitza) SET($izena, $abizena, $nan, $telefonoa, $jaiotzeData, $hashedPasahitzaBerria)  WHERE email = '$email'";
         if (mysqli_query($conn, $updateQuery)) {
-            echo "Data updated successfully.";
+            echo "Datuak aldatu dira.";
+            echo"<script>
+                    alert('Pertsona honen datuak gorde dira');
+                    window.location.href = 'index.php';
+                </script>";
         } else {
-            echo "Error updating data: " . mysqli_error($conn);
+            echo "Errorea: " . mysqli_error($conn);
         }
     } else {
-        echo "Invalid username or password.";
+        echo "Email edo pasahitza okerra";
     }
 }
 $conn->close();
@@ -95,7 +99,7 @@ $conn->close();
 
             <div class="input-box">
                 <label for="nan">NAN berria</label>
-                <input type="text" name="nan" id="nan" placeholder= "11111111-Z" pattern= "[0-9]{8}-[A-Z]" required >
+                <input type="text" name="nan" id="nan" placeholder= "12345678-Z" pattern= "[0-9]{8}-[A-Z]" required >
             </div>
 
             <div class="input-box">
@@ -109,12 +113,11 @@ $conn->close();
             </div>
 
             
-            <button id= "register_submit" type="submit" onclick="window.location.href='index.php'" style="font-size: 15px; width: 100px; border-radius: 10px; background-color: rgb(207, 2, 248);" >Gorde</button>
+            <button id= "register_submit" type="submit" style="font-size: 15px; width: 100px; border-radius: 10px; background-color: rgb(207, 2, 248);" >Gorde</button>
             
         </form>
         <button onclick="window.location.href='login.php'" style="font-size: 15px; width: 100px; background-color: rgb(255, 208, 0); border-radius: 10px;">Login</button>
     
-    <script src="js/script.js"></script>
 
     </div>
     
