@@ -18,9 +18,9 @@
         $sql = "SELECT * FROM BIDEOJOKOA";
         $result = $konexioa->query($sql);
 
-        //if (!$result) {
-          //  echo "Errorea datu basearekin: " . $konexioa->error;
-        //} else if ($result->num_rows > 0) {
+        if (!$result) {
+            echo "Errorea datu basearekin: " . $konexioa->error;
+        } else if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
 
                 $game_id = $row["titulu"] . '-' . $row["egilea"]; // Crear un id único combinando título y autor
@@ -52,9 +52,9 @@
                 echo "<tr><td>Urtea</td><td>" . $row["urtea"] . "</td></tr>";
                 echo "</table>";*/
             }
-        //} else {
-          //  echo "<p>Bideojokorik ez dago.</p>";
-        //}
+        } else {
+            echo "<p>Bideojokorik ez dago.</p>";
+        }
 
         $konexioa->close();
        ?>
