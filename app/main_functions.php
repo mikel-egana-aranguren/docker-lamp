@@ -35,7 +35,9 @@
             echo "Errorea datuak gordetzean";
         }
     }
-    if(isset($_POST['gehitu'])){
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $akzioa = $_POST["akzioa"];
+    if($akzioa === "gehitu"){
         $titulu = $_POST['gehituTitulua'];
         $egilea = $_POST['gehituEgilea'];
         $prezioa = $_POST['gehituPrezioa'];
@@ -43,7 +45,7 @@
         $urtea = $_POST['gehituUrtea'];
         datuakSartuDatuBasean($titulu, $egilea, $prezioa, $mota, $urtea);
     }
-    else if(isset($_POST['aldatu'])){
+    else if($akzioa === "aldatu"){
         $titulu = $_POST['aldatuTitulua'];
         $egilea = $_POST['aldatuEgilea'];    
         $prezioa = $_POST['aldatuPrezioa'];
@@ -51,7 +53,7 @@
         $deskripzioa = $_POST['aldatuDeskripzioa'];
         $urtea = $_POST['aldatuUrtea'];
         datuakAldatu($titulu, $egilea, $prezioa, $mota, $urtea);
-    }
+    }}
     
     $konexioa->close();
 ?>
