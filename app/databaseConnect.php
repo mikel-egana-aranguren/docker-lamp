@@ -26,7 +26,7 @@ function konektatuDatuBasera() {
     $database = "database";
 
     // Crear la conexión
-    $conn = new mysqli($hostname, $username, $password, $database);
+    $conn = new mysqli($hostname, $username, $password, $database, 3306);
 
     // Comprobar si la conexión ha fallado
     if ($conn->connect_errno) {
