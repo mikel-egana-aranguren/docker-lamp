@@ -37,7 +37,7 @@
                     echo "<tr><td>Prezioa</td><td>" . $row["prezioa"] . "</td></tr>";
                     echo "<tr><td>Mota</td><td>" . $row["mota"] . "</td></tr>";
                     echo "<tr><td>Urtea</td><td>" . $row["urtea"] . "</td></tr>";
-                    echo "<tr><td onclick='erakutsiFormularioaEditatu(\"" . $row["titulu"] . "\",\"" . $row["egilea"] . "\")'>Editatu</td></tr>";
+                    echo "<tr><td onclick='erakutsiFormularioaEditatu(\"" . $row["titulu"] . "\",\"" . $row["egilea"] . "\", \"" . $row["prezioa"] . "\", \"" . $row["mota"] . "\", \"" . $row["urtea"] . "\" )'>Editatu</td></tr>";
                     echo "</table>";
 
 
