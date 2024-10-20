@@ -3,10 +3,10 @@
 	
 	if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-		$erabiltzaile = $_POST['erabiltzaile'];
-		$pasahitz = $_post['pasahitz'];
+		$erabiltzaile = $_POST['email'];
+		$pasahitz = $_post['pasahitza'];
 	
-		$stmt = $conn->prepare("SELECT pasahitz FROM ERABILTZAILEA WHERE erabiltzaile = ?");	
+		$stmt = $conn->prepare("SELECT pasahitza FROM erabiltzailea WHERE email = ?");	
 		$stmt->bind_param("s", $erabiltzaile);
 
 
@@ -27,7 +27,7 @@
 		} else{
 			$userData = $result->fetch_assoc();
 			
-			$passwordOna = password_verify($pasahitz,$userData['pasahitz']);
+			$passwordOna = password_verify($pasahitza,$userData['pasahitza']);
 		
 			if($passwordOna) {
 				echo "Ongi etorri";
@@ -55,8 +55,8 @@
 
 <h2>Hasi Saioa</h2>
 <form id="login_form"action="login.php" method="post">
-	<label for="erabiltzailea">Erabiltzailea:</label>
-	<input type="text" id="erabiltzailea" name="erabiltzailea" placeholder="adiidez: Erabiltzaile123" required><br>
+	<label for="erabiltzailea">Email:</label>
+	<input type="email" id="erabiltzailea" name="erabiltzailea" placeholder="Sartu zure email-a" required><br>
     	<label for="pasahitza">Pasahitza:</label>
     	<input type="password" id="pasahitza" name="pasahitza" placeholder="Sartu zure pasahitza" required><br>
 	
