@@ -1,6 +1,6 @@
 <?php
 
-function konektatuDatuBasera(){
+/*function konektatuDatuBasera(){
 	$hostname = "db";
 	$username = "admin";
 	$password = "test";
@@ -18,5 +18,18 @@ function konektatuDatuBasera(){
 function sortuMySqli(){
 	$mysqli = new mysqli("db", "admin", "test", "database");
 	return $mysqli;
+}*/
+function konektatuDatuBasera(){
+	$hostname = "db";
+	$username = "admin";
+	$password = "test";
+	$database = "database";
+
+	$conn = new mysqli($hostname, $username, $password, $database);
+
+	if(!$conn){
+		die("Konexioa galduta: " . $conn->connect_error);
+	}
+	return $conn;
 }
 ?>
