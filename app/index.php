@@ -29,7 +29,7 @@
                     $game_id = $row["titulu"] . '-' . $row["egilea"]; // Crear un id único combinando título y autor
                     echo "<div class='bideojoko' onclick='toggleDetalles(\"$game_id\")'>";
                     echo "<h2 class='bideojoko-titulua'>" . $row["titulu"] . "</h2>";
-                    echo "<h2 class='bideojoko-titulua'>" . $row["titulu"] . "</h2>";
+                    echo "<h2 class='bideojoko-titulua'>" . $row["egilea"] . "</h2>";
                     echo "</div>";
                     echo "<table id='detalles-$game_id' style='display:none;'>";
                     echo "<tr><th>Atributua</th><th>Balioa</th></tr>";
@@ -37,7 +37,7 @@
                     echo "<tr><td>Egilea</td><td>" . $row["egilea"] . "</td></tr>";
                     echo "<tr><td>Prezioa</td><td>" . $row["prezioa"] . "</td></tr>";
                     echo "<tr><td>Mota</td><td>" . $row["mota"] . "</td></tr>";
-                    echo "<tr><td><button onclick='erakutsiFormularioaEditatu(\"" . $row["titulu"] . "\",\"" . $row["egilea"] . "\", \"" . $row["prezioa"] . "\", \"" . $row["mota"] . "\", \"" . $row["urtea"] . "\")'>Editatu</button></td></tr>";
+                    echo "<tr><td><button id="modal-editatu">Editatu</button></td></tr>";
                     echo "<tr><td><button onclick='bideojokoaEzabatu(\"" . $row["titulu"] . "\",\"" . $row["egilea"] . "\")'>Ezabatu</button></td></tr>";
                     echo "</table>";
 
@@ -96,6 +96,31 @@
             </form>
         </div>
     </div>
+
+    <div id="modal-editatu" class="modal" style="display:none;">
+        <div class="modal-edukia">
+            <span class="itxi" onclick="itxiFormularioaEditatu()">&times;</span>
+            <form action="main_functions.php" method="post">
+                <h3>Bideojoko Berria Gehitu</h3>
+                <label for="aldatuTitulua">Izenburua:</label>
+                <input type="text" id="aldatuTitulua" name="aldatuTitulua" required><br>
+
+                <label for="aldatuEgilea">Egilea:</label>
+                <input type="text" id="aldatuEgilea" name="aldatuEgilea" required><br>
+
+                <label for="aldatuPrezioa">Prezioa:</label>
+                <input type="text" id="aldatuPrezioa" name="aldatuPrezioa" required><br>
+
+                <label for="aldatuMota">Mota:</label>
+                <input type="text" id="aldatuMota" name="aldatuMota" required><br>
+
+                <label for="aldatuArgitaratzeData">Argitaratze Urtea:</label>
+                <input type="text" id="aldatuArgitaratzeData" name="aldatuUrtea" required><br>
+
+                <input type="hidden" name="akzioa" value="aldatu">
+                <button type="submit" onclick= "return balioztatuFormularioa()">Aldatu</button>
+            </form>
+        </div>
 </body>
 </html>
 

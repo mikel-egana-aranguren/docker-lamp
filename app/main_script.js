@@ -5,14 +5,13 @@ function itxiFormularioaGehitu() {
     document.getElementById('modal-gehitu').style.display = 'none';
 }
 function erakutsiFormularioaEditatu(index) {
-    const bideojokoa = bideojokoak[index];
+    document.getElementById('modal-editatu').style.display = 'block';
     document.getElementById('editatuIndex').value = index;
     document.getElementById('editatuTitulua').value = bideojokoa.titulua;
     document.getElementById('editatuEgilea').value=bidejokoa.egilea;
     document.getElementById('editatuPrezioa').value = bideojokoa.prezioa;
     document.getElementById('editatuMota').value = bideojokoa.mota;
     document.getElementById('editatuArgitaratzeData').value = bideojokoa.argitaratzeData;
-    document.getElementById('modal-editatu').style.display = 'block';
 }
 function balioztatuFormularioa() {
     const titulua = document.getElementById('gehituTitulua').value;

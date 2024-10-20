@@ -20,21 +20,21 @@
         $stmt->close();
 
     }
-    function datuakAldatu($titulua, $egilea, $prezioa, $mota, $urtea){
-        $mysqli = sortuMysqli();
-        $sql = "UPDATE bideojokoak
-                SET titulu=?, egilea=?, prezioa=?, mota=?, deskripzioa=?, urtea=?
-                WHERE ISBN = ?";
-        $stmt = $mysqli->prepare($sql);
-        $stmt->bind_param('ssdss', $titulua, $egilea, $prezioa, $mota, $urtea);
-        $stmt->execute();
-        if (mysqli_stmt_errno($stmt) === 0) {
-            $stmt->close();
+    function datuakAldatu($conn, $titulua, $egilea, $prezioa, $mota, $urtea){
+       $stmt = $conn->prepare("UPDATE bideojokoa
+                SET titulu=?, egilea=?, prezioa=?, mota=?, urtea=?
+                WHERE ISBN = ?");
+        if ($stmt == false) {
+            echo "Errorea datu basearekin: " . $conn->error;
+        }
+        $stmt->bind_param("ssdss", $titulua, $egilea, $prezioa, $mota, $urtea);
+        if ($stmt->execute()) {
             header("Location: index.php");
             exit();
         } else {
             echo "Errorea datuak gordetzean";
-        }
+        }  
+        $stmt->close();
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $akzioa = $_POST["akzioa"];
