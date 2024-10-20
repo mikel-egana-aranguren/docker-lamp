@@ -6,7 +6,7 @@
         //$mysqli = sortuMysqli();
        // $sql = "INSERT INTO bideojokoak (titulu, egilea, prezioa, mota, deskripzioa, urtea)
         //        VALUES (?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare("INSERT INTO bideojokoa (titulu, egilea, prezioa, mota, deskripzioa, urtea);
+        $stmt = $konexioa->prepare("INSERT INTO bideojokoa (titulu, egilea, prezioa, mota, deskripzioa, urtea);
                 VALUES (?, ?, ?, ?, ?)");
         //$stmt->bind_param('ssdss', $titulua, $egilea, $prezioa, $mota, $urtea);
         $stmt->bind_param("ssdss", $titulu, $egilea, $prezioa, $mota, $urtea);
