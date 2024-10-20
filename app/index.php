@@ -29,6 +29,7 @@
                     $game_id = $row["titulu"] . '-' . $row["egilea"]; // Crear un id único combinando título y autor
                     echo "<div class='bideojoko' onclick='toggleDetalles(\"$game_id\")'>";
                     echo "<h2 class='bideojoko-titulua'>" . $row["titulu"] . "</h2>";
+                    echo "<h2 class='bideojoko-titulua'>" . $row["titulu"] . "</h2>";
                     echo "</div>";
                     echo "<table id='detalles-$game_id' style='display:none;'>";
                     echo "<tr><th>Atributua</th><th>Balioa</th></tr>";
@@ -36,8 +37,8 @@
                     echo "<tr><td>Egilea</td><td>" . $row["egilea"] . "</td></tr>";
                     echo "<tr><td>Prezioa</td><td>" . $row["prezioa"] . "</td></tr>";
                     echo "<tr><td>Mota</td><td>" . $row["mota"] . "</td></tr>";
-                    echo "<tr><td>Urtea</td><td>" . $row["urtea"] . "</td></tr>";
-                    echo "<tr><td onclick='erakutsiFormularioaEditatu(\"" . $row["titulu"] . "\",\"" . $row["egilea"] . "\")'>Editatu</td></tr>";
+                    echo "<tr><td><button onclick='erakutsiFormularioaEditatu(\"" . $row["titulu"] . "\",\"" . $row["egilea"] . "\", \"" . $row["prezioa"] . "\", \"" . $row["mota"] . "\", \"" . $row["urtea"] . "\")'>Editatu</button></td></tr>";
+                    echo "<tr><td><button onclick='bideojokoaEzabatu(\"" . $row["titulu"] . "\",\"" . $row["egilea"] . "\")'>Ezabatu</button></td></tr>";
                     echo "</table>";
 
 
