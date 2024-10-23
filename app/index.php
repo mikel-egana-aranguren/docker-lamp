@@ -38,7 +38,7 @@
                     echo "<tr><td>Prezioa</td><td>" . $row["prezioa"] . "</td></tr>";
                     echo "<tr><td>Mota</td><td>" . $row["mota"] . "</td></tr>";
                     echo '<tr><td><button class="editatu-botoia" onclick="window.location.href=\'edit.php\'">Editatu</button></td></tr>';
-                    echo "<tr><td><button onclick='bideojokoaEzabatu(\"" . $row["titulu"] . "\",\"" . $row["egilea"] . "\")'>Ezabatu</button></td></tr>";
+                    echo "<tr><td><button onclick='window.location.href=\"delete.php\"'>Ezabatu</button></td></tr>"
                     echo "</table>";
                 }
             } else {
