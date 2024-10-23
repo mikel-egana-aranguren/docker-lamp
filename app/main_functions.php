@@ -37,8 +37,6 @@
         $stmt->close();
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $akzioa = $_POST["akzioa"];
-        if($akzioa === "gehitu"){
         $titulu = $_POST['titulua'];
         $egilea = $_POST['egilea'];
         $prezioa = $_POST['prezioa'];
@@ -46,15 +44,7 @@
         $urtea = $_POST['argitaratze_urtea'];
         datuakSartuDatuBasean($conn, $titulu, $egilea, $prezioa, $mota, $urtea);
     }
-        else if($akzioa === "aldatu"){
-        $titulu = $_POST['aldatuTitulua'];
-        $egilea = $_POST['aldatuEgilea'];    
-        $prezioa = $_POST['aldatuPrezioa'];
-        $mota = $_POST['aldatuMota'];
-        $deskripzioa = $_POST['aldatuDeskripzioa'];
-        $urtea = $_POST['aldatuUrtea'];
-        datuakAldatu($conn, $titulu, $egilea, $prezioa, $mota, $urtea);
-    }}
+    
     
     $conn->close();
 ?>

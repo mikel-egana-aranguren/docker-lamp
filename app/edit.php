@@ -43,7 +43,7 @@ $conn->close();
 </head>
 <body>
     <h1>Bideojokoa Aldatu</h1>
-    <form action="" method="post">
+    <form action="modal-gehitu" method="post">
         <label for="titulu">Titulua:</label>
         <input type="text" id="titulu" name="titulu" required><br><br>
         <label for="egilea">Egilea:</label>
@@ -54,9 +54,8 @@ $conn->close();
         <input type="text" id="mota" name="mota" required><br><br>
         <label for="urtea">Urtea:</label>
         <input type="number" id="urtea" name="urtea" required><br><br>
-        <button type="submit">Aldatu</button>
+        <button type="submit" onclick="window.location.href='index.php'">Aldatu</button>
     </form>
-
-    <button class="atzera-botoia" onclick="window.location.href='index.php'">Atzera</button>
+    <button onclick="window.location.href='index.php'">Atzera</button>
 </body>
 </html>
