@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
     if (mysqli_num_rows($Egiaztatu) == 1) {
         $stmt = $conn->prepare("UPDATE bideojokoa
-                SET titulu='$titulu', egilea='$egilea', prezioa='$prezioa', mota='$mota', urtea='$urtea'
+                SET  prezioa='$prezioa', mota='$mota', urtea='$urtea'
                 WHERE titulu='$titulu' AND egilea='$egilea'");
         if ($stmt == false) {
             echo "Errorea datu basearekin: " . $conn->error;
