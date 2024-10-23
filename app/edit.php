@@ -1,8 +1,8 @@
 <?php
 include 'databaseConnect.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    $titulu = $_GET['titulu'];
-    $egilea = $_GET['egilea'];
+    $titulu = $_POST['titulu'];
+    $egilea = $_POST['egilea'];
     $prezioa = $_POST['prezioa'];
     $mota = $_POST['mota'];
     $urtea = $_POST['urtea'];
