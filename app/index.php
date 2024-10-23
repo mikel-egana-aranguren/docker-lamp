@@ -81,31 +81,6 @@
             </form>
         </div>
     </div>
-
-    <div id="modal-editatu" class="modal" style="display:none;">
-        <div class="modal-edukia">
-            <span class="itxi" onclick="itxiFormularioaEditatu()">&times;</span>
-            <form action="edit-php" method="post">
-                <h3>Editatu Jokoa</h3>
-                <label for="aldatuTitulua">Izenburua:</label>
-                <input type="text" id="aldatuTitulua" name="aldatuTitulua" required><br>
-
-                <label for="aldatuEgilea">Egilea:</label>
-                <input type="text" id="aldatuEgilea" name="aldatuEgilea" required><br>
-
-                <label for="aldatuPrezioa">Prezioa:</label>
-                <input type="text" id="aldatuPrezioa" name="aldatuPrezioa" required><br>
-
-                <label for="aldatuMota">Mota:</label>
-                <input type="text" id="aldatuMota" name="aldatuMota" required><br>
-
-                <label for="aldatuArgitaratzeData">Argitaratze Urtea:</label>
-                <input type="text" id="aldatuArgitaratzeData" name="aldatuUrtea" required><br>
-
-                <input type="hidden" name="akzioa" value="aldatu">
-                <button type="submit" onclick= "return balioztatuFormularioa()">Aldatu</button>
-            </form>
-        </div>
 </body>
 </html>
 
