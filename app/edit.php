@@ -43,7 +43,7 @@ $conn->close();
 </head>
 <body>
     <h1>Bideojokoa Aldatu</h1>
-    <form action="modal-gehitu" action="main_functions.php" method="post">
+    <form id="modal-gehitu" action="main_functions.php" method="post">
         <label for="titulu">Titulua:</label>
         <input type="text" id="titulu" name="titulu" required><br><br>
         <label for="egilea">Egilea:</label>
