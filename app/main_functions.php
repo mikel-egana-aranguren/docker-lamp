@@ -58,3 +58,17 @@
     
     $conn->close();
 ?>
+<DOCTYPE html>
+<html>
+    <head>
+        <title>GORDE</title>
+        <link rel="stylesheet" type="text/css" href="styles.css">
+    </head>
+    <body>
+        <div class="errorea">
+            <h1>Gorde</h1>
+            <p>Sartutako datuak gorde dira</p>
+            <button onclick="window.location.href='index.php'">Atzera</button>
+        </div>
+    </body>
+</html>
