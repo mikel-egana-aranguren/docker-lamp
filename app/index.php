@@ -37,24 +37,9 @@
                     echo "<tr><td>Egilea</td><td>" . $row["egilea"] . "</td></tr>";
                     echo "<tr><td>Prezioa</td><td>" . $row["prezioa"] . "</td></tr>";
                     echo "<tr><td>Mota</td><td>" . $row["mota"] . "</td></tr>";
-                    echo "<tr><td><button class=\"editatu-botoia\" onclick=\"erakutsiFormularioaEditatu()\">Editatu</button></td></tr>";
+                    echo '<tr><td><button class="editatu-botoia" onclick="window.location.href=\'edit.php\'">Editatu</button></td></tr>';
                     echo "<tr><td><button onclick='bideojokoaEzabatu(\"" . $row["titulu"] . "\",\"" . $row["egilea"] . "\")'>Ezabatu</button></td></tr>";
                     echo "</table>";
-
-
-                /* Generar un id único para cada videojuego
-                $game_id = $row["id"];
-                echo "<div class='bideojoko' onclick='toggleDetalles($game_id)'>";
-                // Mostrar datos sin aplicar htmlspecialchars()
-                echo "<h2 class='bideojoko-titulua'>". $row["titulua"] . "</h2>";
-                echo "</div>";
-                echo "<table id='detalles-$game_id' style='display:none;'>";
-                echo "<tr><th>Atributua</th><th>Balioa</th></tr>";
-                echo "<tr><td>Titulua</td><td>" . $row["titulua"] . "</td></tr>";
-                echo "<tr><td>Prezioa</td><td>" . $row["prezioa"] . "</td></tr>";
-                echo "<tr><td>Mota</td><td>" . $row["mota"] . "</td></tr>";
-                echo "<tr><td>Urtea</td><td>" . $row["urtea"] . "</td></tr>";
-                echo "</table>";*/
                 }
             } else {
             echo "<p>Bideojokorik ez dago.</p>";
@@ -100,7 +85,7 @@
     <div id="modal-editatu" class="modal" style="display:none;">
         <div class="modal-edukia">
             <span class="itxi" onclick="itxiFormularioaEditatu()">&times;</span>
-            <form action="main_functions.php" method="post">
+            <form action="edit-php" method="post">
                 <h3>Editatu Jokoa</h3>
                 <label for="aldatuTitulua">Izenburua:</label>
                 <input type="text" id="aldatuTitulua" name="aldatuTitulua" required><br>
