@@ -127,7 +127,7 @@ $conn->close();
         <input type="text" id="mota" name="mota" required><br><br>
         <label for="urtea">Urtea:</label>
         <input type="number" id="urtea" name="urtea" required><br><br>
-        <button type="submit" onclick="window.location.href='index.php'">Aldatu</button>
+        <button type="submit">Aldatu</button>
     </form>
     <button onclick="window.location.href='index.php'">Atzera</button>
 </body>
