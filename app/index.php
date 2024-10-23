@@ -38,7 +38,6 @@
                     echo "<tr><td>Prezioa</td><td>" . $row["prezioa"] . "</td></tr>";
                     echo "<tr><td>Mota</td><td>" . $row["mota"] . "</td></tr>";
                     echo '<tr><td><button class="editatu-botoia" onclick="window.location.href=\'edit.php\'">Editatu</button></td></tr>';
-                    echo "<tr><td><button onclick='window.location.href=\"delete.php\"'>Ezabatu</button></td></tr>";
                     echo "</table>";
                 }
             } else {
@@ -54,7 +53,7 @@
     <button class="aldatu-botoia" onclick="window.location.href='modify_user.php'" style="position: absolute; top: 10px; right: 10px;">Aldatu/Hasi Saioa</button>
     <button class="gehitu-botoia" onclick="erakutsiFormularioaGehitu()" style="position: absolute; top: 50px; right: 10px;">Bideojokoa Gehitu</button>
     <button class="registro-botoia" onclick="window.location.href='register.php'" style="position: absolute; top: 90px; right: 10px;">Registro</button>
-    
+    <button class="ezabatu-botoia" onclick="window.location.href='delete.php'" style="position: absolute; top: 130px; right: 10px;">Ezabatu</button>
  
     <div id="modal-gehitu" class="modal" style="display:none;">
         <div class="modal-edukia">
