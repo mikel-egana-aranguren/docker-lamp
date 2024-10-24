@@ -53,11 +53,13 @@ h1 {
     margin: 15px 0;
     padding: 20px;
     transition: box-shadow 0.3s ease;
+    text-align: center; /* Centrar el contenido de la tabla */
 }
 
 .bideojoko-taula td {
     padding: 10px;
     border-bottom: 1px solid #ccc;
+    text-align: center; /* Centrar el contenido de las celdas */
 }
 
 .bideojoko-taula tr:last-child td {
