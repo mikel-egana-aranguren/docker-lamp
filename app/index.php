@@ -38,6 +38,11 @@
                     echo "<tr><td>Prezioa</td><td>" . $row["prezioa"] . "</td></tr>";
                     echo "<tr><td>Mota</td><td>" . $row["mota"] . "</td></tr>";
                     echo '<tr><td><button class="editatu-botoia" onclick="window.location.href=\'edit.php\'">Editatu</button></td></tr>';
+                    echo '<tr><td><form action="delete.php" method="post" onsubmit="return confirm(\'Ziur zaude ezabatu nahi duzula?\');">';
+                    echo '<input type="hidden" name="titulu" value="' . $row["titulu"] . '">';
+                    echo '<input type="hidden" name="egilea" value="' . $row["egilea"] . '">';
+                    echo '<button type="submit" class="ezabatu-botoia">Ezabatu</button>';
+                    echo '</form></td></tr>';
                     echo "</table>";
                 }
             } else {
@@ -76,7 +81,7 @@
                 <input type="text" id="gehituArgitaratzeData" name="argitaratze_urtea" required><br>
 
                 <input type="hidden" name="akzioa" value="gehitu">
-                <button type="submit" onclick= "return balioztatuFormularioa()">Gehitu</button>
+                <button type="submit" onclick="return balioztatuFormularioa()">Gehitu</button>
             </form>
         </div>
     </div>
