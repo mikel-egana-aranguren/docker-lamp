@@ -49,19 +49,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Eliminar Videojuego</title>
+    <title>BIDEOJOKOA EZABATU</title>
 </head>
 <body>
     <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($result) && $result->num_rows > 0): ?>
-        <h1>¿Está seguro de que desea eliminar este videojuego?</h1>
+        <h1>Ziur zaude bideojokoa ezabatu nahi duzula?</h1>
         <form method="post">
             <input type="hidden" name="titulu" value="<?php echo htmlspecialchars($titulu); ?>">
             <input type="hidden" name="egilea" value="<?php echo htmlspecialchars($egilea); ?>">
-            <button type="submit" name="confirm">Sí, eliminar</button>
-            <button type="submit" name="cancel">No, cancelar</button>
+            <button type="submit" name="confirm">BAI</button>
+            <button type="submit" name="cancel">EZ</button>
         </form>
     <?php else: ?>
-        <h1>Eliminar Videojuego</h1>
+        <h1>Bideojokoa ezabatu</h1>
         <form method="post">
             <label for="titulu">Titulu:</label>
             <input type="text" id="titulu" name="titulu" required>
@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="egilea">Egilea:</label>
             <input type="text" id="egilea" name="egilea" required>
             <br>
-            <button type="submit">Verificar</button>
+            <button type="submit">Egiaztatu</button>
         </form>
     <?php endif; ?>
 </body>
