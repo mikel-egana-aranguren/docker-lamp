@@ -26,8 +26,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 $deleteStmt->close();
                 $conn->close();
-                header("Location: index.php");
-                exit();
+                echo "Pertsona honen datuak gorde dira";
+                echo"<script>
+                    alert('Pertsona honen datuak gorde dira');
+                    window.location.href = 'index.php';
+                </script>";
             } elseif (isset($_POST['cancel'])) {
                 header("Location: index.php");
                 exit();
