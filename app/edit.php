@@ -97,9 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Cerrar la consulta
     $stmt->close();
-} else {
-    echo "Errorea: Eskaera POST izan behar da.";
-}
+} 
 
 // Cerrar la conexión a la base de datos
 $conn->close();
