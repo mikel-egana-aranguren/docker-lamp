@@ -1,36 +1,4 @@
 <?php
-/*include 'databaseConnect.php';
-if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    $titulu = $_POST['titulu'];
-    $egilea = $_POST['egilea'];
-    $prezioa = $_POST['prezioa'];
-    $mota = $_POST['mota'];
-    $urtea = $_POST['urtea'];
-    
-    $query = "SELECT * FROM bideojokoa WHERE titulu = '$titulu' AND egilea = '$egilea'";
-    $Egiaztatu = mysqli_query($conn, $query);
-
-    if (mysqli_num_rows($Egiaztatu) == 1) {
-        $stmt = $conn->prepare("UPDATE bideojokoa
-                SET  prezioa='$prezioa', mota='$mota', urtea='$urtea'
-                WHERE titulu='$titulu' AND egilea='$egilea'");
-        if ($stmt == false) {
-            echo "Errorea datu basearekin: " . $conn->error;
-        }
-        $stmt->bind_param("ssdss", $titulu, $egilea, $prezioa, $mota, $urtea);
-        if ($stmt->execute()) {
-            header("Location: index.php");
-            exit();
-        } else {
-            echo "Errorea datuak gordetzean";
-        }  
-        $stmt->close();
-    } else {
-        echo "Errorea: " . mysqli_error($conn);
-    }
-}
-$conn->close();*/
-// Incluir la conexión a la base de datos
 include 'databaseConnect.php';
 
 // Verificar si el método de la solicitud es POST

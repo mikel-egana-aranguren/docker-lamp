@@ -1,22 +1,18 @@
 body {
     font-family: Arial, sans-serif;
- 
-    background-color: rgba(24, 144, 213, 0.99);
+    background-color: #add8e6; /* Azul claro */
     margin: 0;
     padding: 20px;
     text-align: center;
 }
 
-h1 {
-    text-align: center;
-    color: #01fe0e;
-}
-
 .bideojoko-lista {
     max-width: 600px;
     margin: 0 auto;
-    text-align: center; 
+    text-align: center;
+    background-color: #d3d3d3; /* Gris claro */
 }
+
 .bideojoko {
     background-color: #fff;
     border: 1px solid #ccc;
@@ -24,119 +20,12 @@ h1 {
     margin: 15px 0;
     padding: 20px;
     transition: box-shadow 0.3s ease;
-}
-
-.bideojoko:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #000; /* Color de letra negro */
 }
 
 .bideojoko-titulua {
     font-size: 1.5em;
     margin: 0;
     cursor: pointer;
-    color: #007bff;
-}
-
-.bideojoku-titulua:hover {
-    text-decoration: underline;
-}
-
-.bideojokuaren-xehetasunak {
-    margin-top: 10px;
-}
-
-
-.bideojoko-taula {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin: 15px 0;
-    padding: 20px;
-    transition: box-shadow 0.3s ease;
-    
-}
-
-.bideojoko-taula td {
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-}
-
-.bideojoko-taula tr:last-child td {
-    border-bottom: none;
-}
-
-.bideojoko-taula td:first-child {
-    font-weight: bold;
-}
-
-.editatu-botoia {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.editatu-botoia:hover {
-    background-color: #0056b3;
-}
-
-
-.modal {
-    display: none; 
-    position: fixed;
-    z-index: 1; 
-    left: 0;
-    top: 0;
-    width: 100%; 
-    height: 100%;
-    overflow: auto; 
-    background-color: rgba(0,0,0,0.4); 
-}
-
-.modal-edukia {
-    background-color: #f4f4f4;
-    margin: 10% auto; 
-    padding: 20px;
-    border: 2px solid #007bff;
-    border-radius: 8px;
-    width: 80%; 
-    max-width: 500px;
-}
-
-.itxi {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.itxi:hover,
-.itxi:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.modal input, .modal textarea {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.gorde-botoia {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.gorde-botoia:hover {
-    background-color: #0056b3;
+    color: #000; /* Color de letra negro */
 }
