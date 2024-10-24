@@ -14,7 +14,7 @@
 <body>
     <h1>Bideojokoen Zerrenda</h1>
     <div class="bideojoko-lista">
-       <div class="bideojoku-taula">>    
+       <div class="bideojoku-taula">   
          <?php
              $sql = "SHOW TABLES";
             $sql = "SELECT * FROM bideojokoa";
