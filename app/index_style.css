@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #ADD8E6; /* Fondo azul claro */
+    background-color: #4f64a5c5; /* Fondo azul claro */
     margin: 0;
     padding: 20px;
     text-align: center;
@@ -20,7 +20,7 @@ h1 {
 
 .bideojoko {
     background-color: #d3d3d33e; /* Fondo gris claro para los detalles de los videojuegos */
-    border: 1px solid #ccc;
+    border: 1px solid #d3d3d33e;
     border-radius: 8px;
     margin: 15px 0;
     padding: 20px;
@@ -47,8 +47,8 @@ h1 {
 }
 
 .bideojoko-taula {
-    background-color: #8d8d8db3; /* Fondo gris claro para los detalles en tabla */
-    border: 1px solid #ccc;
+    background-color: #d3d3d33e; /* Fondo gris claro para los detalles en tabla */
+    border: 1px solid #d3d3d33e;
     border-radius: 8px;
     margin: 15px 0;
     padding: 20px;
@@ -128,7 +128,7 @@ h1 {
 
 .gorde-botoia {
     padding: 10px 20px;
-    background-color: #D3D3D3; /* Botones de color gris claro */
+    background-color: #d3d3d33e; /* Botones de color gris claro */
     color: white;
     border: none;
     border-radius: 5px;
@@ -136,5 +136,5 @@ h1 {
 }
 
 .gorde-botoia:hover {
-    background-color: #B0B0B0; /* Botón más oscuro al hacer hover */
+    background-color: #d3d3d33e; /* Botón más oscuro al hacer hover */
 }
