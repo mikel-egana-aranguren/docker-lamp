@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $egilea = $_POST['egilea'];
 
         // Verificar si el videojuego existe
-        $query = "SELECT * FROM videojuegos WHERE titulu = ? AND egilea = ?";
+        $query = "SELECT * FROM bideojokoa WHERE titulu = ? AND egilea = ?";
         $stmt = $conn->prepare($query);
         $stmt->bind_param("ss", $titulu, $egilea);
         $stmt->execute();
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($result->num_rows > 0) {
             // Videojuego encontrado, mostrar formulario de confirmación
             if (isset($_POST['confirm'])) {
-                $deleteQuery = "DELETE FROM videojuegos WHERE titulu = ? AND egilea = ?";
+                $deleteQuery = "DELETE FROM bideojokoa WHERE titulu = ? AND egilea = ?";
                 $deleteStmt = $conn->prepare($deleteQuery);
                 $deleteStmt->bind_param("ss", $titulu, $egilea);
                 if ($deleteStmt->execute()) {
