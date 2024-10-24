@@ -140,3 +140,17 @@ h1 {
 .gorde-botoia:hover {
     background-color: #d3d3d33e; /* Botón más oscuro al hacer hover */
 }
+table {
+    margin: 0 auto; /* Centra la tabla en la página */
+    width: 100%; /* Ajusta el ancho de la tabla para que ocupe todo el contenedor */
+}
+
+table th, table td {
+    text-align: center; /* Centra el contenido de las celdas */
+    padding: 10px; /* Añade un poco de espacio interno a las celdas */
+}
+
+table button {
+    margin: 0 auto; /* Centra los botones dentro de las celdas */
+    display: block;
+}

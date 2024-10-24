@@ -14,9 +14,9 @@
 <body>
     <h1>Bideojokoen Zerrenda</h1>
     <div class="bideojoko-lista">
-    <div class="bideojoku-taula" style="text-align: center;">   
-        <?php
-            $sql = "SHOW TABLES";
+       <div class="bideojoku-taula">   
+         <?php
+             $sql = "SHOW TABLES";
             $sql = "SELECT * FROM bideojokoa";
         
             $result = $conn->query($sql);
@@ -27,11 +27,11 @@
                 while($row = $result->fetch_assoc()) {
 
                     $game_id = $row["titulu"] . '-' . $row["egilea"]; // Crear un id único combinando título y autor
-                    echo "<div class='bideojoko' onclick='toggleDetalles(\"$game_id\")' style='display: inline-block; text-align: left;'>";
+                    echo "<div class='bideojoko' onclick='toggleDetalles(\"$game_id\")'>";
                     echo "<h2 class='bideojoko-titulua'>" . $row["titulu"] . "</h2>";
                     echo "<h2 class='bideojoko-titulua'>" . $row["egilea"] . "</h2>";
                     echo "</div>";
-                    echo "<table id='detalles-$game_id' style='display:none; margin: 0 auto;'>";
+                    echo "<table id='detalles-$game_id' style='display:none;'>";
                     echo "<tr><th>Atributua</th><th>Balioa</th></tr>";
                     echo "<tr><td>Titulua</td><td>" . $row["titulu"] . "</td></tr>";
                     echo "<tr><td>Egilea</td><td>" . $row["egilea"] . "</td></tr>";
@@ -46,12 +46,12 @@
                     echo "</table>";
                 }
             } else {
-                echo "<p>Bideojokorik ez dago.</p>";
+            echo "<p>Bideojokorik ez dago.</p>";
             }
 
             $conn->close();
-        ?>
-    </div>
+            ?>
+       </div>
     </div>
 
     <!-- Botoiak -->
