@@ -8,18 +8,18 @@ body {
 
 h1 {
     text-align: center;
-    color: #01fe0e;
+    color: #000000;
 }
 
 .bideojoko-lista {
     max-width: 600px;
     margin: 0 auto;
     text-align: center; 
-    background-color: #D3D3D3; /* Fondo gris claro para la lista de videojuegos */
+    background-color: #d3d3d33e; /* Fondo gris claro para la lista de videojuegos */
 }
 
 .bideojoko {
-    background-color: #D3D3D3; /* Fondo gris claro para los detalles de los videojuegos */
+    background-color: #d3d3d33e; /* Fondo gris claro para los detalles de los videojuegos */
     border: 1px solid #ccc;
     border-radius: 8px;
     margin: 15px 0;
@@ -35,7 +35,7 @@ h1 {
     font-size: 1.5em;
     margin: 0;
     cursor: pointer;
-    color: #007bff;
+    color: #000000;
 }
 
 .bideojoku-titulua:hover {
@@ -47,7 +47,7 @@ h1 {
 }
 
 .bideojoko-taula {
-    background-color: #D3D3D3; /* Fondo gris claro para los detalles en tabla */
+    background-color: #8d8d8db3; /* Fondo gris claro para los detalles en tabla */
     border: 1px solid #ccc;
     border-radius: 8px;
     margin: 15px 0;
@@ -71,7 +71,7 @@ h1 {
 .editatu-botoia {
     margin-top: 10px;
     padding: 10px 20px;
-    background-color: #D3D3D3; /* Botones de color gris claro */
+    background-color: #b0b7afc8; /* Botones de color gris claro */
     color: white;
     border: none;
     border-radius: 5px;
