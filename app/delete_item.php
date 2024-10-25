@@ -20,24 +20,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $deleteStmt = $conn->prepare($deleteQuery);
                 $deleteStmt->bind_param("ss", $titulu, $egilea);
                 if ($deleteStmt->execute()) {
-                    echo "Videojuego eliminado correctamente.";
+                    echo "Bideojokoa ondo ezabatu da.";
                 } else {
-                    echo "Error al eliminar el videojuego.";
+                    echo "Errorea jokua ezabatzerakoan.";
                 }
                 $deleteStmt->close();
                 $conn->close();
-                echo "Pertsona honen datuak gorde dira";
+                echo "Bideokoa ezabatu da.";
                 echo"<script>
-                    alert('Pertsona honen datuak gorde dira');
+                    alert('Bideojokoa ezabatu da.');
                     window.location.href = 'index.php';
                 </script>";
             } elseif (isset($_POST['cancel'])) {
                 header("Location: index.php");
                 exit();
             }
-        } else {
-            echo "Datos incorrectos. No se encontró ningún videojuego con ese titulu y egilea.";
-        }
+        } 
         $stmt->close();
     } else {
         echo "Titulu o egilea de videojuego no proporcionado.";
