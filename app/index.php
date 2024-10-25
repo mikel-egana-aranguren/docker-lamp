@@ -37,11 +37,11 @@
                     echo "<tr><td>Egilea</td><td>" . $row["egilea"] . "</td></tr>";
                     echo "<tr><td>Prezioa</td><td>" . $row["prezioa"] . "</td></tr>";
                     echo "<tr><td>Mota</td><td>" . $row["mota"] . "</td></tr>";
-                    echo '<tr><td><button class="editatu-botoia" onclick="window.location.href=\'modify_item.php\'">Editatu</button></td></tr>';
+                    echo '<tr><td><button class="item_modify_submit" onclick="window.location.href=\'modify_item.php\'">Editatu</button></td></tr>';
                     echo '<tr><td><form action="delete_item.php" method="post" onsubmit="return confirm(\'Ziur zaude ezabatu nahi duzula?\');">';
                     echo '<input type="hidden" name="titulu" value="' . $row["titulu"] . '">';
                     echo '<input type="hidden" name="egilea" value="' . $row["egilea"] . '">';
-                    echo '<button type="submit" class="ezabatu-botoia">Ezabatu</button>';
+                    echo '<button type="submit" class="item_delelte_submit">Ezabatu</button>';
                     echo '</form></td></tr>';
                     echo "</table>";
                 }
@@ -56,14 +56,14 @@
 
     <!-- Botoiak -->
     <button class="aldatu-botoia" onclick="window.location.href='modify_user.php'" style="position: absolute; top: 10px; right: 10px;">Aldatu/Hasi Saioa</button>
-    <button class="gehitu-botoia" onclick="erakutsiFormularioaGehitu()" style="position: absolute; top: 50px; right: 10px;">Bideojokoa Gehitu</button>
+    <button class="item_add_submit" onclick="erakutsiFormularioaGehitu()" style="position: absolute; top: 50px; right: 10px;">Bideojokoa Gehitu</button>
     <button class="registro-botoia" onclick="window.location.href='register.php'" style="position: absolute; top: 90px; right: 10px;">Registro</button>
     <button class="ezabatu-botoia" onclick="window.location.href='delete_item.php'" style="position: absolute; top: 130px; right: 10px;">Ezabatu</button>
  
     <div id="modal-gehitu" class="modal" style="display:none;">
         <div class="modal-edukia">
             <span class="itxi" onclick="itxiFormularioaGehitu()">&times;</span>
-            <form action="add_item.php" method="post">
+            <form id="item_add_form" action="add_item.php" method="post">
                 <h3>Bideojoko Berria Gehitu</h3>
                 <label for="gehituTitulua">Izenburua:</label>
                 <input type="text" id="gehituTitulua" name="titulua" required><br>

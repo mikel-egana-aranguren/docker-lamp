@@ -70,7 +70,7 @@ h1 {
     font-weight: bold;
 }
 
-.editatu-botoia {
+.item_modify_submit {
     margin-top: 10px;
     padding: 10px 20px;
     background-color: #b0b7afc8; /* Botones de color gris claro */
@@ -80,7 +80,7 @@ h1 {
     cursor: pointer;
 }
 
-.editatu-botoia:hover {
+.item_modify_submit:hover {
     background-color: #B0B0B0; /* Botón más oscuro al hacer hover */
 }
 
