@@ -68,6 +68,9 @@
 	</div>
 </form>
 <style>
+	body{
+		background-color: #4f64a5c5;
+	}
 	.botoi_container{
 		display:flex;
 		align-items:center;

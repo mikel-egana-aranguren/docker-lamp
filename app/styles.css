@@ -26,10 +26,10 @@ body {
     display: flex;
     flex-direction: column;
     padding: 20px;
-    background-color: aqua;
+    background-color: #4f64a5c5;
 }
 
-.register_form {
+.user_modify_form {
     position: relative;
     width: 100%;
     max-width: 500px;
@@ -40,13 +40,13 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.register_form .titulua {
+.user_modify_form .titulua {
     font-size: 24px;
     margin-bottom: 20px;
     color: #333;
 }
 
-.register_form form {
+.user_modify_form form {
     margin-top: 30px;
 }
 

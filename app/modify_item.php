@@ -97,4 +97,9 @@ $conn->close();
     </form>
     <button onclick="window.location.href='index.php'">Atzera</button>
 </body>
+<style>
+    body{
+        background-color: #4f64a5c5;
+    }
+    </style>
 </html>
