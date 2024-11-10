@@ -58,7 +58,7 @@
     <button class="aldatu-botoia" onclick="window.location.href='modify_user.php'" style="position: absolute; top: 10px; right: 10px;">Aldatu/Hasi Saioa</button>
     <button class="item_add_submit" onclick="erakutsiFormularioaGehitu()" style="position: absolute; top: 50px; right: 10px;">Bideojokoa Gehitu</button>
     <button class="registro-botoia" onclick="window.location.href='register.php'" style="position: absolute; top: 90px; right: 10px;">Registro</button>
-    <button class="ezabatu-botoia" onclick="window.location.href='delete_item.php'" style="position: absolute; top: 130px; right: 10px;">Ezabatu</button>
+    <!-- <button class="ezabatu-botoia" onclick="window.location.href='delete_item.php'" style="position: absolute; top: 130px; right: 10px;">Ezabatu</button> -->
  
     <div id="modal-gehitu" class="modal" style="display:none;">
         <div class="modal-edukia">
