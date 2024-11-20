@@ -1,6 +1,12 @@
 <?php
     include 'databaseConnect.php';
-
+    ini_set('session.use_only_cookies', 1);
+    ini_set('session.use_only_strict_mode', 1);
+    ini_set('session.cookie_httponly', 1);
+    ini_set('session-hash_function', 'sha256');
+    session_start();
+    $token = bin2hex(random_bytes(16));
+    $_SESSION['token'] = $token;
 ?>
 <!DOCTYPE html>
 <html lang="eu">
@@ -53,7 +59,19 @@
             ?>
        </div>
     </div>
-
+    <?php
+        if($_POST){
+            session_start();
+            $csrf= $_POST['csrf'];
+            if($csrf == $_SESSION['token']){
+                unset($_SESSION['token']);
+                echo "Tokena zuzena da";
+            }
+        
+            else{
+            echo "Tokena ez da zuzena";
+            }
+        }
     <!-- Botoiak -->
     <button class="aldatu-botoia" onclick="window.location.href='modify_user.php'" style="position: absolute; top: 10px; right: 10px;">Aldatu/Hasi Saioa</button>
     <button class="item_add_submit" onclick="erakutsiFormularioaGehitu()" style="position: absolute; top: 50px; right: 10px;">Bideojokoa Gehitu</button>
@@ -81,9 +99,11 @@
                 <input type="text" id="gehituArgitaratzeData" name="argitaratze_urtea" required><br>
 
                 <input type="hidden" name="akzioa" value="gehitu">
-                <button type="submit" onclick="return balioztatuFormularioa()">Gehitu</button>
+                <input type="hidden" name="csrf" value="<?php echo $token; ?>">
+                <button type="submit">Gehitu</button>
             </form>
         </div>
     </div>
+    <script src="main_script.js"></script>
 </body>
 </html>
