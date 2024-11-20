@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Ejecutar la consulta de actualización
         if ($updateStmt->execute()) {
             // Si la actualización fue exitosa, redirigir a la página principal
-            header("Location: index.php");
+            header("Location: home.php");
             exit();
         } else {
             echo "Errorea datuak eguneratzean: " . $updateStmt->error;
@@ -95,7 +95,7 @@ $conn->close();
         <input type="number" id="urtea" name="urtea" required><br><br>
         <button type="submit">Aldatu</button>
     </form>
-    <button onclick="window.location.href='index.php'">Atzera</button>
+    <button onclick="window.location.href='home.php'">Atzera</button>
 </body>
 <style>
     body{

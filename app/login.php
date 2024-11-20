@@ -63,7 +63,7 @@
 	<br>
 	<div class="botoi_container">
 		<input id= "login_submit" type="submit" value="Hasi Saioa">
-		<input id="atzera_botoia" type="button" value="Atzera" onclick="location.href='index.php'">
+		<input id="atzera_botoia" type="button" value="Atzera" onclick="location.href='home.php'">
 
 	</div>
 </form>

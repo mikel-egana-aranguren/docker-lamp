@@ -12,7 +12,7 @@
         }
         $stmt->bind_param("ssdss", $titulu, $egilea, $prezioa, $mota, $urtea);
         if ($stmt->execute()) {
-            header("Location: index.php");
+            header("Location: home.php");
             exit();
         } else {
             echo "Errorea datuak gordetzean";
@@ -29,7 +29,7 @@
         }
         $stmt->bind_param("ssdss", $titulu, $egilea, $prezioa, $mota, $urtea);
         if ($stmt->execute()) {
-            header("Location: index.php");
+            header("Location: home.php");
             exit();
         } else {
             echo "Errorea datuak gordetzean";
@@ -58,7 +58,7 @@
         <div class="errorea">
             <h1>Gorde</h1>
             <p>Sartutako datuak gorde dira</p>
-            <button onclick="window.location.href='index.php'">Atzera</button>
+            <button onclick="window.location.href='home.php'">Atzera</button>
         </div>
     </body>
 </html>

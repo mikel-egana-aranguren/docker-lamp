@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		    echo "Pertsona honen datuak gorde dira";
             echo"<script>
                     alert('Pertsona honen datuak gorde dira');
-                    window.location.href = 'index.php';
+                    window.location.href = 'home.php';
                 </script>";
 	    }else{
 		    echo "Error: " . $stmt->error;
@@ -64,7 +64,7 @@ $conn->close();
 </head>
 <body>
     <header>
-        <button id= "index_botoia" onclick="window.location.href='index.php'" style="font-size: 15px; width: 100px; border-radius: 10px; background-color: rgb(207, 2, 248);" >Hasiera</button>
+        <button id= "index_botoia" onclick="window.location.href='home.php'" style="font-size: 15px; width: 100px; border-radius: 10px; background-color: rgb(207, 2, 248);" >Hasiera</button>
         
         <hr>
     </header>

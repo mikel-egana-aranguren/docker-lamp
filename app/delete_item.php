@@ -29,10 +29,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo "Bideokoa ezabatu da.";
                 echo"<script>
                     alert('Bideojokoa ezabatu da.');
-                    window.location.href = 'index.php';
+                    window.location.href = 'home.php';
                 </script>";
             } elseif (isset($_POST['cancel'])) {
-                header("Location: index.php");
+                header("Location: home.php");
                 exit();
             }
         } 
