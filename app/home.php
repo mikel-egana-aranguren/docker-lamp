@@ -7,6 +7,19 @@
     session_start();
     $token = bin2hex(random_bytes(16));
     $_SESSION['token'] = $token;
+
+    if($_POST){
+        session_start();
+        $csrf= $_POST['csrf'];
+        if($csrf == $_SESSION['token']){
+            unset($_SESSION['token']);
+            echo "Tokena zuzena da";
+        }
+    
+        else{
+        echo "Tokena ez da zuzena";
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="eu">
@@ -59,19 +72,7 @@
             ?>
        </div>
     </div>
-    <?php
-        if($_POST){
-            session_start();
-            $csrf= $_POST['csrf'];
-            if($csrf == $_SESSION['token']){
-                unset($_SESSION['token']);
-                echo "Tokena zuzena da";
-            }
-        
-            else{
-            echo "Tokena ez da zuzena";
-            }
-        }
+    
     <!-- Botoiak -->
     <button class="aldatu-botoia" onclick="window.location.href='modify_user.php'" style="position: absolute; top: 10px; right: 10px;">Aldatu/Hasi Saioa</button>
     <button class="item_add_submit" onclick="erakutsiFormularioaGehitu()" style="position: absolute; top: 50px; right: 10px;">Bideojokoa Gehitu</button>
