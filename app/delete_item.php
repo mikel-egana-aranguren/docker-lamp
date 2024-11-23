@@ -1,7 +1,24 @@
 <?php
+session_start();
+session_regenerate_id(true);
+
+if (!isset($_SESSION['email']) || $_SESSION['rola'] !== 1 || !$_SESSION['logged_in']|| !isset($_SESSION['logged_in'])) {
+    header("Location: login.php");
+    exit();
+}
+
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 include 'databaseConnect.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        echo "Tokena ez da zuzena";
+        exit();
+    }
+    
     if (isset($_POST['titulu']) && isset($_POST['egilea'])) {
         $titulu = $_POST['titulu'];
         $egilea = $_POST['egilea'];
@@ -67,6 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="egilea">Egilea:</label>
             <input type="text" id="egilea" name="egilea" required>
             <br>
+            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>"><br>
             <button type="submit">Egiaztatu</button>
         </form>
     <?php endif; ?>

@@ -92,7 +92,7 @@
     <!-- Botoiak -->
     <button class="aldatu-botoia" onclick="window.location.href='modify_user.php'" style="position: absolute; top: 10px; right: 10px;">Aldatu Datuak</button>
     <button class="item_add_submit" onclick="erakutsiFormularioaGehitu()" style="position: absolute; top: 50px; right: 10px;">Bideojokoa Gehitu</button>
-    <button class="registro-botoia" onclick="window.location.href='register.php'" style="position: absolute; top: 90px; right: 10px;">Registro</button>
+    <!--<button class="registro-botoia" onclick="window.location.href='register.php'" style="position: absolute; top: 90px; right: 10px;">Registro</button>-->
     <button class="registro-botoia" onclick="window.location.href='logout.php'" style="position: absolute; top: 90px; right: 10px;">Log out</button>
     <!-- <button class="ezabatu-botoia" onclick="window.location.href='delete_item.php'" style="position: absolute; top: 130px; right: 10px;">Ezabatu</button> -->
  
