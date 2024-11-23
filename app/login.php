@@ -1,12 +1,33 @@
 <?php
+	session_start();
+	session_regenerate_id(true);
+
+	ini_set('session.cookie_httponly', '1');
+	ini_set('session.cookie_samesite', 'Lax');
+
+	// CSRF tokena sortu
+	if (empty($_SESSION['csrf_token'])) {
+		$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+	}
+
 	include 'databaseConnect.php';
 	
 	if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-		$email = $_POST['email'];
+		// CSRF tokena konprobatu
+		if(!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+			echo "Tokena ez da zuzena";
+			exit();
+		}
+
+		$email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+		if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			echo "Email okerra";
+			exit();
+		}
 		$pasahitza = $_POST['pasahitza'];
 	
-		$stmt = $conn->prepare("SELECT pasahitza FROM erabiltzailea WHERE email = ?");	
+		$stmt = $conn->prepare("SELECT pasahitza, role FROM erabiltzailea WHERE email = ?");	
 		$stmt->bind_param("s", $email);
 
 
@@ -14,7 +35,6 @@
 			echo "Prepare failed: " . $conn->error;
 			
 		}
-
 		$stmt->execute();
 		$result = $stmt->get_result();
 
@@ -30,7 +50,14 @@
 			$passwordOna = password_verify($pasahitza,$userData['pasahitza']);
 		
 			if($passwordOna) {
-				echo "Ongi etorri";
+				$_SESSION['email'] = $email;
+				$_SESSION['role'] = $userData['role'];
+				// CSRF tokena berria sortu
+				$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+
+				header("Location: home.php");
+				exit();
+
 			} else{
 				
 				echo "Pasahitza okerra";
@@ -57,13 +84,16 @@
 <form id="login_form" action="login.php" method="post">
 	<label for="email">Email:</label>
 	<input type="email" id="email" name="email" placeholder="Sartu zure email-a" required><br>
-    	<label for="pasahitza">Pasahitza:</label>
-    	<input type="password" id="pasahitza" name="pasahitza" placeholder="Sartu zure pasahitza" required><br>
+    <label for="pasahitza">Pasahitza:</label>
+    <input type="password" id="pasahitza" name="pasahitza" placeholder="Sartu zure pasahitza" required><br>
+
+	<!-- CSRF tokena -->
+	<input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>"><br>
 	
 	<br>
 	<div class="botoi_container">
 		<input id= "login_submit" type="submit" value="Hasi Saioa">
-		<input id="atzera_botoia" type="button" value="Atzera" onclick="location.href='home.php'">
+		<!--<input id="atzera_botoia" type="button" value="Atzera" onclick="location.href='home.php'"> -->
 
 	</div>
 </form>

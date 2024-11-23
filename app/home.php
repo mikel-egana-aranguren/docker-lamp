@@ -1,14 +1,29 @@
 <?php
+    session_start();
+
+    if (!isset($_SESSION['email'])) {
+        header("Location: login.php");
+        exit();
+    }
+
+    if (empty($_SESSION['csrf_token'])) {
+		$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+	}
+
     include 'databaseConnect.php';
     ini_set('session.use_only_cookies', 1);
     ini_set('session.use_only_strict_mode', 1);
     ini_set('session.cookie_httponly', 1);
     ini_set('session-hash_function', 'sha256');
-    session_start();
-    $token = bin2hex(random_bytes(16));
-    $_SESSION['token'] = $token;
 
-    if($_POST){
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+            echo "Tokena ez da zuzena";
+            exit();
+        }
+    }
+
+    /*if($_POST){
         session_start();
         $csrf= $_POST['csrf'];
         if($csrf == $_SESSION['token']){
@@ -19,7 +34,7 @@
         else{
         echo "Tokena ez da zuzena";
         }
-    }
+    }*/
 ?>
 <!DOCTYPE html>
 <html lang="eu">
@@ -100,7 +115,7 @@
                 <input type="text" id="gehituArgitaratzeData" name="argitaratze_urtea" required><br>
 
                 <input type="hidden" name="akzioa" value="gehitu">
-                <input type="hidden" name="csrf" value="<?php echo $token; ?>">
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>"><br>
                 <button type="submit">Gehitu</button>
             </form>
         </div>
