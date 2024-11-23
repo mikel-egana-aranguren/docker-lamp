@@ -33,7 +33,7 @@ CREATE TABLE `erabiltzailea` (
   `telefonoa` INT(9) NOT NULL,
   `jaiotzeData` VARCHAR(10) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `role` boolean NOT NULL,
+  `role` boolean NOT NULL DEFAULT 0,
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
