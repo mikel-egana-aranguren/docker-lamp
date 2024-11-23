@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $jaiotzeData = str_replace('/', '-', $jaiotzeData);
     $email = $_POST['email'];
     $pasahitza = $_POST['pasahitza'];
+    $role = 0;
 
 
     $hashed_pasahitza = password_hash($pasahitza, PASSWORD_BCRYPT);
@@ -34,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	    if($stmt==false){
 		    echo "Error: " . $conn->error;
 	    }
-        $stmt->bind_param("ssssssss", $izena, $abizena, $NAN, $hashed_pasahitza, $telefonoa, $jaiotzeData, $email, 0);
+        $stmt->bind_param("ssssssss", $izena, $abizena, $NAN, $hashed_pasahitza, $telefonoa, $jaiotzeData, $email, $role);
 	    
         if($stmt->execute()){
 		    echo "Pertsona honen datuak gorde dira";
