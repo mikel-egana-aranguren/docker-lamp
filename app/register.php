@@ -28,13 +28,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 	
     if (NANaBalida($NAN)){
-	    $stmt = $conn->prepare("INSERT INTO erabiltzailea (izena, abizena, NAN, pasahitza, telefonoa, jaiotzeData, email) 
-                                VALUES (?,?,?,?,?,?,?)");
+	    $stmt = $conn->prepare("INSERT INTO erabiltzailea (izena, abizena, NAN, pasahitza, telefonoa, jaiotzeData, email, role) 
+                                VALUES (?,?,?,?,?,?,?,?)");
 	
 	    if($stmt==false){
 		    echo "Error: " . $conn->error;
 	    }
-        $stmt->bind_param("sssssss", $izena, $abizena, $NAN, $hashed_pasahitza, $telefonoa, $jaiotzeData, $email);
+        $stmt->bind_param("ssssssss", $izena, $abizena, $NAN, $hashed_pasahitza, $telefonoa, $jaiotzeData, $email, 0);
 	    
         if($stmt->execute()){
 		    echo "Pertsona honen datuak gorde dira";
