@@ -2,8 +2,8 @@
 	session_start();
 	session_regenerate_id(true);
 
-	ini_set('session.cookie_httponly', '1');
-	ini_set('session.cookie_samesite', 'Lax');
+	//ini_set('session.cookie_httponly', '1');
+	//ini_set('session.cookie_samesite', 'Lax');
 
 	// CSRF tokena sortu
 	if (empty($_SESSION['csrf_token'])) {
@@ -52,6 +52,7 @@
 			if($passwordOna) {
 				$_SESSION['email'] = $email;
 				$_SESSION['role'] = $userData['role'];
+				$_SESSION['logged_in'] = true;
 				// CSRF tokena berria sortu
 				$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 

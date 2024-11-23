@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    if (!isset($_SESSION['email'])) {
+    if (!isset($_SESSION['email']) || !$_SESSION['logged_in']) {
         header("Location: login.php");
         exit();
     }
@@ -11,10 +11,10 @@
 	}
 
     include 'databaseConnect.php';
-    ini_set('session.use_only_cookies', 1);
+    /*ini_set('session.use_only_cookies', 1);
     ini_set('session.use_only_strict_mode', 1);
     ini_set('session.cookie_httponly', 1);
-    ini_set('session-hash_function', 'sha256');
+    ini_set('session-hash_function', 'sha256');*/
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
