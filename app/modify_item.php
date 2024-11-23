@@ -1,28 +1,44 @@
 <?php
-include 'databaseConnect.php';
+    session_start();
+    session_regenerate_id(true);
 
-// Verificar si el método de la solicitud es POST
+    if (!isset($_SESSION['email']) || $_SESSION['rola'] !== '1' || !$_SESSION['logged_in']) {
+        header("Location: login.php");
+        exit();
+    }
+
+    if (empty($_SESSION['csrf_token'])) {
+		$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+	}
+
+    include 'databaseConnect.php';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recoger los datos del formulario usando $_POST
+
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        echo "Tokena ez da zuzena";
+        exit();
+    }
+    
     $titulu = $_POST['titulu'];
     $egilea = $_POST['egilea'];
     $prezioa = $_POST['prezioa'];
     $mota = $_POST['mota'];
     $urtea = $_POST['urtea'];
 
-    // Comprobar si los valores recibidos no están vacíos
+    
     if (empty($titulu) || empty($egilea) || empty($prezioa) || empty($mota) || empty($urtea)) {
         echo "Errorea: Datu guztiak bete behar dira.";
         exit();
     }
 
-    // Verificar que el precio y el año sean numéricos
+    
     if (!is_numeric($prezioa) || !is_numeric($urtea)) {
         echo "Errorea: Prezioa eta urtea balio numerikoak izan behar dira.";
         exit();
     }
 
-    // Consulta para verificar si el videojuego ya existe
+    
     $query = "SELECT * FROM bideojokoa WHERE titulu = ? AND egilea = ?";
     $stmt = $conn->prepare($query);
 
@@ -31,14 +47,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // Enlazar los parámetros a la consulta
+    
     $stmt->bind_param("ss", $titulu, $egilea);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    // Verificar si existe el videojuego
+    
     if ($result->num_rows == 1) {
-        // Preparar la consulta para actualizar los datos
+        
         $updateQuery = "UPDATE bideojokoa SET prezioa = ?, mota = ?, urtea = ? WHERE titulu = ? AND egilea = ?";
         $updateStmt = $conn->prepare($updateQuery);
 
@@ -47,12 +63,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
 
-        // Enlazar los parámetros a la consulta
+        
         $updateStmt->bind_param("dssss", $prezioa, $mota, $urtea, $titulu, $egilea);
 
-        // Ejecutar la consulta de actualización
+        
         if ($updateStmt->execute()) {
-            // Si la actualización fue exitosa, redirigir a la página principal
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
             header("Location: home.php");
             exit();
         } else {
@@ -63,11 +79,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Errorea: Ez da aurkitu bideojokorik izen horrekin.";
     }
 
-    // Cerrar la consulta
+   
     $stmt->close();
 } 
 
-// Cerrar la conexión a la base de datos
+
 $conn->close();
 ?>
 
@@ -93,7 +109,9 @@ $conn->close();
         <input type="text" id="mota" name="mota" required><br><br>
         <label for="urtea">Urtea:</label>
         <input type="number" id="urtea" name="urtea" required><br><br>
+        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>"><br>
         <button type="submit">Aldatu</button>
+
     </form>
     <button onclick="window.location.href='home.php'">Atzera</button>
 </body>
