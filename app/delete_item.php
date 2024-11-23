@@ -2,8 +2,13 @@
 session_start();
 session_regenerate_id(true);
 
-if (!isset($_SESSION['email']) || $_SESSION['rola'] !== 1 || !$_SESSION['logged_in']|| !isset($_SESSION['logged_in'])) {
+if (!isset($_SESSION['email']) || !$_SESSION['logged_in']|| !isset($_SESSION['logged_in'])) {
     header("Location: login.php");
+    exit();
+}
+
+if ($_SESSION['role'] !== 1) {
+    echo "Ez daukazu baimenik hona sartzeko.";
     exit();
 }
 
@@ -44,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $deleteStmt->close();
                 $conn->close();
                 echo "Bideokoa ezabatu da.";
+                $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
                 echo"<script>
                     alert('Bideojokoa ezabatu da.');
                     window.location.href = 'home.php';
