@@ -1,5 +1,5 @@
 <?php
-
+    header("Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; font-src 'self'; frame-src 'self'; object-src 'none'; media-src 'self'; child-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; manifest-src 'self'; worker-src 'self'; prefetch-src 'self'; script-src-attr 'none'; style-src-attr 'none'; plugin-types 'none'; sandbox allow-forms allow-same-origin allow-scripts; reflected-xss block; report-uri /report-violation; require-sri-for script style; require-trusted-types-for 'script';");
     ini_set('display_errors', 0); 
 	ini_set('log_errors', 1);
 	ini_set('error_log', 'error.log');
@@ -56,21 +56,21 @@
             } else if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
 
-                    $game_id = $row["titulu"] . '-' . $row["egilea"]; // Crear un id único combinando título y autor
+                    $game_id = htmlspecialchars($titulu) . '-' . htmlspecialchars($egilea); // Crear un id único combinando título y autor
                     echo "<div class='bideojoko' onclick='toggleDetalles(\"$game_id\")'>";
-                    echo "<h2 class='bideojoko-titulua'>" . $row["titulu"] . "</h2>";
-                    echo "<h2 class='bideojoko-titulua'>" . $row["egilea"] . "</h2>";
+                    echo "<h2 class='bideojoko-titulua'>" . htmlspecialchars($titulu) . "</h2>";
+                    echo "<h2 class='bideojoko-titulua'>" . htmlspecialchars($egilea) . "</h2>";
                     echo "</div>";
                     echo "<table id='detalles-$game_id' style='display:none;'>";
                     echo "<tr><th>Atributua</th><th>Balioa</th></tr>";
-                    echo "<tr><td>Titulua</td><td>" . $row["titulu"] . "</td></tr>";
-                    echo "<tr><td>Egilea</td><td>" . $row["egilea"] . "</td></tr>";
-                    echo "<tr><td>Prezioa</td><td>" . $row["prezioa"] . "</td></tr>";
-                    echo "<tr><td>Mota</td><td>" . $row["mota"] . "</td></tr>";
+                    echo "<tr><td>Titulua</td><td>" . htmlspecialchars($titulu) . "</td></tr>";
+                    echo "<tr><td>Egilea</td><td>" . htmlspecialchars($egilea) . "</td></tr>";
+                    echo "<tr><td>Prezioa</td><td>" . htmlspecialchars($prezioa) . "</td></tr>";
+                    echo "<tr><td>Mota</td><td>" . htmlspecialchars($mota) . "</td></tr>";
                     echo '<tr><td><button class="item_modify_submit" onclick="window.location.href=\'modify_item.php\'">Editatu</button></td></tr>';
                     echo '<tr><td><form action="delete_item.php" method="post" onsubmit="return confirm(\'Ziur zaude ezabatu nahi duzula?\');">';
-                    echo '<input type="hidden" name="titulu" value="' . $row["titulu"] . '">';
-                    echo '<input type="hidden" name="egilea" value="' . $row["egilea"] . '">';
+                    echo '<input type="hidden" name="titulu" value="' . htmlspecialchars($titulu) . '">';
+                    echo '<input type="hidden" name="egilea" value="' . htmlspecialchars($egilea) . '">';
                     echo '<input type="hidden" name="csrf_token" value="' . $_SESSION['csrf_token'] . '">';
                     echo '<button type="submit" class="item_delelte_submit">Ezabatu</button>';
                     echo '</form></td></tr>';
