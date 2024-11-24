@@ -12,7 +12,7 @@ document.addEventListener('mousemove', function() {
 
     // Establecer un nuevo temporizador para detectar inactividad
     logoutTimer = setTimeout(function() {
-        let countdown = 60;  // 1 minuto en segundos
+        let countdown = 60;  // 1min  en segundos
 
         // Iniciar la cuenta regresiva para cierre de sesión
         inactivityCountdown = setInterval(function() {
