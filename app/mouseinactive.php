@@ -1,27 +1,26 @@
-let logoutTimer = null;
-let inactivityCountdown = null;
+<script>
+        let timeout=null;
+        let interval=null;
 
-document.addEventListener('mousemove', function() {
-    // Cancelar cualquier temporizador activo
-    if (logoutTimer) {
-        clearTimeout(logoutTimer);
-    }
-    if (inactivityCountdown) {
-        clearInterval(inactivityCountdown);
-    }
-
-    // Establecer un nuevo temporizador para detectar inactividad
-    logoutTimer = setTimeout(function() {
-        let countdown = 60;  // 1min  en segundos
-
-        // Iniciar la cuenta regresiva para cierre de sesión
-        inactivityCountdown = setInterval(function() {
-            countdown--;
-
-            if (countdown <= 0) {
-                clearInterval(inactivityCountdown);
-                window.location.href = 'logout.php';  // Redirigir a logout
+        document.addEventListener('mousemove', () => {
+            if(timeout!==null){
+                clearTimeout(timeout);
             }
-        }, 1000); // Contar cada segundo
-    }, 100);  // Esperar 100ms de inactividad antes de iniciar la cuenta regresiva
-});
+            if(interval!==null){
+                clearInterval(interval);
+            }
+
+            timeout= setTimeout(function() {
+                let timer=300;
+
+                interval=setInterval(function() {
+                    timer--;
+                    if(timer===-1){
+                        clearInterval(interval);
+                        window.location.href='logout.php';
+                    }
+                }, 1000);
+                
+            }, 100);
+        });
+    </script>
