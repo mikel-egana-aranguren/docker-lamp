@@ -83,6 +83,7 @@
                     echo '<tr><td><form action="delete_item.php" method="post" onsubmit="return confirm(\'Ziur zaude ezabatu nahi duzula?\');">';
                     echo '<input type="hidden" name="titulu" value="' . $row["titulu"] . '">';
                     echo '<input type="hidden" name="egilea" value="' . $row["egilea"] . '">';
+                    echo '<input type="hidden" name="csrf_token" value="' . $_SESSION['csrf_token'] . '">';
                     echo '<button type="submit" class="item_delelte_submit">Ezabatu</button>';
                     echo '</form></td></tr>';
                     echo "</table>";

@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     echo "Errorea jokua ezabatzerakoan.";
                 }
                 $deleteStmt->close();
-                $conn->close();
+                
                 echo "Bideokoa ezabatu da.";
                 $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
                 echo"<script>
@@ -69,6 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         echo "Titulu o egilea de videojuego no proporcionado.";
     }
+    $conn->close();
 }
 ?>
 
@@ -84,6 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form method="post">
             <input type="hidden" name="titulu" value="<?php echo htmlspecialchars($titulu); ?>">
             <input type="hidden" name="egilea" value="<?php echo htmlspecialchars($egilea); ?>">
+            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
             <button type="submit" name="confirm">BAI</button>
             <button type="submit" name="cancel">EZ</button>
         </form>
