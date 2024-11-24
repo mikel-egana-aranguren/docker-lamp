@@ -30,19 +30,6 @@
             exit();
         }
     }
-
-    /*if($_POST){
-        session_start();
-        $csrf= $_POST['csrf'];
-        if($csrf == $_SESSION['token']){
-            unset($_SESSION['token']);
-            echo "Tokena zuzena da";
-        }
-    
-        else{
-        echo "Tokena ez da zuzena";
-        }
-    }*/
 ?>
 <!DOCTYPE html>
 <html lang="eu">

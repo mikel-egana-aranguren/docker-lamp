@@ -77,6 +77,7 @@
 <DOCTYPE html>
 <html>
     <head>
+        <script src= "inactivity.js"> </script>
         <title>GORDE</title>
         <link rel="stylesheet" type="text/css" href="styles.css">
     </head>

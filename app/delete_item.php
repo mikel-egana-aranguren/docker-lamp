@@ -76,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <script src= "inactivity.js"> </script>
     <meta charset="UTF-8">
     <title>BIDEOJOKOA EZABATU</title>
 </head>
