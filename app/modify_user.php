@@ -1,4 +1,12 @@
 <?php
+ini_set('display_errors', 0); 
+ini_set('log_errors', 1);
+session_start();
+session_regenerate_id(true);
+
+if(empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 
 include 'databaseConnect.php';
 
@@ -11,6 +19,12 @@ function NANaBalida($nan) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        echo "Tokena ez da zuzena";
+        exit();
+    }
+
     $id = $_POST['email'];
     $password = $_POST['pasahitza'];
     $nan = $_POST['nan'];
@@ -121,6 +135,8 @@ $conn->close();
                 <label for="jaiotzeData">Jaiotze data berria</label>
                 <input type="date" name="jaiotzeData" id="jaiotzeData" required>
             </div>
+
+            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>"><br>
 
             
             <button id= "user_modify_submit" type="submit" style="font-size: 15px; width: 100px; border-radius: 10px; background-color: rgb(207, 2, 248);" >Gorde</button>

@@ -1,7 +1,10 @@
 <?php
-    session_start();
-    session_regenerate_id(true);
 
+    ini_set('display_errors', 0); 
+    ini_set('log_errors', 1);
+
+    session_start();
+    
     if (!isset($_SESSION['email']) || !$_SESSION['logged_in']|| !isset($_SESSION['logged_in'])) {
         header("Location: login.php");
         exit();
@@ -25,11 +28,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
     
-    $titulu = $_POST['titulu'];
-    $egilea = $_POST['egilea'];
-    $prezioa = $_POST['prezioa'];
-    $mota = $_POST['mota'];
-    $urtea = $_POST['urtea'];
+    $titulu = htmlspecialchars(trim($_POST['titulu'])); 
+    $egilea = htmlspecialchars(trim($_POST['egilea']));
+    $prezioa = floatval($_POST['prezioa']);
+    $mota = htmlspecialchars(trim($_POST['mota']));
+    $urtea = intval($_POST['urtea']);
+
+
 
     
     if (empty($titulu) || empty($egilea) || empty($prezioa) || empty($mota) || empty($urtea)) {
@@ -73,6 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         
         if ($updateStmt->execute()) {
+            session_regenerate_id(true);
             $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
             header("Location: home.php");
             exit();
