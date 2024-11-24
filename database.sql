@@ -46,19 +46,14 @@ CREATE TABLE bideojokoa (
   PRIMARY KEY (`titulu`, `egilea`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE failed_login (
-  `id` varchar(50) NOT NULL,
-  `saiakerak` int NOT NULL DEFAULT 0,
-  `azkenSaiakera` DATETIME NOT NULL,
-  `blok_denbora` DATETIME NULL,
-  PRIMARY KEY (`id`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 INSERT INTO bideojokoa VALUES('Super Mario Odyssey', 'Nintendo', 59.99, 'Plataformas', 2017);
 INSERT INTO bideojokoa VALUES('The Legend of Zelda: Breath of the Wild', 'Nintendo', 59.99, 'Aventura', 2017);
 INSERT INTO bideojokoa VALUES('Mario Kart 8 Deluxe', 'Nintendo', 59.99, 'Carreras', 2017);
 INSERT INTO bideojokoa VALUES('Splatoon 2', 'Nintendo', 59.99, 'Shooter', 2017);
 
+-- PasahitzaAdmin: admin#ja777
 INSERT INTO erabiltzailea VALUES('admin', 'admin', 'NAN', '$2y$10$sQlobyZ3F9TDBBnkCo820uowm5G.GxUUZHMBmPun5OrGTR4./MF8W', 000000000, '2020-09-16', 'issksadmin@admin.com', 1);
 -- Estructura de tabla para la tabla `usuarios`
 --
