@@ -7,3 +7,4 @@ RUN echo "Header set X-FRAME-OPTIONS \"SAMEORIGIN\"" >> /etc/apache2/conf-enable
 RUN echo "Header unset X-Powered-By" >> /etc/apache2/conf-enabled/security.conf
 RUN echo "Header set X-XSS-Protection \"1; mode=block\"" >> /etc/apache2/conf-enabled/security.conf
 RUN echo "Header set X-Content-Type-Options nosniff" >> /etc/apache2/conf-enabled/security.conf
+#RUN echo "Header always set Content-Security-Policy \"default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self';\"" >> /etc/apache2/conf-enabled/security.conf

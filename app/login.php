@@ -81,6 +81,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+	<script src= "inactivity.js"> </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hasi Saioa</title>
