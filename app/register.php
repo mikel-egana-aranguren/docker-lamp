@@ -1,5 +1,5 @@
 <?php
-
+    header("Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; font-src 'self'; frame-src 'self'; object-src 'none'; media-src 'self'; child-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; manifest-src 'self'; worker-src 'self'; prefetch-src 'self'; script-src-attr 'none'; style-src-attr 'none'; plugin-types 'none'; sandbox allow-forms allow-same-origin allow-scripts; reflected-xss block; report-uri /report-violation; require-sri-for script style; block-all-mixed-content;");
     ini_set('display_errors', 0); 
 	ini_set('log_errors', 1);
 	ini_set('error_log', 'error.log');
