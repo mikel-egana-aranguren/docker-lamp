@@ -1,7 +1,11 @@
 <?php
 
     ini_set('display_errors', 0); 
-    ini_set('log_errors', 1);
+	ini_set('log_errors', 1);
+	ini_set('error_log', 'error.log');
+	ini_set('session.cookie_httponly', 1);
+	ini_set('session.cookie_secure', 1);
+	ini_set('session.cookie_samesite', 'Strict');
 
     session_start();
     
