@@ -1,5 +1,5 @@
 <?php
-	header("Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; font-src 'self';");
+    header("Content-Security-Policy: default-src 'self'; script-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com; img-src 'self'; frame-ancestors 'self'; form-action 'self';");
 	ini_set('display_errors', 0); 
 	ini_set('log_errors', 1);
 	ini_set('error_log', 'error.log');
