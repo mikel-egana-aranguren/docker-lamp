@@ -22,6 +22,29 @@ function NANaBalida($nan) {
 	return $letraKalkulatu === $letra;
 }
 
+function isPasswordInsecure($password) {
+    $filePath = 'common_passwords.txt';
+
+    if (!file_exists($filePath)) {
+        error_log("Errorea: Artxiboa ez da aurkitzen.");
+    }
+
+    $file = fopen($filePath, 'r');
+
+    while ($line = fgets($file)) {
+        
+        $line = trim($line);
+        
+        if ($line === $password) {
+            fclose($file);
+            return true;  
+        }
+    }
+
+    fclose($file);
+    return false;  
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
@@ -44,39 +67,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     $query = "SELECT * FROM erabiltzailea WHERE email = '$id'";
     $egiaztatu = mysqli_query($conn, $query);
-
-    if (mysqli_num_rows($egiaztatu) == 1) {
-        $row = mysqli_fetch_assoc($egiaztatu);
-
-        if (password_verify($password, $row['pasahitza'])) {
-            if (NANaBalida($nan)) {
-                $hashedPasahitzaBerria = password_hash($newPassword, PASSWORD_BCRYPT);
-
-                $updateQuery = "UPDATE erabiltzailea SET 
-                    izena = ?, abizena = ?, NAN = ?, telefonoa = ?, jaiotzeData = ?, pasahitza = ?
-                    WHERE email = ?";
-                
-                $stmt = $conn->prepare($updateQuery);
-                $stmt->bind_param("sssssss", $izena, $abizena, $nan, $telefonoa, $jaiotzeData, $hashedPasahitzaBerria, $id);
-
-                if ($stmt->execute()) {
-                    echo "Datuak aldatu dira.";
-                    echo "<script>
-                            alert('Pertsona honen datuak gorde dira');
-                            window.location.href = 'home.php';
-                          </script>";
+    if (isPasswordInsecure($newPassword)) {
+        echo "Errorea: Pasahitza ez da segurua.";
+    }
+    else{
+        if (mysqli_num_rows($egiaztatu) == 1) {
+            $row = mysqli_fetch_assoc($egiaztatu);
+    
+            if (password_verify($password, $row['pasahitza'])) {
+                if (NANaBalida($nan)) {
+                    $hashedPasahitzaBerria = password_hash($newPassword, PASSWORD_BCRYPT);
+    
+                    $updateQuery = "UPDATE erabiltzailea SET 
+                        izena = ?, abizena = ?, NAN = ?, telefonoa = ?, jaiotzeData = ?, pasahitza = ?
+                        WHERE email = ?";
+                    
+                    $stmt = $conn->prepare($updateQuery);
+                    $stmt->bind_param("sssssss", $izena, $abizena, $nan, $telefonoa, $jaiotzeData, $hashedPasahitzaBerria, $id);
+    
+                    if ($stmt->execute()) {
+                        echo "Datuak aldatu dira.";
+                        echo "<script>
+                                alert('Pertsona honen datuak gorde dira');
+                                window.location.href = 'home.php';
+                              </script>";
+                    } else {
+                        echo "Errorea: " . $stmt->error;
+                    }
+                    $stmt->close();
                 } else {
-                    echo "Errorea: " . $stmt->error;
+                    echo "NAN okerra.";
                 }
-                $stmt->close();
             } else {
-                echo "NAN okerra.";
+                echo "Pasahitza okerra.";
             }
         } else {
-            echo "Pasahitza okerra.";
+            echo "Email okerra.";
         }
-    } else {
-        echo "Email okerra.";
+
     }
 }
 $conn->close();

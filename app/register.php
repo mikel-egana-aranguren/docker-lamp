@@ -10,13 +10,35 @@
 include 'databaseConnect.php';
 
 
-
 function NANaBalida($nan) {
 	$zenbakiak = substr($nan, 0, 8);
 	$letraerabilgarriak="TRWAGMYFPDXBNJZSQVHLCKE";
 	$letra = substr($nan, -1);
 	$letraKalkulatu = $letraerabilgarriak[$zenbakiak % 23];
 	return $letraKalkulatu === $letra;
+}
+
+function isPasswordInsecure($password) {
+    $filePath = 'common_passwords.txt';
+
+    if (!file_exists($filePath)) {
+        error_log("Errorea: Artxiboa ez da aurkitzen.");
+    }
+
+    $file = fopen($filePath, 'r');
+
+    while ($line = fgets($file)) {
+        
+        $line = trim($line);
+        
+        if ($line === $password) {
+            fclose($file);
+            return true;  
+        }
+    }
+
+    fclose($file);
+    return false;  
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -34,31 +56,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $hashed_pasahitza = password_hash($pasahitza, PASSWORD_BCRYPT);
 
-	
-    if (NANaBalida($NAN)){
-	    $stmt = $conn->prepare("INSERT INTO erabiltzailea (izena, abizena, NAN, pasahitza, telefonoa, jaiotzeData, email, role) 
-                                VALUES (?,?,?,?,?,?,?,?)");
-	
-	    if($stmt==false){
-		    echo "Error: " . $conn->error;
-	    }
-        $stmt->bind_param("ssssssss", $izena, $abizena, $NAN, $hashed_pasahitza, $telefonoa, $jaiotzeData, $email, $role);
-	    
-        if($stmt->execute()){
-		    echo "Pertsona honen datuak gorde dira";
-            echo"<script>
-                    alert('Pertsona honen datuak gorde dira');
-                    window.location.href = 'home.php';
-                </script>";
-	    }else{
-		    echo "Error: " . $stmt->error;
-	    }
-        $stmt->close();
-	
-     }else{
-
-	echo "NAN-a txarto";
+	if (isPasswordInsecure($pasahitza)) {
+        echo "Pasahitza ez da segurua";
     }
+    else{
+        if (NANaBalida($NAN)){
+            $stmt = $conn->prepare("INSERT INTO erabiltzailea (izena, abizena, NAN, pasahitza, telefonoa, jaiotzeData, email, role) 
+                                    VALUES (?,?,?,?,?,?,?,?)");
+        
+            if($stmt==false){
+                echo "Error: " . $conn->error;
+            }
+            $stmt->bind_param("ssssssss", $izena, $abizena, $NAN, $hashed_pasahitza, $telefonoa, $jaiotzeData, $email, $role);
+            
+            if($stmt->execute()){
+                echo "Pertsona honen datuak gorde dira";
+                echo"<script>
+                        alert('Pertsona honen datuak gorde dira');
+                        window.location.href = 'home.php';
+                    </script>";
+            }else{
+                echo "Error: " . $stmt->error;
+            }
+            $stmt->close();
+        
+         }else{
+    
+        echo "NAN-a txarto";
+        }
+
+    }
+    
 }
 
 $conn->close();
