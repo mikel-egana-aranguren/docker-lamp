@@ -33,6 +33,29 @@
 			exit();
 		}
 		$pasahitza = $_POST['pasahitza'];
+
+		$loginSaiakerak = 5;
+		$zenbatdenb_blok = 120; 
+
+		$stmt = $conn->prepare("SELECT saiakerak, azkenSaiakera, blok_denbora FROM failed_login WHERE email = ?");
+    	$stmt->bind_param("s", $email);
+    	$stmt->execute();
+    	$resultSaiakerak = $stmt->get_result();
+
+    	$saiakerak = 0;
+    	$blok_denb = null;
+
+		if ($resultSaiakerak->num_rows > 0) {
+			$row = $result->fetch_assoc();
+			$saiakerak = $row['saiakerak'];
+			$blok_denbora = $row['blok_denbora'];
+			$azkenSaiakera = $row['azkenSaiakera'];
+		}
+
+		if ($blok_denbora && strtotime($blok_denbora) > time()) {
+			$geratzenDenDenb = strtotime($blok_denbora) - time();
+			die("Email blokeatuta. Saiatu berriro $geratzenDenDenb segundotan.");
+		}
 	
 		$stmt = $conn->prepare("SELECT pasahitza, role FROM erabiltzailea WHERE email = ?");	
 		$stmt->bind_param("s", $email);
@@ -63,12 +86,32 @@
 				// CSRF tokena berria sortu
 				$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 
+				$stmt = $conn->prepare("DELETE FROM failed_login WHERE email = ?");
+        		$stmt->bind_param("s", $email);
+        		$stmt->execute();
+
 				header("Location: home.php");
 				exit();
 
 			} else{
+				$saiakerak++;
+				$blok_denb = null;
+
+				if ($saiakerak >= $loginSaiakerak) {
+					$blok_denb = date('Y-m-d H:i:s', time() + $zenbatdenb_blok);
+					echo "Email blokeatuta.";
+				} else {
+					$geratzenDirenSaiak = $loginSaiakerak - $saiakerak;
+					echo "Pasahitza okerra. $geratzenDirenSaiak saiakerak geratzen dira..";
+				}
 				
-				echo "Pasahitza okerra";
+				if ($resultSaiakerak->num_rows > 0) {
+					$stmt = $conn->prepare("UPDATE failed_login SET saiakerak = ?, azkenSaiakera = NOW(), blok_denb = ? WHERE email = ?");
+					$stmt->bind_param("iss", $saiakerak, $blok_denb, $email);
+				} else {
+					$stmt = $conn->prepare("INSERT INTO failed_login (email, saiakerak, azkenSaiakera, blok_denb) VALUES (?, ?, NOW(), ?)");
+					$stmt->bind_param("sis", $email, $saiakerak, $blok_denb);
+				}
 			}
 
 		}

@@ -46,6 +46,14 @@ CREATE TABLE bideojokoa (
   PRIMARY KEY (`titulu`, `egilea`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE failed_login (
+  `id` varchar(50) NOT NULL,
+  `saiakerak` int NOT NULL DEFAULT 0,
+  `azkenSaiakera` DATETIME NOT NULL,
+  `blok_denbora` DATETIME NULL,
+  PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 INSERT INTO bideojokoa VALUES('Super Mario Odyssey', 'Nintendo', 59.99, 'Plataformas', 2017);
 INSERT INTO bideojokoa VALUES('The Legend of Zelda: Breath of the Wild', 'Nintendo', 59.99, 'Aventura', 2017);
 INSERT INTO bideojokoa VALUES('Mario Kart 8 Deluxe', 'Nintendo', 59.99, 'Carreras', 2017);
