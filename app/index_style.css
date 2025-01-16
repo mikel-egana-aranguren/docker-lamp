@@ -1,0 +1,156 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #4f64a5c5; /* Fondo azul claro */
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    color: #000000;
+}
+
+.bideojoko-lista {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center; 
+    background-color: #d3d3d33e; /* Fondo gris claro para la lista de videojuegos */
+}
+
+.bideojoko {
+    background-color: #d3d3d33e; /* Fondo gris claro para los detalles de los videojuegos */
+    border: 1px solid #d3d3d33e;
+    border-radius: 8px;
+    margin: 15px 0;
+    padding: 20px;
+    transition: box-shadow 0.3s ease;
+}
+
+.bideojoko:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.bideojoko-titulua {
+    font-size: 1.5em;
+    margin: 0;
+    cursor: pointer;
+    color: #000000;
+}
+
+.bideojoku-titulua:hover {
+    text-decoration: underline;
+}
+
+.bideojokuaren-xehetasunak {
+    margin-top: 10px;
+}
+
+.bideojoko-taula {
+    background-color: #d3d3d33e; /* Fondo gris claro para los detalles en tabla */
+    border: 1px solid #d3d3d33e;
+    border-radius: 8px;
+    margin: 15px 0;
+    padding: 20px;
+    transition: box-shadow 0.3s ease;
+    text-align: center; /* Centrar el contenido de la tabla */
+}
+
+.bideojoko-taula td {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    text-align: center; /* Centrar el contenido de las celdas */
+}
+
+.bideojoko-taula tr:last-child td {
+    border-bottom: none;
+}
+
+.bideojoko-taula td:first-child {
+    font-weight: bold;
+}
+
+.item_modify_submit {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #b0b7afc8; /* Botones de color gris claro */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.item_modify_submit:hover {
+    background-color: #B0B0B0; /* Botón más oscuro al hacer hover */
+}
+
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%;
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-edukia {
+    background-color: #f4f4f4;
+    margin: 10% auto; 
+    padding: 20px;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    width: 80%; 
+    max-width: 500px;
+}
+
+.itxi {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.itxi:hover,
+.itxi:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal input, .modal textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.gorde-botoia {
+    padding: 10px 20px;
+    background-color: #d3d3d33e; /* Botones de color gris claro */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.gorde-botoia:hover {
+    background-color: #d3d3d33e; /* Botón más oscuro al hacer hover */
+}
+table {
+    margin: 0 auto; /* Centra la tabla en la página */
+    width: 100%; /* Ajusta el ancho de la tabla para que ocupe todo el contenedor */
+}
+
+table th, table td {
+    text-align: center; /* Centra el contenido de las celdas */
+    padding: 10px; /* Añade un poco de espacio interno a las celdas */
+}
+
+table button {
+    margin: 0 auto; /* Centra los botones dentro de las celdas */
+    display: block;
+}
