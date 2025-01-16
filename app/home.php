@@ -87,7 +87,43 @@
             ?>
        </div>
     </div>
-    
+    <script>
+    function alquilarBideojokoa(titulu, egilea) {
+        var dni = prompt("Sartu zure DNI:");
+        if (dni != null && dni != "") {
+            var form = document.createElement("form");
+            form.method = "post";
+            form.action = "alquilar_item.php";
+
+            var tituluInput = document.createElement("input");
+            tituluInput.type = "hidden";
+            tituluInput.name = "titulu";
+            tituluInput.value = titulu;
+            form.appendChild(tituluInput);
+
+            var egileaInput = document.createElement("input");
+            egileaInput.type = "hidden";
+            egileaInput.name = "egilea";
+            egileaInput.value = egilea;
+            form.appendChild(egileaInput);
+
+            var dniInput = document.createElement("input");
+            dniInput.type = "hidden";
+            dniInput.name = "dni";
+            dniInput.value = dni;
+            form.appendChild(dniInput);
+
+            var csrfInput = document.createElement("input");
+            csrfInput.type = "hidden";
+            csrfInput.name = "csrf_token";
+            csrfInput.value = "<?php echo $_SESSION['csrf_token']; ?>";
+            form.appendChild(csrfInput);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+    </script>
     <!-- Botoiak -->
     <button class="aldatu-botoia" onclick="window.location.href='modify_user.php'" style="position: absolute; top: 10px; right: 10px;">Aldatu Datuak</button>
     <button class="item_add_submit" onclick="erakutsiFormularioaGehitu()" style="position: absolute; top: 50px; right: 10px;">Bideojokoa Gehitu</button>
