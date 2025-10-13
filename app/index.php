@@ -1,5 +1,10 @@
 <?php
-  echo '<h1>Yeah, it works!<h1>';
+  echo '<form id="iniciarSesion">
+<h1 style="color: #5e9ca0;"><span style="text-decoration: underline; color: #003366;">Iniciar Sesi&oacute;n</span></h1>
+<p style="text-align: justify; padding-left: 40px;"><label>Usuario:</label> <input id="user" name="user" required="" type="text" /></p>
+<p style="text-align: justify; padding-left: 40px;"><label>Contrase&ntilde;a:</label> <input id="user" name="user" required="" type="text" /></p>
+<p id="mensaje" style="text-align: justify; padding-left: 40px;">&nbsp;</p>
+</form>';
   // phpinfo();
   $hostname = "db";
   $username = "admin";
