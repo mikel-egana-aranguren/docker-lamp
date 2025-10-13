@@ -1,5 +1,6 @@
 web:
-   image: web
+   build: .
+   container_name: web
    environment:
      - ALLOW_OVERRIDE=true
    ports:
@@ -14,6 +15,7 @@ db:
   restart: always
   volumes:
     - ./mysql:/var/lib/mysql
+    - ./database.sql:/docker-entrypoint-initdb.d/database.sql
   environment:
     MYSQL_ROOT_PASSWORD: root
     MYSQL_USER: admin
