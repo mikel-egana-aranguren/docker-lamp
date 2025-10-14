@@ -1,20 +1,18 @@
-<html>
-   <head>
-    <link rel="stylesheet" type="text/css" href="inicioStyle.css">
-   </head>
-   <body>
-    <h1>¡Bienvenid@ a SafeFilms!<h1>
-    <h2>Consulta nuestro catálogo con lo mejor del cine: <h2>
-    <form>
-     <button class="ctlg">Catálogo</button>
-     <button class="inic">Iniciar sesión</button>
-     <button class="reg">Registrarse</button>
-    </form>
-   </body>
-  </html>
-  
 <?php
-  
+session_start(); //iniciar sesion con php
+/**Algo de explicación: 
+ * Estructura:
+    - html: crea el formulario, cuando se le da al botón el .js está "escuchando" y 
+    se encarga de validar los datos rollo formato y tal, cosas q hemos definido al crear la bd.
+    - php: una vez validados los datos, se envían al php, que se encarga de comprobar si ya existe
+    el usuario en la bd y si no existe, lo crea.
+    + name del input (html) y el índice de $_POST (php) deben coincidir 
+    + primero debe ir la parte de php y luego la de html porq la primera línea debe ser <?php sesion_start
+    
+index.php --> register.php :
+               -php 
+               -html (formulario) ---> js
+*/
   // phpinfo();
   $hostname = "db";
   $username = "admin";
@@ -44,3 +42,19 @@ while ($row = mysqli_fetch_array($query)) {
 }
 
 ?>
+<html>
+   <head>
+    <link rel="stylesheet" type="text/css" href="inicioStyle.css">
+   </head>
+   <body>
+    <h1>¡Bienvenid@ a SafeFilms!<h1>
+      <button onclick="window.location.href='register.php'">Registrarse</button> 
+    <h2>Consulta nuestro catálogo con lo mejor del cine: <h2>
+    <form>
+     <button class="ctlg">Catálogo</button>
+     <button class="inic">Iniciar sesión</button>
+    </form>
+   </body>
+  </html>
+  
+

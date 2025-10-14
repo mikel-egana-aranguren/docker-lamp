@@ -27,7 +27,7 @@ USE `database`;
 -- Estructura de tabla para la tabla `usuarios`
 --
 CREATE TABLE `usuarios` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `idU` INT(11) NOT NULL AUTO_INCREMENT,
   `usuario` TEXT NOT NULL,
   `contrasena` TEXT NOT NULL,
   `nombre` TEXT NOT NULL,
@@ -35,15 +35,15 @@ CREATE TABLE `usuarios` (
   `numDni` TEXT NOT NULL,
   `letraDni` TEXT NOT NULL,
   `tlfn` TEXT NOT NULL,
-  `fNacimien` DATE NOT NULL,
+  `fNacimiento` DATE NOT NULL,
   `email` TEXT NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`idU`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
-INSERT INTO `usuarios` (`usuario`, `contrasena`, `nombre`, `apellido`, `numDni`, `letraDni`, `tlfn`, `fNacimien`, `email`) VALUES
+INSERT INTO `usuarios` (`usuario`, `contrasena`, `nombre`, `apellido`, `numDni`, `letraDni`, `tlfn`, `fNacimiento`, `email`) VALUES
 ('admin', 'admin123', 'Admin', 'Admin', '12345678', 'A', '600123456', '1990-01-01', 'admin@gmail.com');
 
 -- --------------------------------------------------------

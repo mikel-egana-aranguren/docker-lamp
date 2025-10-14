@@ -4,12 +4,23 @@ Linux + Apache + MariaDB (MySQL) + PHP 7.2 on Docker Compose. Mod_rewrite enable
 
 ## Instructions
 
-Enter the following command to start your containers:
+Asegúrate de que no tengas la bd:
+```bash
+$ sudo rm -r mysql
+```
+Asegúrate de no tener otro contenedor con el mismo nombre:
+```bash
+$ docker rm -f web
+```
+Ahora, construye la imagen y levanta entorno (cd al proyecto!!):
+```bash
+$ docker build -t web .
+```
 ```bash
 $ docker-compose up -d
 ```
 
-To stop them, use this:
+Para pararlo:
 ```bash
 $ docker-compose stop
 ```
