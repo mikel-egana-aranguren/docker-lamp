@@ -1,10 +1,9 @@
 <?php
-  echo '<form id="iniciarSesion">
-<h1 style="color: #5e9ca0;"><span style="text-decoration: underline; color: #003366;">Iniciar Sesi&oacute;n</span></h1>
-<p style="text-align: justify; padding-left: 40px;"><label>Usuario:</label> <input id="user" name="user" required="" type="text" /></p>
-<p style="text-align: justify; padding-left: 40px;"><label>Contrase&ntilde;a:</label> <input id="user" name="user" required="" type="text" /></p>
-<p id="mensaje" style="text-align: justify; padding-left: 40px;">&nbsp;</p><p><a href="register.php">Ir al registro</a></p>
-</form>';
+  echo '<h1 style="text-align: center;"><span style="text-decoration: underline;"><strong>CONCESIONARIO</strong></span></h1>
+<div style="text-align: center;"><a href="index.php"><button id="login">Iniciar Sesi&oacute;n</button></a></div>
+<div style="text-align: center;">&nbsp;</div>
+<div style="text-align: center;"><a href="register.php"><button id="register">Registrarse</button></a></div>
+<p>&nbsp;</p>';
   // phpinfo();
   $hostname = "db";
   $username = "admin";
