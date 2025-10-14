@@ -1,6 +1,6 @@
 <?php
   echo '<h1 style="text-align: center;"><span style="text-decoration: underline;"><strong>CONCESIONARIO</strong></span></h1>
-<div style="text-align: center;"><a href="index.php"><button id="login">Iniciar Sesi&oacute;n</button></a></div>
+<div style="text-align: center;"><a href="login.php"><button id="login">Iniciar Sesi&oacute;n</button></a></div>
 <div style="text-align: center;">&nbsp;</div>
 <div style="text-align: center;"><a href="register.php"><button id="register">Registrarse</button></a></div>
 <p>&nbsp;</p>';
