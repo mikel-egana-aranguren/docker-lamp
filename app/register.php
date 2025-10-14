@@ -104,6 +104,28 @@ echo '
     box-shadow: 0 10px 15px rgba(0,0,0,0.2);
   }
 </style>
+
+<script>
+const form = document.getElementById("register_form");
+const nameInput = document.getElementById("name");
+const surnamesInput = document.getElementById("surnames");
+
+form.addEventListener("submit", function(event) {
+    const name = nameInput.value.trim();
+    const surnames = surnamesInput.value.trim();
+
+    const nameRegex = /^[A-Za-z]+$/;
+    const surnamesRegex = /^[A-Za-zÀ-ÿ ]+$/;
+
+    if (!nameRegex.test(name)) {
+        alert("Por favor, introduce un nombre válido.");
+        event.preventDefault();
+    } else if (!surnamesRegex.test(surnames)) {
+        alert("Por favor, introduce apellidos válidos.");
+        event.preventDefault();
+    }
+});
+</script>
 ';
 // phpinfo();
   $hostname = "db";
