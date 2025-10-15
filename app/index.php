@@ -48,7 +48,7 @@
   }
 
   .btn-login,
-  .btn-register 
+  .btn-register, 
   .btn-modify_user{
     display: inline-block;
     font-weight: bold;
