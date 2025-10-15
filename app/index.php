@@ -34,7 +34,7 @@
     gap: 60px;
   }
 
-  h1, .content {
+  h1 {
     font-family: Arial, sans-serif;
     font-size: 48px;
     margin: 0;
@@ -79,7 +79,7 @@
   }
 
   .btn-login:hover,
-  .btn-register:hover 
+  .btn-register:hover,
   .btn-modify_user:hover {
     background-color: #232323;
     color: #fff;
