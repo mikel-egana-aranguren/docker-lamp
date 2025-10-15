@@ -71,7 +71,7 @@
     padding: 40px 150px;
   }
   
-  .btn-modify {
+  .btn-modify_user {
       background-color: #f0f0f0;
       color: #000;
       border-color: #000;
@@ -79,7 +79,7 @@
 
   .btn-login:hover,
   .btn-register:hover 
-  .btn-modify:hover {
+  .btn-modify_user:hover {
     background-color: #232323;
     color: #fff;
     border-color: #232323;
