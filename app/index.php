@@ -6,6 +6,7 @@
     <div class="buttons">
       <a href="login.php" class="btn-login">Iniciar Sesión</a>
       <a href="register.php" class="btn-register">Registrarse</a>
+      <a href="modify_user.php" class="btn-modify_user">Modificar Usuario</a>
     </div>
   </div>
 </div>
@@ -77,6 +78,18 @@
     border-color: #232323;
     transform: translateY(-5px);
     box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+  }
+  .btn-modify {
+    background-color: #007bff;
+    color: #fff;
+    padding: 40px 120px;
+    border: 4px solid #007bff;
+  }
+
+  .btn-modify:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+    transform: translateY(-5px);
   }
 </style>
 ';
