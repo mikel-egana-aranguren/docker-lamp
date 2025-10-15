@@ -6,7 +6,6 @@
     <div class="buttons">
       <a href="login.php" class="btn-login">Iniciar Sesión</a>
       <a href="register.php" class="btn-register">Registrarse</a>
-      <a href="modify_user.php" class="btn-modify_user">Modificar Usuario</a>
     </div>
   </div>
 </div>
@@ -48,8 +47,7 @@
   }
 
   .btn-login,
-  .btn-register, 
-  .btn-modify_user{
+  .btn-register{
     display: inline-block;
     font-weight: bold;
     border-radius: 100px;
@@ -72,15 +70,9 @@
     padding: 40px 150px;
   }
   
-  .btn-modify_user {
-      background-color: #000;
-      color: #fff;
-      padding: 40px 140px;
-  }
 
   .btn-login:hover,
-  .btn-register:hover,
-  .btn-modify_user:hover {
+  .btn-register:hover{
     background-color: #232323;
     color: #fff;
     border-color: #232323;
