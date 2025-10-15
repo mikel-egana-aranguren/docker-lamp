@@ -48,7 +48,8 @@
   }
 
   .btn-login,
-  .btn-register {
+  .btn-register 
+  .btn-modify_user{
     display: inline-block;
     font-weight: bold;
     border-radius: 100px;
@@ -72,9 +73,9 @@
   }
   
   .btn-modify_user {
-      background-color: #f0f0f0;
-      color: #000;
-      border-color: #000;
+      background-color: #000;
+      color: #fff;
+      padding: 40px 140px;
   }
 
   .btn-login:hover,
