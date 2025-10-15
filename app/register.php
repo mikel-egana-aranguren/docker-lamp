@@ -1,5 +1,6 @@
 <?php
 echo '
+<link rel="stylesheet" href="css/register.css">
 <div class="container">
   <div class="content">
     <h1>REGISTRARSE</h1>
@@ -34,117 +35,8 @@ echo '
   </div>
 </div>
 
-<style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-  }
+<script src="js/register.js" defer></script>';
 
-  .container {
-    display: grid;
-    place-items: center;
-    height: 100vh;
-    box-sizing: border-box;
-  }
-
-  .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
-    font-family: Arial, sans-serif;
-  }
-
-  h1 {
-    font-size: 48px;
-    margin: 0;
-  }
-
-  .labels {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-  }
-
-  label {
-    font-weight: bold;
-    font-size: 20px;
-  }
-
-  input {
-    padding: 10px 20px;
-    font-size: 18px;
-    border-radius: 20px;
-    border: 2px solid #000;
-    outline: none;
-  }
-
-  button {
-    display: inline-block;
-    font-weight: bold;
-    border-radius: 100px;
-    text-decoration: none;
-    border: 4px solid #000;
-    font-size: 22px;
-    box-shadow: 0 10px 10px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-    background-color: #000;
-    color: #fff;
-    padding: 20px 50px;
-  }
-
-  button:hover {
-    background-color: #232323;
-    color: #fff;
-    border-color: #232323;
-    transform: translateY(-5px);
-    box-shadow: 0 10px 15px rgba(0,0,0,0.2);
-  }
-</style>
-
-<script>
-const form = document.getElementById("register_form");
-const nameInput = document.getElementById("name");
-const surnamesInput = document.getElementById("surnames");
-const dniInput = document.getElementById("dni");
-const emailInput = document.getElementById("email");
-const tlfnInput = document.getElementById("tlfn");
-
-form.addEventListener("submit", function(event) {
-    const name = nameInput.value.trim();
-    const surnames = surnamesInput.value.trim();
-    const dni = dniInput.value.trim();
-    const email = emailInput.value.trim();
-    const tlfn = tlfnInput.value.trim();
-
-    const nameRegex = /^[A-Za-z]+$/;
-    const surnamesRegex = /^[A-Za-zÀ-ÿ ]+$/;
-    const dniRegex = /^[0-9]{8}[-\s]?[A-Z]$/i;
-    const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
-    const tlfnRegex = /^[679]\d{8}$/;
-
-    if (!nameRegex.test(name)) {
-        alert("Por favor, introduce un nombre válido.");
-        event.preventDefault();
-    } else if (!surnamesRegex.test(surnames)) {
-        alert("Por favor, introduce apellidos válidos.");
-        event.preventDefault();
-    } else if (!dniRegex.test(dni)) {
-    	alert("Por favor, introduce un DNI válido.");
-        event.preventDefault();
-    } else if (!emailRegex.test(email)) {
-    	alert("Por favor, introduce un correo válido (usuario@servidor.extension).");
-        event.preventDefault();
-    } else if (!tlfnRegex.test(tlfn)) {
-    	alert("Por favor, introduce un teléfono válido (Ejemplo ; 600123456)");
-        event.preventDefault();
-    }
-});
-</script>
-';
 // phpinfo();
   $hostname = "db";
   $username = "admin";
