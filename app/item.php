@@ -16,19 +16,15 @@ $username = "admin";
 $password = "test";
 $db = "database";
 
-// Conectar a la base de datos
 $conn = new mysqli($hostname, $username, $password, $db);
 
-// Verificar conexión
 if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
 
-// Consultar todos los items
 $sql = "SELECT id, nombre, descripcion FROM items";
 $result = $conn->query($sql);
 
-// Mostrar los resultados
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         echo "<tr>
