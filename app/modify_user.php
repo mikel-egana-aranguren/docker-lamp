@@ -1,4 +1,9 @@
 <?php
+// phpinfo();
+  $hostname = "db";
+  $username = "admin";
+  $password = "test";
+  $db = "database";
 
 $cn = mysqli_connect($hostname, $username, $password, $dbname);
 if (!$cn) {
@@ -281,11 +286,7 @@ form.addEventListener("submit", function(event) {
 });
 </script>
 ';
-// phpinfo();
-  $hostname = "db";
-  $username = "admin";
-  $password = "test";
-  $db = "database";
+
 ?>
 
 
