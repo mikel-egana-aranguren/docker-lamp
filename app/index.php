@@ -70,27 +70,23 @@
     color: #000;
     padding: 40px 150px;
   }
+  
+  .btn-modify {
+      background-color: #f0f0f0;
+      color: #000;
+      border-color: #000;
+  }
 
   .btn-login:hover,
-  .btn-register:hover {
+  .btn-register:hover 
+  .btn-modify:hover {
     background-color: #232323;
     color: #fff;
     border-color: #232323;
     transform: translateY(-5px);
     box-shadow: 0 10px 15px rgba(0,0,0,0.2);
   }
-  .btn-modify {
-    background-color: #007bff;
-    color: #fff;
-    padding: 40px 120px;
-    border: 4px solid #007bff;
-  }
 
-  .btn-modify:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
-    transform: translateY(-5px);
-  }
 </style>
 ';
 ?>
