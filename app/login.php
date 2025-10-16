@@ -37,6 +37,8 @@ if ($conn->connect_error) {
         
         $stmt->close();
     }
+ }
+ }
 }
 $conn->close();
 ?>
@@ -67,4 +69,4 @@ $conn->close();
 </div>
 
 <script src="js/login.js" defer></script>
-?>
+
