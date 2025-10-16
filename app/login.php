@@ -67,3 +67,4 @@ $conn->close();
 </div>
 
 <script src="js/login.js" defer></script>
+?>
