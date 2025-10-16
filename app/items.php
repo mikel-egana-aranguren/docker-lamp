@@ -8,13 +8,13 @@ if (!isset($_SESSION['username'])) {
 }
 
 $username_session = $_SESSION['username'];
-?>
 
 echo '
 <link rel="stylesheet" href="css/items.css">
 
 <div class="user-bar">
     <div class="user-dropdown">
+        <a href="delete_item.php" class="btn-delete"><button>Eliminar Coches</button></a>
         <button class="user-button">' . htmlspecialchars($username_session) . ' ▼</button>
         <div class="user-dropdown-content">
             <a href="modify_user.php">Modificar Usuario</a>
@@ -23,9 +23,6 @@ echo '
     </div>
 </div>
 
-<div class="buttons">
-  <a href="delete_item.php" class="btn-login">Eliminar Coches</a>
-</div>
 <div class="container">
   <div class="content">
     <h1>LISTA DE ITEMS</h1>
@@ -44,7 +41,6 @@ $password = "test";
 $db = "database";
 
 $conn = @new mysqli($hostname, $username, $password, $db);
-
 
 if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
@@ -71,11 +67,9 @@ if ($result->num_rows > 0) {
 $conn->close();
 
 echo '
-<link rel="stylesheet" href="css/items.css">
     </table>
   </div>
 </div>
-
-
+<script src="js/items.js" defer></script>
 ';
 ?>
