@@ -17,7 +17,7 @@ echo '
     <div class="user-dropdown">
         <button class="user-button">' . htmlspecialchars($username_session) . ' ▼</button>
         <div class="user-dropdown-content">
-            <a href="modify_user.php">Modificar Usuario</a>
+            <a href="show_user.php?user={$username}">Mi Usuario</a>
             <a href="logout.php">Cerrar Sesión</a>
         </div>
     </div>

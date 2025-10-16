@@ -10,20 +10,22 @@ if ($conn->connect_error) {
 }
 
 $nombre = isset($_GET['item']) ? $_GET['item'] : '';
+
 // Si se ha enviado el formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre_nuevo = $conn->real_escape_string($_POST['nombre']);
     $año = intval($_POST['año']);
     $combustible = $conn->real_escape_string($_POST['combustible']);
     $caballos = intval($_POST['caballos']);
+    $precio = floatval($_POST['precio']); // nuevo campo
 
-    $stmt = $conn->prepare("UPDATE item SET nombre = ?, año = ?, combustible = ?, caballos = ? WHERE nombre = ?");
-    $stmt->bind_param("sisis", $nombre_nuevo, $año, $combustible, $caballos, $nombre);
+    $stmt = $conn->prepare("UPDATE item SET nombre = ?, año = ?, combustible = ?, caballos = ?, precio = ? WHERE nombre = ?");
+    $stmt->bind_param("sisisd", $nombre_nuevo, $año, $combustible, $caballos, $precio, $nombre);
     if ($stmt->execute()) {
-     header("Location: items.php");
-     exit;
+        header("Location: items.php");
+        exit;
     } else {
-     echo "Error al actualizar el coche: " . $stmt->error;
+        echo "Error al actualizar el coche: " . $stmt->error;
     }
     $stmt->close();
 }
@@ -37,8 +39,8 @@ $result = $stmt->get_result();
 $item = $result ? $result->fetch_assoc() : null;
 $stmt->close();
 $conn->close();
-
 ?>
+
 <!DOCTYPE html>
 <link rel="stylesheet" href="css/modify_item.css">
  <div class="container">
@@ -54,6 +56,8 @@ $conn->close();
           <input type="text" name="combustible" value="<?= htmlspecialchars($item['combustible']) ?>" required><br><br>
           <label>Caballos:</label><br>
           <input type="number" name="caballos" value="<?= htmlspecialchars($item['caballos']) ?>" required><br><br>
+          <label>Precio:</label><br>
+  	  <input type="number" step="0.01" name="precio" value="<?= htmlspecialchars($item['precio']) ?>" required><br><br>
           <div class="buttons">
           	<button type="submit" id="item_modify_submit">Guardar cambios</button>
           </div>
@@ -65,3 +69,5 @@ $conn->close();
     </div>
   </div>
 </html>
+
+

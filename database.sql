@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.3
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: db
--- Tiempo de generación: 16-10-2025 a las 16:30:15
+-- Tiempo de generación: 16-10-2025 a las 21:34:43
 -- Versión del servidor: 10.8.2-MariaDB-1:10.8.2+maria~focal
--- Versión de PHP: 8.3.26
+-- Versión de PHP: 8.2.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,7 +31,8 @@ CREATE TABLE `item` (
   `nombre` text NOT NULL,
   `año` year(4) NOT NULL,
   `combustible` text NOT NULL,
-  `caballos` int(11) NOT NULL
+  `caballos` int(11) NOT NULL,
+  `precio` int(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -41,12 +42,13 @@ CREATE TABLE `item` (
 --
 
 CREATE TABLE `usuario` (
-  `dni` varchar(10) NOT NULL,
+  `user` text NOT NULL,
   `nombre` text NOT NULL,
   `apellidos` text NOT NULL,
   `correo` text NOT NULL,
   `contrasena` text NOT NULL,
   `telefono` char(9) NOT NULL,
+  `dni` varchar(10) NOT NULL,
   `fecha_nacimiento` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -64,7 +66,10 @@ ALTER TABLE `item`
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`dni`);
+  ADD PRIMARY KEY (`user`(255)),
+  ADD UNIQUE KEY `dni` (`dni`),
+  ADD UNIQUE KEY `telefono` (`telefono`),
+  ADD UNIQUE KEY `correo` (`correo`) USING HASH;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

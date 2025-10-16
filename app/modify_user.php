@@ -17,70 +17,32 @@ function prepare_or_die($cn, $sql, $ctx = '') {
     return $stmt;
 }
 
-// Obtener clave de búsqueda
+// --- Obtener usuario por clave ---
 $userKey = isset($_GET['user']) ? trim($_GET['user']) : '';
+$usuario = null;
 
-$user = null;
 if ($userKey !== '') {
-    // Detectar tipo: email, teléfono (9 dígitos), DNI (formato 12345678-X) o nombre
-    if (filter_var($userKey, FILTER_VALIDATE_EMAIL)) {
-        $sql = "SELECT dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento FROM `usuario` WHERE correo = ?";
-        $stmt = prepare_or_die($cn, $sql, 'SELECT por correo');
-        mysqli_stmt_bind_param($stmt, "s", $userKey);
-    } elseif (preg_match('/^\d{9}$/', $userKey)) {
-        $sql = "SELECT dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento FROM `usuario` WHERE telefono = ?";
-        $stmt = prepare_or_die($cn, $sql, 'SELECT por telefono');
-        mysqli_stmt_bind_param($stmt, "s", $userKey);
-    } elseif (preg_match('/^\d{8}-?[A-Za-z]$/', $userKey)) { // DNI con o sin dash
-        $sql = "SELECT dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento FROM `usuario` WHERE dni = ?";
-        $stmt = prepare_or_die($cn, $sql, 'SELECT por dni');
-        mysqli_stmt_bind_param($stmt, "s", $userKey);
-    } else {
-        // Buscar por nombre (puede devolver muchos; tomamos el primero)
-        $sql = "SELECT dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento FROM `usuario` WHERE nombre = ? LIMIT 1";
-        $stmt = prepare_or_die($cn, $sql, 'SELECT por nombre');
-        mysqli_stmt_bind_param($stmt, "s", $userKey);
-    }
-
-    if (!mysqli_stmt_execute($stmt)) {
-        die("Error al ejecutar la consulta: " . mysqli_stmt_error($stmt));
-    }
-
-    // Obtener resultado
-    if (function_exists('mysqli_stmt_get_result')) {
-        $res = mysqli_stmt_get_result($stmt);
-        if ($res === false) {
-            die("mysqli_stmt_get_result() falló: " . mysqli_error($cn));
-        }
-        $user = mysqli_fetch_assoc($res);
-    } else {
-        mysqli_stmt_bind_result($stmt, $dni, $nombre, $apellidos, $correo, $contrasena, $telefono, $fecha_nacimiento);
-        if (mysqli_stmt_fetch($stmt)) {
-            $user = [
-                'dni' => $dni,
-                'nombre' => $nombre,
-                'apellidos' => $apellidos,
-                'correo' => $correo,
-                'contrasena' => $contrasena,
-                'telefono' => $telefono,
-                'fecha_nacimiento' => $fecha_nacimiento
-            ];
-        } else {
-            $user = null;
-        }
-    }
+    $sql = "SELECT * FROM `usuario` WHERE user = ? OR correo = ? OR telefono = ? OR dni = ? LIMIT 1";
+    $stmt = prepare_or_die($cn, $sql, 'SELECT usuario');
+    mysqli_stmt_bind_param($stmt, "ssss", $userKey, $userKey, $userKey, $userKey);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+    $usuario = mysqli_fetch_assoc($res);
     mysqli_stmt_close($stmt);
 }
 
-if (!$user) {
+if (!$usuario) {
     echo "Usuario no encontrado.";
     exit;
 }
 
-// Procesar POST de modificación
 $successMsg = "";
 $errorMsg = "";
+$message_color = "red";
+
+// --- Procesar envío del formulario ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $user_post   = $usuario['user']; // el user nunca cambia
     $dni_post    = trim($_POST['dni'] ?? '');
     $nombre_post = trim($_POST['nombre'] ?? '');
     $apellidos   = trim($_POST['apellidos'] ?? '');
@@ -90,65 +52,69 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $passwd      = $_POST['contrasena'] ?? '';
     $passwd_r    = $_POST['contrasena_repeat'] ?? '';
 
-    // Validaciones actualizadas
-    $nombreOk = (bool) preg_match('/^[A-Za-zÀ-ÿ ]+$/', $nombre_post);
-    $apelsOk  = (bool) preg_match('/^[A-Za-zÀ-ÿ ]+$/', $apellidos);
-    $emailOk  = (bool) filter_var($correo, FILTER_VALIDATE_EMAIL);
-    $tlfOk    = (bool) preg_match('/^\d{9}$/', $telefono);
+    // --- Comprobación de duplicados ---
+    $dup_sql = "SELECT user, correo, dni, telefono 
+                FROM usuario 
+                WHERE (correo = ? OR dni = ? OR telefono = ?) AND user <> ?";
+    $dup_stmt = prepare_or_die($cn, $dup_sql, 'SELECT duplicados');
+    mysqli_stmt_bind_param($dup_stmt, "ssss", $correo, $dni_post, $telefono, $user_post);
+    mysqli_stmt_execute($dup_stmt);
+    $dup_res = mysqli_stmt_get_result($dup_stmt);
 
-    // Validar fecha (acepta 2008-03-14 o 14/03/2008)
-    if (preg_match('/^(\d{2})\/(\d{2})\/(\d{4})$/', $fecha_nac, $m)) {
-        $fecha_nac = "{$m[3]}-{$m[2]}-{$m[1]}";
-    }
-    $fechaOk = (bool) preg_match('/^\d{4}-\d{2}-\d{2}$/', $fecha_nac);
-
-    // Validar DNI (solo formato, sin comprobar letra)
-    $dniOk = (bool) preg_match('/^\d{8}[A-Za-z]$/', $dni_post);
-
-    if (!$nombreOk || !$apelsOk || !$emailOk || !$tlfOk || !$fechaOk || !$dniOk) {
-        $errorMsg = "Algún campo no cumple el formato.";
+    if ($dup_user = mysqli_fetch_assoc($dup_res)) {
+        if ($dup_user['correo'] === $correo) {
+            $errorMsg = "El correo ya está registrado por otro usuario.";
+        } elseif ($dup_user['dni'] === $dni_post) {
+            $errorMsg = "El DNI ya está registrado por otro usuario.";
+        } elseif ($dup_user['telefono'] === $telefono) {
+            $errorMsg = "El teléfono ya está registrado por otro usuario.";
+        }
+        mysqli_stmt_close($dup_stmt);
     } else {
+        mysqli_stmt_close($dup_stmt);
+
+        // --- Actualización (con o sin contraseña) ---
         if ($passwd !== '') {
             if ($passwd !== $passwd_r) {
                 $errorMsg = "Las contraseñas no coinciden.";
             } else {
-                $hash = password_hash($passwd, PASSWORD_DEFAULT);
-                $sql = "UPDATE `usuario` SET `nombre` = ?, `apellidos` = ?, `dni` = ?, `correo` = ?, `telefono` = ?, `fecha_nacimiento` = ?, `contrasena` = ? WHERE `dni` = ?";
+                $sql = "UPDATE `usuario` 
+                        SET `nombre`=?, `apellidos`=?, `dni`=?, `correo`=?, 
+                            `telefono`=?, `fecha_nacimiento`=?, `contrasena`=? 
+                        WHERE `user`=?";
                 $stmt = prepare_or_die($cn, $sql, 'UPDATE con contrasena');
-                mysqli_stmt_bind_param($stmt, "ssssssss", $nombre_post, $apellidos, $dni_post, $correo, $telefono, $fecha_nac, $hash, $dni_post);
-                if (!mysqli_stmt_execute($stmt)) {
-                    die("Error ejecutando UPDATE: " . mysqli_stmt_error($stmt));
-                }
+                mysqli_stmt_bind_param($stmt, "ssssssss", 
+                    $nombre_post, $apellidos, $dni_post, $correo, 
+                    $telefono, $fecha_nac, $passwd, $user_post
+                );
+                mysqli_stmt_execute($stmt);
                 mysqli_stmt_close($stmt);
                 $successMsg = "Datos actualizados (contraseña incluida).";
+                $message_color = "green";
             }
         } else {
-            $sql = "UPDATE `usuario` SET `nombre` = ?, `apellidos` = ?, `dni` = ?, `correo` = ?, `telefono` = ?, `fecha_nacimiento` = ? WHERE `dni` = ?";
+            $sql = "UPDATE `usuario` 
+                    SET `nombre`=?, `apellidos`=?, `dni`=?, `correo`=?, 
+                        `telefono`=?, `fecha_nacimiento`=? 
+                    WHERE `user`=?";
             $stmt = prepare_or_die($cn, $sql, 'UPDATE sin contrasena');
-            mysqli_stmt_bind_param($stmt, "sssssss", $nombre_post, $apellidos, $dni_post, $correo, $telefono, $fecha_nac, $dni_post);
-            if (!mysqli_stmt_execute($stmt)) {
-                die("Error ejecutando UPDATE: " . mysqli_stmt_error($stmt));
-            }
+            mysqli_stmt_bind_param($stmt, "sssssss", 
+                $nombre_post, $apellidos, $dni_post, $correo, 
+                $telefono, $fecha_nac, $user_post
+            );
+            mysqli_stmt_execute($stmt);
             mysqli_stmt_close($stmt);
             $successMsg = "Datos actualizados.";
+            $message_color = "green";
         }
 
         // Recargar datos actualizados
-        $sql = "SELECT dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento FROM `usuario` WHERE dni = ?";
+        $sql = "SELECT * FROM `usuario` WHERE user = ?";
         $stmt = prepare_or_die($cn, $sql, 'SELECT recarga');
-        mysqli_stmt_bind_param($stmt, "s", $dni_post);
+        mysqli_stmt_bind_param($stmt, "s", $user_post);
         mysqli_stmt_execute($stmt);
-        if (function_exists('mysqli_stmt_get_result')) {
-            $res = mysqli_stmt_get_result($stmt);
-            $user = mysqli_fetch_assoc($res);
-        } else {
-            mysqli_stmt_bind_result($stmt, $dni, $nombre, $apellidos, $correo, $contrasena, $telefono, $fecha_nacimiento);
-            if (mysqli_stmt_fetch($stmt)) {
-                $user = compact('dni','nombre','apellidos','correo','contrasena','telefono','fecha_nacimiento');
-            } else {
-                $user = null;
-            }
-        }
+        $res = mysqli_stmt_get_result($stmt);
+        $usuario = mysqli_fetch_assoc($res);
         mysqli_stmt_close($stmt);
     }
 }
@@ -158,34 +124,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="container">
   <div class="content">
     <h1>MODIFICAR USUARIO</h1>
+
     <?php if ($errorMsg): ?>
-      <div class="error"><?= htmlspecialchars($errorMsg) ?></div>
+      <p style="color: red; font-weight: bold;"><?= htmlspecialchars($errorMsg) ?></p>
     <?php endif; ?>
     <?php if ($successMsg): ?>
-      <div class="success"><?= htmlspecialchars($successMsg) ?></div>
+      <p style="color: green; font-weight: bold;"><?= htmlspecialchars($successMsg) ?></p>
     <?php endif; ?>
+
     <div class="rellenar">
-      <form id="user_modify_form" action="modify_user.php?user=<?= urlencode($user['dni']) ?>" method="post" class="labels">
-        <label for="dni">DNI *</label>
-        <input type="text" id="dni" name="dni" value="<?= htmlspecialchars($user['dni']) ?>" required>
+      <form id="user_modify_form" action="modify_user.php?user=<?= urlencode($usuario['user']) ?>" method="post" class="labels">
+        <input type="hidden" name="user" value="<?= htmlspecialchars($usuario['user']) ?>">
+
+        <label for="user_display">Usuario</label>
+        <input type="text" id="user_display" value="<?= htmlspecialchars($usuario['user']) ?>" readonly>
 
         <label for="nombre">Nombre *</label>
-        <input type="text" id="nombre" name="nombre" value="<?= htmlspecialchars($user['nombre']) ?>" required>
+        <input type="text" id="nombre" name="nombre" value="<?= htmlspecialchars($usuario['nombre']) ?>" required>
 
         <label for="apellidos">Apellidos *</label>
-        <input type="text" id="apellidos" name="apellidos" value="<?= htmlspecialchars($user['apellidos']) ?>" required>
+        <input type="text" id="apellidos" name="apellidos" value="<?= htmlspecialchars($usuario['apellidos']) ?>" required>
 
         <label for="correo">Correo *</label>
-        <input type="email" id="correo" name="correo" value="<?= htmlspecialchars($user['correo']) ?>" required>
+        <input type="email" id="correo" name="correo" value="<?= htmlspecialchars($usuario['correo']) ?>" required>
+        
+        <label for="dni">DNI *</label>
+        <input type="text" id="dni" name="dni" value="<?= htmlspecialchars($usuario['dni']) ?>" required>
 
         <label for="telefono">Teléfono *</label>
-        <input type="text" id="telefono" name="telefono" value="<?= htmlspecialchars($user['telefono']) ?>" required>
+        <input type="text" id="telefono" name="telefono" value="<?= htmlspecialchars($usuario['telefono']) ?>" required>
 
         <label for="fecha_nacimiento">Fecha de Nacimiento *</label>
-        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" value="<?= htmlspecialchars($user['fecha_nacimiento']) ?>" required>
+        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" value="<?= htmlspecialchars($usuario['fecha_nacimiento']) ?>" required>
 
         <details>
-          <summary>Cambiar contraseña (opcional)</summary>
+          <summary>Cambiar contraseña</summary>
           <label for="contrasena">Contraseña</label>
           <input type="password" id="contrasena" name="contrasena">
           <label for="contrasena_repeat">Repetir Contraseña</label>
@@ -197,4 +170,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
   </div>
 </div>
-
+<script src="js/modify_user.js" defer></script>

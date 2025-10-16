@@ -42,8 +42,8 @@ $conn->close();
             <p><strong>Año:</strong> <?= htmlspecialchars($item['año']) ?></p>
             <p><strong>Combustible:</strong> <?= htmlspecialchars($item['combustible']) ?></p>
             <p><strong>Caballos:</strong> <?= htmlspecialchars($item['caballos']) ?></p>
+            <p><strong>Precio:</strong> <?= $item['precio'] ?>€</p> <!-- NUEVO -->
 
-            <!-- Eliminamos el espacio antes del valor de id -->
             <a href="modify_item.php?item=<?= urlencode($item['nombre']) ?>"><button>Modificar</button></a>
             <a href="items.php"><button>Volver</button></a>
         <?php else: ?>

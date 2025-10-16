@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("user_modify_form");
   const nombreInput = document.getElementById("nombre");
   const apellidosInput = document.getElementById("apellidos");
@@ -8,6 +8,26 @@ document.addEventListener('DOMContentLoaded', function () {
   const fechaInput = document.getElementById("fecha_nacimiento");
   const passwdInput = document.getElementById("contrasena");
   const passwdRepeatInput = document.getElementById("contrasena_repeat");
+
+  // Crear un contenedor para mostrar errores
+  const msgBox = document.createElement("div");
+  msgBox.style.marginTop = "15px";
+  msgBox.style.fontWeight = "bold";
+  form.parentElement.insertBefore(msgBox, form);
+
+  const showMessage = (text, color = "red") => {
+    msgBox.textContent = text;
+    msgBox.style.color = color;
+  };
+
+  const clearMessage = () => {
+    msgBox.textContent = "";
+  };
+
+  // Limpiar mensaje al escribir
+  form.querySelectorAll("input").forEach(input => {
+    input.addEventListener("input", clearMessage);
+  });
 
   form.addEventListener("submit", function (event) {
     const nombre = nombreInput.value.trim();
@@ -27,48 +47,49 @@ document.addEventListener('DOMContentLoaded', function () {
     const fechaRegex = /^\d{4}-\d{2}-\d{2}$/; // formato YYYY-MM-DD
 
     if (!nombreRegex.test(nombre)) {
-      alert("El nombre no es válido.");
+      showMessage("El nombre no es válido.");
       event.preventDefault();
       return;
     }
 
     if (!apellidosRegex.test(apellidos)) {
-      alert("Los apellidos no son válidos.");
+      showMessage("Los apellidos no son válidos.");
       event.preventDefault();
       return;
     }
 
     if (!dniRegex.test(dni)) {
-      alert("El DNI debe tener 8 números y 1 letra (sin guion).");
+      showMessage("El DNI debe tener 8 números y 1 letra (sin guion).");
       event.preventDefault();
       return;
     }
 
     if (!correoRegex.test(correo)) {
-      alert("El correo electrónico no es válido.");
+      showMessage("El correo electrónico no es válido.");
       event.preventDefault();
       return;
     }
 
     if (!telefonoRegex.test(telefono)) {
-      alert("El teléfono debe tener 9 dígitos.");
+      showMessage("El teléfono debe tener 9 dígitos.");
       event.preventDefault();
       return;
     }
 
     if (!fechaRegex.test(fecha)) {
-      alert("La fecha de nacimiento no es válida.");
+      showMessage("La fecha de nacimiento no es válida.");
       event.preventDefault();
       return;
     }
 
     if (passwd !== "" && passwd !== passwdRepeat) {
-      alert("Las contraseñas no coinciden.");
+      showMessage("Las contraseñas no coinciden.");
       event.preventDefault();
       return;
     }
 
-    // Si pasa todas las validaciones, el formulario se envía normalmente
+    // Si todo está bien, mensaje temporal en verde antes del envío
+    showMessage("Validando datos...", "green");
   });
 });
 

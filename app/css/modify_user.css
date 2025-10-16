@@ -1,14 +1,14 @@
 html, body { 
-	margin:0; 
-padding:0; 
-height:100%; 
-overflow: hidden;
+  margin: 0;
+  padding: 0;
+  min-height: 100%; /* permite que el contenido crezca */
+  font-family: Arial, sans-serif;
 }
 
 .container {
-  display: grid;
-  place-items: center;
-  height: 100vh;
+  display: flex;
+  justify-content: center; /* centrar horizontal */
+  padding: 20px;           /* espacio alrededor */
   box-sizing: border-box;
 }
 
@@ -16,22 +16,29 @@ overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 50px;
-  font-family: Arial, sans-serif;
+  max-width: 600px;  /* opcional: limitar ancho */
+  width: 100%;
 }
 
-h1 {
-  font-size: 48px;
-  margin: 0;
+.success {
+  color: green;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 15px;
 }
 
 .labels {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch; /* ahora inputs ocupan todo el ancho */
   gap: 20px;
-   }
+}
 
 label {
   font-weight: bold;
@@ -44,6 +51,8 @@ input {
   border-radius: 20px;
   border: 2px solid #000;
   outline: none;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 button {
@@ -58,10 +67,11 @@ button {
   background-color: #000;
   color: #fff;
   padding: 20px 50px;
+  cursor: pointer;
+  align-self: center;
 }
 button:hover {
   background-color: #232323;
-  color: #fff;
   border-color: #232323;
   transform: translateY(-5px);
   box-shadow: 0 10px 15px rgba(0,0,0,0.2);
