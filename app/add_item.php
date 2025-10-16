@@ -1,5 +1,5 @@
 <?php
-// Mostrar errores (solo para desarrollo, puedes quitarlo después)
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -8,17 +8,6 @@ $hostname = "db";
 $username = "admin";
 $password = "test";
 $db = "database";
-
-// Procesar datos del formulario si se envió
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $item_name  = $_POST["item_name"];
-    $item_desc  = $_POST["item_desc"];
-    $item_price = $_POST["item_price"];
-
-    // Aquí podrías añadir la lógica para guardar en BD
-    // Por ahora solo mostramos los datos enviados (modo test)
-    echo "<p>Item recibido: $item_name | $item_desc | $item_price €</p>";
-}
 ?>
 
 <!DOCTYPE html>
@@ -26,8 +15,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
   <meta charset="UTF-8">
   <title>Añadir Item</title>
-
-  <!-- Enlaces a CSS y JS -->
   <link rel="stylesheet" href="css/add_item.css">
   <script src="js/add_item.js" defer></script>
 </head>
