@@ -26,15 +26,16 @@ if ($conn->connect_error) {
         } else {
             $stmt->bind_result($db_pass);
             $stmt->fetch();
-        if ($db_pass === $passwd) { // sin hash 
-           $message = "Login correcto. Redirigiendo..."; 
-           $message_color = "green"; // Redirigir después de 1.5s 
-           header("refresh:1.5; url=items.php"); 
-        } 
-        else { 
-            $message = "Contraseña incorrecta."; 
-        }    
-        
+
+            if ($db_pass === $passwd) { // sin hash
+                $message = "Login correcto. Redirigiendo...";
+                $message_color = "green";
+                // Redirigir después de 1.5s
+                header("refresh:1.5; url=items.php");
+            } else {
+                $message = "Contraseña incorrecta.";
+            }
+        }
         $stmt->close();
     }
 }
