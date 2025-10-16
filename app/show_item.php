@@ -9,30 +9,49 @@ if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
 
-$nombre = isset($_GET['nombre']) ? intval($_GET['nombre']) : 0;
-$sql = "SELECT * FROM item WHERE nombre = $nombre";
-$result = $conn->query($sql);
-$item = $result->fetch_assoc();
+$nombre = isset($_GET['item']) ? $_GET['item'] : '';
+
+// Obtener datos del ítem
+$sql = "SELECT * FROM item WHERE nombre = ?";
+$stmt = $conn->prepare($sql);
+if (!$stmt) {
+    die("Error en la preparación de la consulta: " . $conn->error);
+}
+$stmt->bind_param("s", $nombre);
+$stmt->execute();
+$result = $stmt->get_result();
+$item = $result ? $result->fetch_assoc() : null;
+
+$stmt->close();
 $conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Mostrar Ítem</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/items.css">
+    <title>Detalles del ítem</title>
 </head>
 <body>
-  <h1>Detalles del Ítem</h1>
-  <?php if ($item): ?>
-    <p><strong>ID:</strong> <?= htmlspecialchars($item['id']) ?></p>
-    <p><strong>Nombre:</strong> <?= htmlspecialchars($item['nombre']) ?></p>
-    <p><strong>Descripción:</strong> <?= htmlspecialchars($item['descripcion']) ?></p>
+<div class="container">
+    <div class="content">
+        <h1>Detalles del <?= htmlspecialchars($nombre) ?></h1>
 
-    <a href="modify_item.php?id=<?= $item['id'] ?>"><button>Modificar</button></a>
-    <a href="items.php"><button>Volver</button></a>
-  <?php else: ?>
-    <p>Ítem no encontrado.</p>
-    <a href="items.php"><button>Volver</button></a>
-  <?php endif; ?>
+        <?php if ($item): ?>
+            <p><strong>Año:</strong> <?= htmlspecialchars($item['año']) ?></p>
+            <p><strong>Combustible:</strong> <?= htmlspecialchars($item['combustible']) ?></p>
+            <p><strong>Caballos:</strong> <?= htmlspecialchars($item['caballos']) ?></p>
+
+            <!-- Eliminamos el espacio antes del valor de id -->
+            <a href="modify_item.php?item=<?= urlencode($item['nombre']) ?>"><button>Modificar</button></a>
+            <a href="items.php"><button>Volver</button></a>
+        <?php else: ?>
+            <p>Coche no encontrado.</p>
+            <a href="items.php"><button>Volver</button></a>
+        <?php endif; ?>
+    </div>
+</div>
 </body>
 </html>
+
