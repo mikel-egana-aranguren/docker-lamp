@@ -5,7 +5,7 @@
   $password = "test";
   $db = "database";
 
-$cn = mysqli_connect($hostname, $username, $password, $dbname);
+$cn = mysqli_connect($hostname, $username, $password, $db);
 if (!$cn) {
   die("Error de conexión: " . mysqli_connect_error());
 }
