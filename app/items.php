@@ -1,7 +1,14 @@
 <?php
 
 session_start();
-$username_session = isset($_SESSION['username']) ? $_SESSION['username'] : 'Invitado';
+if (!isset($_SESSION['username'])) {
+    // Si no hay usuario logueado, redirigimos al login o mostramos mensaje
+    header("Location: login.php");
+    exit;
+}
+
+$username_session = $_SESSION['username'];
+?>
 
 echo '
 <link rel="stylesheet" href="css/items.css">
