@@ -24,8 +24,6 @@ index.php --> register.php :
     die("Database connection failed: " . $conn->connect_error);
   }
 
-
-
 $query = mysqli_query($conn, "SELECT * FROM pelicula")
    or die (mysqli_error($conn));
 
@@ -37,16 +35,22 @@ while ($row = mysqli_fetch_array($query)) {
       <td>{$row['duracion']}</td>
      </tr>
     </table>";
-   
-
 }
-
 ?>
 <html>
    <head>
     <link rel="stylesheet" type="text/css" href="inicioStyle.css">
    </head>
    <body>
+
+    <!-- 🔽 Añadido: botón 'Mi perfil' solo si hay sesión activa -->
+    <?php if (isset($_SESSION['user_id'])): ?>
+      <p>
+        <a href="show_user.php?user=<?= intval($_SESSION['user_id']) ?>">Mi perfil</a>
+      </p>
+    <?php endif; ?>
+    <!-- 🔼 Fin del añadido -->
+
     <h1>¡Bienvenid@ a SafeFilms!<h1>
       <button onclick="window.location.href='register.php'">Registrarse</button> 
     <h2>Consulta nuestro catálogo con lo mejor del cine: <h2>
@@ -56,5 +60,3 @@ while ($row = mysqli_fetch_array($query)) {
     </form>
    </body>
   </html>
-  
-
