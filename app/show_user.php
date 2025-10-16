@@ -46,7 +46,7 @@ if (!$user) { http_response_code(404); die("Usuario no encontrado."); }
 
   <p>
     <a href="modify_user.php?user=<?= urlencode($user['idU']) ?>">Modificar</a> |
-    <a href="index.php">Volver</a>
+    <a href="items.php">Volver</a>
   </p>
 </body>
 </html>

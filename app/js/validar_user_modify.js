@@ -36,8 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!/^\d{8}$/.test(numDni)) {
       e.preventDefault(); return error("El DNI debe tener 8 dígitos.");
     }
-    if (!/^[A-Z]$/.test(letra) || letra !== letraDNI(numDni)) {
-      e.preventDefault(); return error("La letra del DNI no coincide.");
+    if (!/^[A-Z]$/.test(letra) ) {
+      e.preventDefault(); return error("La letra del DNI debe ser una letra.");
     }
     if (!/^\d{9}$/.test(tlfn)) {
       e.preventDefault(); return error("El teléfono debe tener 9 dígitos.");
