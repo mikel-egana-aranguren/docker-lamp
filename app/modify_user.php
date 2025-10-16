@@ -1,69 +1,66 @@
 <?php
-// modify_user.php (versión corregida y verificada)
-// Ajusta credenciales si hace falta
+// modify_user.php (adaptado a la tabla `usuario` y columnas de show_user.php)
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 $hostname = "db";
 $username = "admin";
 $password = "test";
 $dbname   = "database";
 
-// Conexión
 $cn = mysqli_connect($hostname, $username, $password, $dbname);
 if (!$cn) {
     die("Error de conexión: " . mysqli_connect_error());
 }
 
-// Helper: preparar la consulta o morir con mensaje claro
-function prepare_or_die($cn, $sql, $context = '') {
+function prepare_or_die($cn, $sql, $ctx = '') {
     $stmt = mysqli_prepare($cn, $sql);
     if (!$stmt) {
-        die("Error en prepare() {$context}: " . mysqli_error($cn) . " — SQL: {$sql}");
+        die("Error en prepare() {$ctx}: " . mysqli_error($cn) . " — SQL: {$sql}");
     }
     return $stmt;
 }
 
-// Obtener clave de búsqueda (por GET)
+// Obtener clave de búsqueda
 $userKey = isset($_GET['user']) ? trim($_GET['user']) : '';
 
 $user = null;
-$errorMsg = "";
-$successMsg = "";
-$warnings = [];
-
-// Si viene user, intentamos cargar al usuario (correo / teléfono / dni / nombre)
 if ($userKey !== '') {
+    // Detectar tipo: email, teléfono (9 dígitos), DNI (formato 12345678-X) o nombre
     if (filter_var($userKey, FILTER_VALIDATE_EMAIL)) {
-        $sql = "SELECT dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento FROM `usuario` WHERE correo = ? LIMIT 1";
+        $sql = "SELECT dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento FROM `usuario` WHERE correo = ?";
         $stmt = prepare_or_die($cn, $sql, 'SELECT por correo');
         mysqli_stmt_bind_param($stmt, "s", $userKey);
-    } elseif (preg_match('/^\+?\d[\d\s\-\(\)]{6,}\d$/', $userKey) && preg_replace('/\D+/', '', $userKey) !== '') {
-        $tel_norm = preg_replace('/\D+/', '', $userKey);
-        $sql = "SELECT dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento FROM `usuario` WHERE telefono = ? LIMIT 1";
+    } elseif (preg_match('/^\d{9}$/', $userKey)) {
+        $sql = "SELECT dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento FROM `usuario` WHERE telefono = ?";
         $stmt = prepare_or_die($cn, $sql, 'SELECT por telefono');
-        mysqli_stmt_bind_param($stmt, "s", $tel_norm);
-    } elseif (preg_match('/^\d{8}-?[A-Za-z]$/', $userKey)) {
-        $dni_norm = strtoupper(str_replace('-', '', $userKey));
-        $sql = "SELECT dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento FROM `usuario` WHERE REPLACE(dni,'-','') = ? LIMIT 1";
+        mysqli_stmt_bind_param($stmt, "s", $userKey);
+    } elseif (preg_match('/^\d{8}-?[A-Za-z]$/', $userKey)) { // DNI con o sin dash
+        $sql = "SELECT dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento FROM `usuario` WHERE dni = ?";
         $stmt = prepare_or_die($cn, $sql, 'SELECT por dni');
-        mysqli_stmt_bind_param($stmt, "s", $dni_norm);
+        mysqli_stmt_bind_param($stmt, "s", $userKey);
     } else {
+        // Buscar por nombre (puede devolver muchos; tomamos el primero). Mejor: mostrar lista.
         $sql = "SELECT dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento FROM `usuario` WHERE nombre = ? LIMIT 1";
         $stmt = prepare_or_die($cn, $sql, 'SELECT por nombre');
         mysqli_stmt_bind_param($stmt, "s", $userKey);
     }
 
     if (!mysqli_stmt_execute($stmt)) {
-        die("Error al ejecutar SELECT: " . mysqli_stmt_error($stmt));
+        die("Error al ejecutar la consulta: " . mysqli_stmt_error($stmt));
     }
 
+    // Obtener resultado (con fallback)
     if (function_exists('mysqli_stmt_get_result')) {
         $res = mysqli_stmt_get_result($stmt);
-        if ($res !== false) {
-            $user = mysqli_fetch_assoc($res);
+        if ($res === false) {
+            die("mysqli_stmt_get_result() falló: " . mysqli_error($cn));
         }
+        $user = mysqli_fetch_assoc($res);
     } else {
         mysqli_stmt_bind_result($stmt, $dni, $nombre, $apellidos, $correo, $contrasena, $telefono, $fecha_nacimiento);
         if (mysqli_stmt_fetch($stmt)) {
-            $user = array(
+            $user = [
                 'dni' => $dni,
                 'nombre' => $nombre,
                 'apellidos' => $apellidos,
@@ -71,18 +68,24 @@ if ($userKey !== '') {
                 'contrasena' => $contrasena,
                 'telefono' => $telefono,
                 'fecha_nacimiento' => $fecha_nacimiento
-            );
+            ];
+        } else {
+            $user = null;
         }
     }
     mysqli_stmt_close($stmt);
 }
 
-if (!$user && $userKey !== '') {
-    $errorMsg = "Usuario no encontrado con la clave proporcionada.";
+if (!$user) {
+    echo "Usuario no encontrado.";
+    exit;
 }
 
-// ------------------ PROCESAR POST ------------------
+// Procesar POST de modificación
+$successMsg = "";
+$errorMsg = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Esperamos que los name del form coincidan con los aquí usados: dni,nombre,apellidos,correo,telefono,fecha_nacimiento,contrasena (opcional)
     $dni_post    = trim($_POST['dni'] ?? '');
     $nombre_post = trim($_POST['nombre'] ?? '');
     $apellidos   = trim($_POST['apellidos'] ?? '');
@@ -92,74 +95,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $passwd      = $_POST['contrasena'] ?? '';
     $passwd_r    = $_POST['contrasena_repeat'] ?? '';
 
-    $errors = array();
-    $warnings = array();
+    // Validaciones (ajusta según tus reglas)
+    $nombreOk = (bool) preg_match('/^[A-Za-zÀ-ÿ ]+$/', $nombre_post);
+    $apelsOk  = (bool) preg_match('/^[A-Za-zÀ-ÿ ]+$/', $apellidos);
+    $emailOk  = (bool) filter_var($correo, FILTER_VALIDATE_EMAIL);
+    $tlfOk    = (bool) preg_match('/^\d{9}$/', $telefono);
+    $fechaOk  = (bool) preg_match('/^\d{4}-\d{2}-\d{2}$/', $fecha_nac);
 
-    // Normalizar teléfono quitando no dígitos
-    $telefono_digits = preg_replace('/\D+/', '', $telefono);
-
-    // 1) DNI: validar formato; si letra incorrecta -> advertencia (no bloqueante)
-    if (!preg_match('/^(\d{8})-?([A-Za-z])$/', $dni_post, $m)) {
-        $errors[] = "DNI: formato inválido (ej. 12345678-A o 12345678A).";
-    } else {
-        $num = (int)$m[1];
+    $dniOk = false;
+    if (preg_match('/^(\d{8})-?([A-Za-z])$/', $dni_post, $m)) {
+        $num   = (int)$m[1];
         $letra = strtoupper($m[2]);
         $tabla = "TRWAGMYFPDXBNJZSQVHLCKE";
-        if (!isset($tabla[$num % 23])) {
-            $errors[] = "DNI: número inválido.";
-        } elseif ($tabla[$num % 23] !== $letra) {
-            $warnings[] = "Advertencia: letra del DNI no corresponde con el número proporcionado.";
-            $dni_post = sprintf("%08d-%s", $num, $letra);
-        } else {
-            $dni_post = sprintf("%08d-%s", $num, $letra);
-        }
+        $dniOk = (isset($tabla[$num % 23]) && $tabla[$num % 23] === $letra);
     }
 
-    // 2) Nombre
-    if ($nombre_post === '' || !preg_match("/^[A-Za-zÀ-ÿ' -]{2,60}$/u", $nombre_post)) {
-        $errors[] = "Nombre: usa letras y/o espacios (2-60 caracteres).";
-    }
-
-    // 3) Apellidos
-    if ($apellidos === '' || !preg_match("/^[A-Za-zÀ-ÿ' -]{2,80}$/u", $apellidos)) {
-        $errors[] = "Apellidos: usa letras y/o espacios (2-80 caracteres).";
-    }
-
-    // 4) Correo
-    if ($correo === '' || !filter_var($correo, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "Correo: formato de email inválido.";
-    }
-
-    // 5) Teléfono: tras normalizar, 9 dígitos
-    if (!preg_match('/^\d{9}$/', $telefono_digits)) {
-        $errors[] = "Teléfono: debe contener 9 dígitos (se permiten espacios y prefijos +34; serán normalizados).";
+    if (!$nombreOk || !$apelsOk || !$emailOk || !$tlfOk || !$fechaOk || !$dniOk) {
+        $errorMsg = "Algún campo no cumple el formato.";
     } else {
-        $telefono = $telefono_digits;
-    }
-
-    // 6) Fecha de nacimiento
-    if ($fecha_nac === '') {
-        $errors[] = "Fecha de nacimiento: obligatorio.";
-    } else {
-        $d = DateTime::createFromFormat('Y-m-d', $fecha_nac);
-        if (!($d && $d->format('Y-m-d') === $fecha_nac)) {
-            $errors[] = "Fecha de nacimiento: formato inválido (YYYY-MM-DD).";
-        }
-    }
-
-    // Si hay errores, no hacemos UPDATE
-    if (!empty($errors)) {
-        $errorMsg = implode(' ', $errors);
-    } else {
-        // Hacer UPDATE (si passwd no vacía -> actualizar contraseña hasheada)
         if ($passwd !== '') {
             if ($passwd !== $passwd_r) {
                 $errorMsg = "Las contraseñas no coinciden.";
             } else {
                 $hash = password_hash($passwd, PASSWORD_DEFAULT);
-                $sql = "UPDATE `usuario` SET `nombre` = ?, `apellidos` = ?, `dni` = ?, `correo` = ?, `telefono` = ?, `fecha_nacimiento` = ?, `contrasena` = ? WHERE REPLACE(dni,'-','') = REPLACE(?, '-','')";
+                $sql = "UPDATE `usuario` SET `nombre` = ?, `apellidos` = ?, `dni` = ?, `correo` = ?, `telefono` = ?, `fecha_nacimiento` = ?, `contrasena` = ? WHERE `dni` = ?";
                 $stmt = prepare_or_die($cn, $sql, 'UPDATE con contrasena');
-                mysqli_stmt_bind_param($stmt, "sssssss", $nombre_post, $apellidos, $dni_post, $correo, $telefono, $fecha_nac, $hash, $dni_post);
+                mysqli_stmt_bind_param($stmt, "ssssssss", $nombre_post, $apellidos, $dni_post, $correo, $telefono, $fecha_nac, $hash, $dni_post);
                 if (!mysqli_stmt_execute($stmt)) {
                     die("Error ejecutando UPDATE: " . mysqli_stmt_error($stmt));
                 }
@@ -167,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $successMsg = "Datos actualizados (contraseña incluida).";
             }
         } else {
-            $sql = "UPDATE `usuario` SET `nombre` = ?, `apellidos` = ?, `dni` = ?, `correo` = ?, `telefono` = ?, `fecha_nacimiento` = ? WHERE REPLACE(dni,'-','') = REPLACE(?, '-','')";
+            $sql = "UPDATE `usuario` SET `nombre` = ?, `apellidos` = ?, `dni` = ?, `correo` = ?, `telefono` = ?, `fecha_nacimiento` = ? WHERE `dni` = ?";
             $stmt = prepare_or_die($cn, $sql, 'UPDATE sin contrasena');
             mysqli_stmt_bind_param($stmt, "sssssss", $nombre_post, $apellidos, $dni_post, $correo, $telefono, $fecha_nac, $dni_post);
             if (!mysqli_stmt_execute($stmt)) {
@@ -177,33 +138,69 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $successMsg = "Datos actualizados.";
         }
 
-        // Recargar datos actualizados
-        $sql = "SELECT dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento FROM `usuario` WHERE REPLACE(dni,'-','') = REPLACE(?, '-','') LIMIT 1";
+        // Recargar datos actualizados (por dni)
+        $sql = "SELECT dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento FROM `usuario` WHERE dni = ?";
         $stmt = prepare_or_die($cn, $sql, 'SELECT recarga');
         mysqli_stmt_bind_param($stmt, "s", $dni_post);
         mysqli_stmt_execute($stmt);
         if (function_exists('mysqli_stmt_get_result')) {
             $res = mysqli_stmt_get_result($stmt);
-            if ($res !== false) {
-                $user = mysqli_fetch_assoc($res);
-            }
+            $user = mysqli_fetch_assoc($res);
         } else {
             mysqli_stmt_bind_result($stmt, $dni, $nombre, $apellidos, $correo, $contrasena, $telefono, $fecha_nacimiento);
             if (mysqli_stmt_fetch($stmt)) {
-                $user = array(
-                    'dni' => $dni,
-                    'nombre' => $nombre,
-                    'apellidos' => $apellidos,
-                    'correo' => $correo,
-                    'contrasena' => $contrasena,
-                    'telefono' => $telefono,
-                    'fecha_nacimiento' => $fecha_nacimiento
-                );
+                $user = compact('dni','nombre','apellidos','correo','contrasena','telefono','fecha_nacimiento');
+            } else {
+                $user = null;
             }
         }
         mysqli_stmt_close($stmt);
+    }
+}
 
-        // Si hay warnings (por ej. letra DNI), los añadimos al successMsg
-        if (!empty($warnings)) {
-            $successMsg = trim(($successMsg ?? '') . ' ' . implode(' ', $warnings));
+// Mostrar formulario (ejemplo simple). Asegúrate de que los name coinciden con lo que procesa el POST arriba.
+?>
+<link rel="stylesheet" href="css/modify_user.css">
+<div class="container">
+  <div class="content">
+    <h1>MODIFICAR USUARIO</h1>
+    <?php if ($errorMsg): ?>
+      <div class="error"><?= htmlspecialchars($errorMsg) ?></div>
+    <?php endif; ?>
+    <?php if ($successMsg): ?>
+      <div class="success"><?= htmlspecialchars($successMsg) ?></div>
+    <?php endif; ?>
+    <div class="rellenar">
+      <form id="user_modify_form" action="modify_user.php?user=<?= urlencode($user['dni']) ?>" method="post" class="labels">
+        <label for="dni">DNI *</label>
+        <input type="text" id="dni" name="dni" value="<?= htmlspecialchars($user['dni']) ?>" required>
+
+        <label for="nombre">Nombre *</label>
+        <input type="text" id="nombre" name="nombre" value="<?= htmlspecialchars($user['nombre']) ?>" required>
+
+        <label for="apellidos">Apellidos *</label>
+        <input type="text" id="apellidos" name="apellidos" value="<?= htmlspecialchars($user['apellidos']) ?>" required>
+
+        <label for="correo">Correo *</label>
+        <input type="email" id="correo" name="correo" value="<?= htmlspecialchars($user['correo']) ?>" required>
+
+        <label for="telefono">Teléfono *</label>
+        <input type="text" id="telefono" name="telefono" value="<?= htmlspecialchars($user['telefono']) ?>" required>
+
+        <label for="fecha_nacimiento">Fecha de Nacimiento *</label>
+        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" value="<?= htmlspecialchars($user['fecha_nacimiento']) ?>" required>
+
+        <details>
+          <summary>Cambiar contraseña (opcional)</summary>
+          <label for="contrasena">Contraseña</label>
+          <input type="password" id="contrasena" name="contrasena">
+          <label for="contrasena_repeat">Repetir Contraseña</label>
+          <input type="password" id="contrasena_repeat" name="contrasena_repeat">
+        </details>
+
+        <button type="submit" id="user_modify_submit">Guardar cambios</button>
+      </form>
+    </div>
+  </div>
+</div>
 
