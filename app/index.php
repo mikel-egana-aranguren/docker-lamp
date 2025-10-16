@@ -2,12 +2,12 @@
 session_start(); //iniciar sesion con php
 /**Algo de explicación: 
  * Estructura:
-    - html: crea el formulario, cuando se le da al botón el .js está "escuchando" y 
-    se encarga de validar los datos rollo formato y tal, cosas q hemos definido al crear la bd.
+    - html: crea el formulario. Cuando se le da al botón, el .js está "escuchando" y 
+    se encarga de validar los datos (formato etc.), tablas que hemos definido al crear la bd.
     - php: una vez validados los datos, se envían al php, que se encarga de comprobar si ya existe
     el usuario en la bd y si no existe, lo crea.
     + name del input (html) y el índice de $_POST (php) deben coincidir 
-    + primero debe ir la parte de php y luego la de html porq la primera línea debe ser <?php sesion_start
+    + primero debe ir la parte de php y luego la de html porque la primera línea debe ser <?php sesion_start
     
 index.php --> register.php :
                -php 
@@ -23,24 +23,6 @@ index.php --> register.php :
   if ($conn->connect_error) {
     die("Database connection failed: " . $conn->connect_error);
   }
-
-
-
-$query = mysqli_query($conn, "SELECT * FROM pelicula")
-   or die (mysqli_error($conn));
-
-while ($row = mysqli_fetch_array($query)) {
-  echo
-   "<table border='1'>
-     <tr>
-      <td>{$row['titulo']}</td>
-      <td>{$row['duracion']}</td>
-     </tr>
-    </table>";
-   
-
-}
-
 ?>
 <html>
    <head>
@@ -48,12 +30,10 @@ while ($row = mysqli_fetch_array($query)) {
    </head>
    <body>
     <h1>¡Bienvenid@ a SafeFilms!<h1>
-      <button onclick="window.location.href='register.php'">Registrarse</button> 
+    <button class="reg" onclick="window.location.href='register.php'">Registrarse</button> 
     <h2>Consulta nuestro catálogo con lo mejor del cine: <h2>
-    <form>
-     <button class="ctlg">Catálogo</button>
-     <button class="inic">Iniciar sesión</button>
-    </form>
+    <button class="ctlg" onclick="window.location.href='catalog.php'">Catálogo</button>
+    <button class="inic">Iniciar sesión</button>
    </body>
   </html>
   
