@@ -17,13 +17,13 @@ $user = null;
 if ($userKey !== '') {
   if (ctype_digit($userKey)) {
     // Buscar por teléfono
-    $sql = "SELECT dni, nombre, apellidos, correo, contraseña, telefono, fecha_nacimiento 
+    $sql = "SELECT dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento 
             FROM usuario WHERE telefono = ?";
     $stmt = mysqli_prepare($cn, $sql);
     mysqli_stmt_bind_param($stmt, "s", $userKey);
   } else {
     // Buscar por DNI o correo
-    $sql = "SELECT dni, nombre, apellidos, correo, contraseña, telefono, fecha_nacimiento 
+    $sql = "SELECT dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento 
             FROM usuario WHERE dni = ? OR correo = ?";
     $stmt = mysqli_prepare($cn, $sql);
     mysqli_stmt_bind_param($stmt, "ss", $userKey, $userKey);
@@ -55,7 +55,7 @@ echo '
       <p><strong>Nombre:</strong> '.htmlspecialchars($user["nombre"]).'</p>
       <p><strong>Apellidos:</strong> '.htmlspecialchars($user["apellidos"]).'</p>
       <p><strong>Correo:</strong> '.htmlspecialchars($user["correo"]).'</p>
-      <p><strong>Contraseña:</strong> '.htmlspecialchars($user["contraseña"]).'</p>
+      <p><strong>Contraseña:</strong> '.htmlspecialchars($user["contrasena"]).'</p>
       <p><strong>Teléfono:</strong> '.htmlspecialchars($user["telefono"]).'</p>
       <p><strong>Fecha de nacimiento:</strong> '.htmlspecialchars($user["fecha_nacimiento"]).'</p>
 
