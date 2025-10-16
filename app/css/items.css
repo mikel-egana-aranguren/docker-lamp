@@ -55,3 +55,116 @@ button:hover {
 td button {
   margin: 0 5px;
 }
+/* ---------------------- Estilos base existentes ---------------------- */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.container {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  font-size: 48px;
+  margin: 0;
+}
+
+table {
+  border-collapse: collapse;
+  font-size: 18px;
+}
+
+th, td {
+  padding: 10px 20px;
+  text-align: center;
+}
+
+button {
+  display: inline-block;
+  font-weight: bold;
+  border-radius: 20px;
+  border: 2px solid #000;
+  background-color: #000;
+  color: #fff;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #232323;
+  transform: translateY(-2px);
+}
+
+td button {
+  margin: 0 5px;
+}
+
+.user-bar {
+  background: #f2f2f2;
+  padding: 10px 20px;
+  text-align: right;
+  font-family: Arial, sans-serif;
+}
+
+.user-dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.user-button {
+  background: #4CAF50;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.user-button:hover {
+  background-color: #45a049;
+}
+
+.user-dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #f9f9f9;
+  min-width: 180px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  z-index: 1;
+}
+
+.user-dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  border-bottom: 1px solid #ddd;
+}
+
+.user-dropdown-content a:last-child {
+  border-bottom: none;
+}
+
+.user-dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
