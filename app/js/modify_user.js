@@ -1,143 +1,74 @@
-<?php
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById("user_modify_form");
+  const nombreInput = document.getElementById("nombre");
+  const apellidosInput = document.getElementById("apellidos");
+  const dniInput = document.getElementById("dni");
+  const correoInput = document.getElementById("correo");
+  const telefonoInput = document.getElementById("telefono");
+  const fechaInput = document.getElementById("fecha_nacimiento");
+  const passwdInput = document.getElementById("contrasena");
+  const passwdRepeatInput = document.getElementById("contrasena_repeat");
 
+  form.addEventListener("submit", function (event) {
+    const nombre = nombreInput.value.trim();
+    const apellidos = apellidosInput.value.trim();
+    const dni = dniInput.value.trim();
+    const correo = correoInput.value.trim();
+    const telefono = telefonoInput.value.trim();
+    const fecha = fechaInput.value.trim();
+    const passwd = passwdInput.value.trim();
+    const passwdRepeat = passwdRepeatInput.value.trim();
 
-$hostname = "db";
-$username = "admin";
-$password = "test";
-$db = "database";
+    const nombreRegex = /^[A-Za-zÀ-ÿ ]+$/;
+    const apellidosRegex = /^[A-Za-zÀ-ÿ ]+$/;
+    const dniRegex = /^[0-9]{8}[A-Za-z]$/;
+    const correoRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const telefonoRegex = /^[0-9]{9}$/;
+    const fechaRegex = /^\d{4}-\d{2}-\d{2}$/; // formato YYYY-MM-DD
 
-$cn = mysqli_connect($hostname, $username, $password, $db);
-if (!$cn) {
-    die("Error de conexión: " . mysqli_connect_error());
-}
-
-$userKey = isset($_GET['user']) ? trim($_GET['user']) : '';
-
-$user = null;
-if ($userKey !== '') {
-    if (ctype_digit($userKey)) {
-        $sql = "SELECT id, name, apels, dni, email, tlf, fechaNcto FROM users WHERE id = ?";
-        $stmt = mysqli_prepare($cn, $sql);
-        mysqli_stmt_bind_param($stmt, "i", $userKey);
-    } else {
-        $sql = "SELECT id, name, apels, dni, email, tlf, fechaNcto FROM users WHERE email = ?";
-        $stmt = mysqli_prepare($cn, $sql);
-        mysqli_stmt_bind_param($stmt, "s", $userKey);
-    }
-    mysqli_stmt_execute($stmt);
-    $res = mysqli_stmt_get_result($stmt);
-    $user = mysqli_fetch_assoc($res);
-}
-
-$successMsg = "";
-$errorMsg = "";
-
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id         = $_POST['id'] ?? null;
-    $name       = trim($_POST['name'] ?? '');
-    $apels      = trim($_POST['Apels'] ?? '');
-    $dni        = trim($_POST['dni'] ?? '');
-    $email      = trim($_POST['email'] ?? '');
-    $tlf        = trim($_POST['tlf'] ?? '');
-    $fechaNcto  = trim($_POST['fechaNcto'] ?? '');
-    $passwd     = $_POST['passwd'] ?? '';
-    $passwd_r   = $_POST['passwd_repeat'] ?? '';
-
-    // Validaciones
-    $nameOk  = (bool) preg_match('/^[A-Za-zÀ-ÿ]+$/', $name);
-    $apelsOk = (bool) preg_match('/^[A-Za-zÀ-ÿ ]+$/', $apels);
-    $emailOk = (bool) filter_var($email, FILTER_VALIDATE_EMAIL);
-    $tlfOk   = (bool) preg_match('/^\d{9}$/', $tlf);
-    $fechaOk = (bool) preg_match('/^\d{4}-\d{2}-\d{2}$/', $fechaNcto);
-
-    $dniOk = false;
-    if (preg_match('/^(\d{8})-([A-Za-z])$/', $dni, $m)) {
-        $num   = (int)$m[1];
-        $letra = strtoupper($m[2]);
-        $tabla = "TRWAGMYFPDXBNJZSQVHLCKE";
-        $dniOk = ($tabla[$num % 23] === $letra);
+    if (!nombreRegex.test(nombre)) {
+      alert("El nombre no es válido.");
+      event.preventDefault();
+      return;
     }
 
-    if (!$nameOk || !$apelsOk || !$emailOk || !$tlfOk || !$fechaOk || !$dniOk) {
-        $errorMsg = "Algún campo no cumple el formato.";
-    } else {
-        if ($passwd !== '') {
-            if ($passwd !== $passwd_r) {
-                $errorMsg = "Las contraseñas no coinciden.";
-            } else {
-                $hash = password_hash($passwd, PASSWORD_DEFAULT);
-                $sql = "UPDATE users SET name=?, apels=?, dni=?, email=?, tlf=?, fechaNcto=?, passwd=? WHERE id=?";
-                $stmt = mysqli_prepare($cn, $sql);
-                mysqli_stmt_bind_param($stmt, "sssssssi", $name, $apels, $dni, $email, $tlf, $fechaNcto, $hash, $id);
-                mysqli_stmt_execute($stmt);
-                $successMsg = "Datos actualizados.";
-            }
-        } else {
-            $sql = "UPDATE users SET name=?, apels=?, dni=?, email=?, tlf=?, fechaNcto=? WHERE id=?";
-            $stmt = mysqli_prepare($cn, $sql);
-            mysqli_stmt_bind_param($stmt, "ssssssi", $name, $apels, $dni, $email, $tlf, $fechaNcto, $id);
-            mysqli_stmt_execute($stmt);
-            $successMsg = "Datos actualizados.";
-        }
-
-        // Recargar datos actualizados
-        $sql = "SELECT id, name, apels, dni, email, tlf, fechaNcto FROM users WHERE id = ?";
-        $stmt = mysqli_prepare($cn, $sql);
-        mysqli_stmt_bind_param($stmt, "i", $id);
-        mysqli_stmt_execute($stmt);
-        $res  = mysqli_stmt_get_result($stmt);
-        $user = mysqli_fetch_assoc($res);
+    if (!apellidosRegex.test(apellidos)) {
+      alert("Los apellidos no son válidos.");
+      event.preventDefault();
+      return;
     }
-}
-?>
 
-<link rel="stylesheet" href="css/modify_user.css">
+    if (!dniRegex.test(dni)) {
+      alert("El DNI debe tener 8 números y 1 letra (sin guion).");
+      event.preventDefault();
+      return;
+    }
 
-<div class="container">
-  <div class="content">
-    <h1>MODIFICAR USUARIO</h1>
-    <?php if ($errorMsg): ?>
-      <div class="error"><?= htmlspecialchars($errorMsg) ?></div>
-    <?php endif; ?>
-    <?php if ($successMsg): ?>
-      <div class="success"><?= htmlspecialchars($successMsg) ?></div>
-    <?php endif; ?>
-    <div class="rellenar">
-      <form id="user_modify_form" action="modify_user.php?user=<?= htmlspecialchars($userKey) ?>" method="post" class="labels">
-        <input type="hidden" name="id" value="<?= htmlspecialchars($user['id']) ?>">
+    if (!correoRegex.test(correo)) {
+      alert("El correo electrónico no es válido.");
+      event.preventDefault();
+      return;
+    }
 
-        <label for="name">Nombre *</label>
-        <input type="text" id="name" name="name" value="<?= htmlspecialchars($user['name']) ?>" required>
+    if (!telefonoRegex.test(telefono)) {
+      alert("El teléfono debe tener 9 dígitos.");
+      event.preventDefault();
+      return;
+    }
 
-        <label for="Apels">Apellidos *</label>
-        <input type="text" id="Apels" name="Apels" value="<?= htmlspecialchars($user['apels']) ?>" required>
+    if (!fechaRegex.test(fecha)) {
+      alert("La fecha de nacimiento no es válida.");
+      event.preventDefault();
+      return;
+    }
 
-        <label for="dni">DNI *</label>
-        <input type="text" id="dni" name="dni" value="<?= htmlspecialchars($user['dni']) ?>" required>
+    if (passwd !== "" && passwd !== passwdRepeat) {
+      alert("Las contraseñas no coinciden.");
+      event.preventDefault();
+      return;
+    }
 
-        <label for="email">Correo *</label>
-        <input type="text" id="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" required>
+    // Si pasa todas las validaciones, el formulario se envía normalmente
+  });
+});
 
-        <label for="tlf">Teléfono *</label>
-        <input type="text" id="tlf" name="tlf" value="<?= htmlspecialchars($user['tlf']) ?>" required>
-
-        <label for="fechaNcto">Fecha de Nacimiento *</label>
-        <input type="date" id="fechaNcto" name="fechaNcto" value="<?= htmlspecialchars($user['fechaNcto']) ?>" required>
-
-        <details>
-          <summary>Cambiar contraseña (opcional)</summary>
-          <label for="passwd">Contraseña</label>
-          <input type="password" id="passwd" name="passwd">
-
-          <label for="passwd_repeat">Repetir Contraseña</label>
-          <input type="password" id="passwd_repeat" name="passwd_repeat">
-        </details>
-
-        <button type="submit" id="user_modify_submit">Guardar cambios</button>
-      </form>
-    </div>
-  </div>
-</div>
-
-<script src="js/login.js" defer></script>
