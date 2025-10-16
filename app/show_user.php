@@ -1,44 +1,7 @@
 <?php
-// phpinfo();
-$hostname = "db";
-$username = "admin";
-$password = "test";
-$dbname   = "database";
-
-// Conexión a la base de datos
-$cn = mysqli_connect($hostname, $username, $password, $dbname);
-if (!$cn) {
-  die("Error de conexión: " . mysqli_connect_error());
-}
-
-// Obtener clave del usuario (por id o email)
-$userKey = isset($_GET['user']) ? trim($_GET['user']) : '';
-
-$user = null;
-if ($userKey !== '') {
-  if (ctype_digit($userKey)) {
-    // Buscar por ID
-    $sql = "SELECT id, name, apels, dni, email, tlf, fechaNcto FROM users WHERE id = ?";
-    $stmt = mysqli_prepare($cn, $sql);
-    mysqli_stmt_bind_param($stmt, "i", $userKey);
-  } else {
-    // Buscar por email
-    $sql = "SELECT id, name, apels, dni, email, tlf, fechaNcto FROM users WHERE email = ?";
-    $stmt = mysqli_prepare($cn, $sql);
-    mysqli_stmt_bind_param($stmt, "s", $userKey);
-  }
-  mysqli_stmt_execute($stmt);
-  $res  = mysqli_stmt_get_result($stmt);
-  $user = mysqli_fetch_assoc($res);
-}
-
-if (!$user) {
-  echo "Usuario no encontrado.";
-  exit;
-}
-
 // Mostrar la información del usuario 
 echo '
+<link rel="stylesheet" href="css/show_user.css">
 <div class="container">
   <div class="content">
     <h1>DATOS DEL USUARIO</h1>
@@ -141,6 +104,45 @@ echo '
     transform: translateY(-5px);
   }
 </style>
+// phpinfo();
+$hostname = "db";
+$username = "admin";
+$password = "test";
+$dbname   = "database";
+
+// Conexión a la base de datos
+$cn = mysqli_connect($hostname, $username, $password, $dbname);
+if (!$cn) {
+  die("Error de conexión: " . mysqli_connect_error());
+}
+
+// Obtener clave del usuario (por id o email)
+$userKey = isset($_GET['user']) ? trim($_GET['user']) : '';
+
+$user = null;
+if ($userKey !== '') {
+  if (ctype_digit($userKey)) {
+    // Buscar por ID
+    $sql = "SELECT id, name, apels, dni, email, tlf, fechaNcto FROM users WHERE id = ?";
+    $stmt = mysqli_prepare($cn, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $userKey);
+  } else {
+    // Buscar por email
+    $sql = "SELECT id, name, apels, dni, email, tlf, fechaNcto FROM users WHERE email = ?";
+    $stmt = mysqli_prepare($cn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $userKey);
+  }
+  mysqli_stmt_execute($stmt);
+  $res  = mysqli_stmt_get_result($stmt);
+  $user = mysqli_fetch_assoc($res);
+}
+
+if (!$user) {
+  echo "Usuario no encontrado.";
+  exit;
+}
+
+
 ';
 ?>
 
