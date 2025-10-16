@@ -1,7 +1,7 @@
 <?php
 
 session_start(); //iniciar sesion con php
-
+ob_end_flush();
 //parámetros para la conexión a la bd
 $servername = "db";
 $username = "admin";
@@ -47,12 +47,15 @@ if (isset($_POST['register_submit'])) {
 			$returnedValues = $result->fetch_assoc();
 			$_SESSION['user_id'] = $returnedValues['idU'];
 			echo "<script>
-			window.alert('Se ha registrado correctamente :)');
-			window.location.href = 'index.php';
+			window.alert('Te has registrado correctamente');
+			window.location.href = 'login.php';
 			</script>";
+
 
 			//se cierra la conexión
 			$conn->close();
+			//header("Location: login.php");
+			header("login.php");
 			exit();
 		} 
 		else {
@@ -64,7 +67,7 @@ if (isset($_POST['register_submit'])) {
 	$conn->close();
 }
 }
-
+ob_end_flush();
 ?>
 
 <html>
@@ -84,7 +87,7 @@ if (isset($_POST['register_submit'])) {
 		Nombre de usuario<br><input type="text" name="usuario" required><br>
 		Contraseña:<br> <input type="text" name="contrasena" required> <br>
 		<br>
-		<input type="submit" value="Registrar" name="register_submit" style="color:black;font-family:'Baskerville',serif;font-weight:bold;">
+		<input type="submit" value="Registrar" name="register_submit" style="color:black; background-color:lightpink;">
 	</form>
 		
 	<div class="button-container">

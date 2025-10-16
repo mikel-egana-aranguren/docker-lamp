@@ -2,24 +2,27 @@
 */
 document.addEventListener("DOMContentLoaded", () => { //a esto no se le llama, está escuchando durante todo el tiempo 
   // Seleccionamos el formulario y el contenedor de errores
-  const form = document.forms["register_form"];
+  const formR = document.forms["register_form"]; //para registro
+  //const formL = document.forms["login_form"]; //para login
+
   const mensajeError = document.createElement("p");
   mensajeError.style.color = "red";
-  form.appendChild(mensajeError);
 
-  form.addEventListener("submit", (e) => { 
+  formR.appendChild(mensajeError);
+  //formL.appendChild(mensajeError.cloneNode(true));
+  formR.addEventListener("submit", (e) => { 
     e.preventDefault(); // Detener el envío hasta validar
 
     // Obtener los valores del formulario
-    const nombre = form.nombre.value.trim();
-    const apellido = form.apellido.value.trim();
-    const numDni = form.numeroDni.value.trim();
-    const letraDni = form.letraDni.value.trim().toUpperCase();
-    const tlfn = form.tlfn.value.trim();
-    const fNacimiento = form.fNacimiento.value;
-    const email = form.email.value.trim();
-    const usuario = form.usuario.value.trim();
-    const contrasena = form.contrasena.value;
+    const nombre = formR.nombre.value.trim();
+    const apellido = formR.apellido.value.trim();
+    const numDni = formR.numeroDni.value.trim();
+    const letraDni = formR.letraDni.value.trim().toUpperCase();
+    const tlfn = formR.tlfn.value.trim();
+    const fNacimiento = formR.fNacimiento.value;
+    const email = formR.email.value.trim();
+    const usuario = formR.usuario.value.trim();
+    const contrasena = formR.contrasena.value;
 
     //validar:
     if (nombre.length < 2 || !/^[A-Za-zÁÉÍÓÚáéíóúñÑ]+$/.test(nombre))
@@ -51,10 +54,8 @@ document.addEventListener("DOMContentLoaded", () => { //a esto no se le llama, e
 
     // Si todo es correcto, limpiar errores y enviar
     mensajeError.textContent = "";
-    form.submit();
+    formR.submit();
   });
-
-  
   function mostrarError(msg) {
     mensajeError.textContent = msg;
   }

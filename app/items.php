@@ -5,6 +5,16 @@ session_start();
 
 <html>
  <body>
+  <?php if (isset($_SESSION['usuario'])): ?>
+      <p>
+        <a href="show_user.php?user=<?= intval($_SESSION['idU']) ?>"> Mi perfil </a>?>
+        <?php $ruta="items.php"; ?>
+      </p>
+  <?php else: ?>
+    <?php $ruta="index.php"; ?>
+    <a href="<?= $ruta ?>" class="button">Volver a inicio</a>
+    <?php endif; ?>
+
   <br><h1 align="center">CATÁLOGO: </h1><br>
   <?php
     $hostname = "db";
@@ -42,7 +52,6 @@ session_start();
     ";
     }
   ?>
-  <a href="index.php" class="button">Volver a inicio</a>
   <script src='./js/ver_info_peli.js'></script>
  </body>
 </html>

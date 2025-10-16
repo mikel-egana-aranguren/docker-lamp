@@ -1,5 +1,6 @@
 <?php
 session_start(); //iniciar sesion con php
+
 /**Algo de explicación: 
  * Estructura:
     - html: crea el formulario. Cuando se le da al botón, el .js está "escuchando" y 
@@ -30,19 +31,18 @@ index.php --> register.php :
     <link rel="stylesheet" type="text/css" href="inicioStyle.css">
    </head>
    <body>
-
-    <!-- 🔽 Añadido: botón 'Mi perfil' solo si hay sesión activa -->
-    <?php if (isset($_SESSION['user_id'])): ?>
-      <p>
-        <a href="show_user.php?user=<?= intval($_SESSION['user_id']) ?>">Mi perfil</a>
-      </p>
+      <h1>¡Bienvenid@ a SafeFilms!<h1>
+    <?php if (isset($_SESSION['usuario'])): ?>
+      
+      <?php else: ?>
+        <p>
+        <h2>Consulta nuestro catálogo con lo mejor del cine: <h2>
+        <button class="ctlg" onclick="window.location.href='items.php'">Catálogo</button>
+        <button class="reg" onclick="window.location.href='register.php'">Registrarse</button> 
+        <button class="inic" onclick="window.location.href='login.php'">Iniciar sesión</button>
+       </p>
     <?php endif; ?>
-    <!-- 🔼 Fin del añadido -->
-
-    <h1>¡Bienvenid@ a SafeFilms!<h1>
-    <button class="reg" onclick="window.location.href='register.php'">Registrarse</button> 
-    <h2>Consulta nuestro catálogo con lo mejor del cine: <h2>
-    <button class="ctlg" onclick="window.location.href='catalog.php'">Catálogo</button>
-    <button class="inic">Iniciar sesión</button>
+    <h2>(sabemos que en cuanto a diseño está feisima, pretendemos ponerla bonita para la entrega)<h2>
+   
    </body>
   </html>

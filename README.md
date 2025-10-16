@@ -1,8 +1,14 @@
+# Integrantes
+Mbarek Galloul Ezzakraoui
+Alicia Maizkurrena
+Adrián Vinagre
+Maira Gabriela Herbas Jaldin
+Ana Victoria Cernatescu
 
 # Docker LAMP
 Linux + Apache + MariaDB (MySQL) + PHP 7.2 on Docker Compose. Mod_rewrite enabled by default.
 
-## Instructions
+## Instrucciones
 
 Asegúrate de que no tengas la bd:
 ```bash
@@ -20,9 +26,10 @@ $ docker build -t web .
 $ docker-compose up -d
 ```
 
-Para pararlo:
+Para pararlo y borrar contenedor y tal
 ```bash
-$ docker-compose stop
+$ docker-compose down -v
+
 ```
 
 Feel free to make pull requests and help to improve this.
