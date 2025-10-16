@@ -9,9 +9,8 @@ if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
 
-$id = isset($_GET['nombre']) ? $_GET['nombre'] : '';
+$id = isset($_GET['item']) ? $_GET['item'] : '';
 
-// Confirmación de eliminación
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $conn->prepare("DELETE FROM item WHERE nombre = ?");
     $stmt->bind_param("s", $id);
@@ -31,14 +30,13 @@ $stmt->close();
 ?>
 
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Eliminar Ítem</title>
-</head>
-<body>
-  <h1>Eliminar Ítem</h1>
-  <?php if ($item): ?>
+<link rel="stylesheet" href="css/items.css">
+<div class="container">
+  <div class="content">
+    <h1>Eliminar Coche</h1>
+    <table border="1" cellpadding="10" cellspacing="0">
+      <tr>
+        <?php if ($item): ?>
     <p>¿Estás seguro de que deseas eliminar <strong><?= htmlspecialchars($item['nombre']) ?></strong>?</p>
     <form method="POST">
       <button type="submit" id="item_delete_submit">Confirmar</button>
@@ -46,7 +44,9 @@ $stmt->close();
     </form>
   <?php else: ?>
     <p>Ítem no encontrado.</p>
-    <a href="items.php"><button>Volver</button></a>
+    <a href="delete_item.php"><button>Volver</button></a>
   <?php endif; ?>
-</body>
+      </tr>
+   </div>
+ </div>
 </html>
