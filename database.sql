@@ -28,10 +28,9 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `item` (
-  `modelo` text NOT NULL,
-  `año` int(4) NOT NULL,
+  `nombre` text NOT NULL,
+  `año` year(4) NOT NULL,
   `combustible` text NOT NULL,
-  `marca` int(11) NOT NULL,
   `caballos` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -62,7 +61,7 @@ INSERT INTO `usuarios` (`id`, `nombre`) VALUES
 -- Indices de la tabla `item`
 --
 ALTER TABLE `item`
-  ADD PRIMARY KEY (`modelo`(255),`marca`);
+  ADD PRIMARY KEY (`nombre`(255));
 
 --
 -- Indices de la tabla `usuarios`
