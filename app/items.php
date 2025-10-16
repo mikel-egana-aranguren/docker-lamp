@@ -1,11 +1,7 @@
 <?php
 
 session_start();
-if (!isset($_SESSION['username'])) {
-    // Si no hay usuario logueado, redirigimos al login o mostramos mensaje
-    header("Location: login.php");
-    exit;
-}
+
 
 $username_session = $_SESSION['username'];
 
@@ -14,7 +10,6 @@ echo '
 
 <div class="user-bar">
     <div class="user-dropdown">
-        <a href="delete_item.php" class="btn-delete"><button>Eliminar Coches</button></a>
         <button class="user-button">' . htmlspecialchars($username_session) . ' ▼</button>
         <div class="user-dropdown-content">
             <a href="modify_user.php">Modificar Usuario</a>
@@ -57,6 +52,7 @@ if ($result->num_rows > 0) {
                 <td>
                     <a href='show_item.php?item={$nombre}'><button>Ver</button></a>
                     <a href='modify_item.php?item={$nombre}'><button>Modificar</button></a>
+                    <a href='delete_item.php?item={$nombre}'><button>Eliminar</button></a>
                 </td>
               </tr>";
     }
