@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.2
+-- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: db
--- Tiempo de generación: 14-10-2025 a las 19:30:49
+-- Tiempo de generación: 16-10-2025 a las 11:20:27
 -- Versión del servidor: 10.8.2-MariaDB-1:10.8.2+maria~focal
--- Versión de PHP: 8.2.27
+-- Versión de PHP: 8.3.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,28 +24,51 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuario`
+-- Estructura de tabla para la tabla `item`
 --
 
-CREATE TABLE `usuario` (
-  `dni` varchar(10) NOT NULL,
-  `nombre` text NOT NULL,
-  `apellidos` text NOT NULL,
-  `correo` text NOT NULL,
-  `contrasena` text NOT NULL,
-  `telefono` char(9) NOT NULL,
-  `fecha_nacimiento` date NOT NULL
-) ;
+CREATE TABLE `item` (
+  `modelo` text NOT NULL,
+  `año` int(4) NOT NULL,
+  `combustible` text NOT NULL,
+  `marca` int(11) NOT NULL,
+  `caballos` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `id` int(11) NOT NULL,
+  `nombre` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `nombre`) VALUES
+(1, 'mikel'),
+(2, 'aitor');
 
 --
 -- Índices para tablas volcadas
 --
 
 --
--- Indices de la tabla `usuario`
+-- Indices de la tabla `item`
 --
-ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`dni`);
+ALTER TABLE `item`
+  ADD PRIMARY KEY (`modelo`(255),`marca`);
+
+--
+-- Indices de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
