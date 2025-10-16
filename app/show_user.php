@@ -1,9 +1,8 @@
 <?php
-// phpinfo();
 $hostname = "db";
 $username = "admin";
 $password = "test";
-$dbname   = "database";
+$dbname   = "database"; // Asegúrate que coincide con el nombre real de tu base de datos
 
 // Conexión a la base de datos
 $cn = mysqli_connect($hostname, $username, $password, $dbname);
@@ -11,22 +10,29 @@ if (!$cn) {
   die("Error de conexión: " . mysqli_connect_error());
 }
 
-// Obtener clave del usuario (por id o email)
+// Obtener clave del usuario (por dni o correo)
 $userKey = isset($_GET['user']) ? trim($_GET['user']) : '';
 
 $user = null;
 if ($userKey !== '') {
   if (ctype_digit($userKey)) {
-    // Buscar por ID
-    $sql = "SELECT id, name, apels, dni, email, tlf, fechaNcto FROM users WHERE id = ?";
-    $stmt = mysqli_prepare($cn, $sql);
-    mysqli_stmt_bind_param($stmt, "i", $userKey);
-  } else {
-    // Buscar por email
-    $sql = "SELECT id, name, apels, dni, email, tlf, fechaNcto FROM users WHERE email = ?";
+    // Buscar por teléfono
+    $sql = "SELECT dni, nombre, apellidos, correo, contraseña, telefono, fecha_nacimiento 
+            FROM usuario WHERE telefono = ?";
     $stmt = mysqli_prepare($cn, $sql);
     mysqli_stmt_bind_param($stmt, "s", $userKey);
+  } else {
+    // Buscar por DNI o correo
+    $sql = "SELECT dni, nombre, apellidos, correo, contraseña, telefono, fecha_nacimiento 
+            FROM usuario WHERE dni = ? OR correo = ?";
+    $stmt = mysqli_prepare($cn, $sql);
+    mysqli_stmt_bind_param($stmt, "ss", $userKey, $userKey);
   }
+
+  if (!$stmt) {
+    die("Error al preparar la consulta: " . mysqli_error($cn));
+  }
+
   mysqli_stmt_execute($stmt);
   $res  = mysqli_stmt_get_result($stmt);
   $user = mysqli_fetch_assoc($res);
@@ -45,13 +51,13 @@ echo '
     <h1>DATOS DEL USUARIO</h1>
     <div class="rellenar">
 
-      <p><strong>ID:</strong> '.htmlspecialchars($user["id"]).'</p>
-      <p><strong>Nombre:</strong> '.htmlspecialchars($user["name"]).'</p>
-      <p><strong>Apellidos:</strong> '.htmlspecialchars($user["apels"]).'</p>
       <p><strong>DNI:</strong> '.htmlspecialchars($user["dni"]).'</p>
-      <p><strong>Correo:</strong> '.htmlspecialchars($user["email"]).'</p>
-      <p><strong>Teléfono:</strong> '.htmlspecialchars($user["tlf"]).'</p>
-      <p><strong>Fecha de nacimiento:</strong> '.htmlspecialchars($user["fechaNcto"]).'</p>
+      <p><strong>Nombre:</strong> '.htmlspecialchars($user["nombre"]).'</p>
+      <p><strong>Apellidos:</strong> '.htmlspecialchars($user["apellidos"]).'</p>
+      <p><strong>Correo:</strong> '.htmlspecialchars($user["correo"]).'</p>
+      <p><strong>Contraseña:</strong> '.htmlspecialchars($user["contraseña"]).'</p>
+      <p><strong>Teléfono:</strong> '.htmlspecialchars($user["telefono"]).'</p>
+      <p><strong>Fecha de nacimiento:</strong> '.htmlspecialchars($user["fecha_nacimiento"]).'</p>
 
     </div>
 
@@ -144,6 +150,7 @@ echo '
 </style>
 ';
 ?>
+
 
 
 
