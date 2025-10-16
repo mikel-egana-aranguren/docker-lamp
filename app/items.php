@@ -1,5 +1,10 @@
 <?php
 echo '
+<link rel="stylesheet" href="css/items.css">
+<div class="buttons">
+  <a href="modify_item.php" class="btn-login">Modificar Coches</a>
+  <a href="delete_item.php" class="btn-login">Eliminar Coches</a>
+</div>
 <div class="container">
   <div class="content">
     <h1>LISTA DE ITEMS</h1>
@@ -28,15 +33,12 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $id = $row['id'];
+        $id = $row['nombre'];
         echo "<tr>
-                <td>{$row['id']}</td>
                 <td>{$row['nombre']}</td>
                 <td>{$row['descripcion']}</td>
                 <td>
                     <a href='show_item.php?id=$id'><button>Ver</button></a>
-                    <a href='modify_item.php?id=$id'><button>Modificar</button></a>
-                    <button onclick=\"confirmDelete($id)\">Eliminar</button>
                 </td>
               </tr>";
     }
@@ -47,6 +49,7 @@ if ($result->num_rows > 0) {
 $conn->close();
 
 echo '
+<link rel="stylesheet" href="css/login.css">
     </table>
   </div>
 </div>
@@ -58,65 +61,5 @@ function confirmDelete(id) {
   }
 }
 </script>
-
-<style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-  }
-
-  .container {
-    display: grid;
-    place-items: center;
-    height: 100vh;
-    box-sizing: border-box;
-  }
-
-  .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
-    font-family: Arial, sans-serif;
-  }
-
-  h1 {
-    font-size: 48px;
-    margin: 0;
-  }
-
-  table {
-    border-collapse: collapse;
-    font-size: 18px;
-  }
-
-  th, td {
-    padding: 10px 20px;
-    text-align: center;
-  }
-
-  button {
-    display: inline-block;
-    font-weight: bold;
-    border-radius: 20px;
-    border: 2px solid #000;
-    background-color: #000;
-    color: #fff;
-    padding: 8px 16px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-
-  button:hover {
-    background-color: #232323;
-    transform: translateY(-2px);
-  }
-
-  td button {
-    margin: 0 5px;
-  }
-</style>
 ';
 ?>
