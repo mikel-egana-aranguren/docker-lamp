@@ -34,11 +34,9 @@ if ($conn->connect_error) {
         else { 
             $message = "Contraseña incorrecta."; 
         }    
-        
         $stmt->close();
-    }
- }
- }
+        }
+  }
 }
 $conn->close();
 ?>
