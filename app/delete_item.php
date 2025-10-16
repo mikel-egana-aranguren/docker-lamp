@@ -1,6 +1,6 @@
 <?php
 echo '
-<link rel="stylesheet" href="css/items.css">
+<link rel="stylesheet" href="css/delete_item.css">
 <div class="container">
   <div class="content">
     <h1>LISTA DE ITEMS</h1>
@@ -33,7 +33,7 @@ if ($result->num_rows > 0) {
         echo "<tr>
                 <td>{$row['nombre']}</td>
                 <td>
-                    <button onclick=\"confirmDelete($id)\">Eliminar</button>
+                    <button onclick=\"confirmDelete($nombre)\">Eliminar</button>
                 </td>
               </tr>";
     }
@@ -44,26 +44,10 @@ if ($result->num_rows > 0) {
 $conn->close();
 
 echo "
-<link rel="stylesheet" href="css/items.css">
     </table>
   </div>
 </div>
-
-<script>
-function confirmDelete(id) {
-  if (confirm("¿Estás seguro de que deseas eliminar este ítem?")) {
-    $sql = "DELETE FROM item WHERE id = $id";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "<script>
-                alert('Ítem eliminado correctamente.');
-              </script>";
-    } else {
-        echo "Error al eliminar el ítem: " . $conn->error;
-    }
-  }
-}
-</script>
+<script src="js/items.js" defer></script>
 ";
 ?>
 
