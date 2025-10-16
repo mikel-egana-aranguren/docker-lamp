@@ -35,7 +35,7 @@ th, td {
   text-align: center;
 }
 
-.button {
+button {
   display: inline-block;
   font-weight: bold;
   border-radius: 20px;

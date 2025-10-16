@@ -2,7 +2,6 @@
 echo '
 <link rel="stylesheet" href="css/items.css">
 <div class="buttons">
-  <a href="modify_item.php" class="btn-login">Modificar Coches</a>
   <a href="delete_item.php" class="btn-login">Eliminar Coches</a>
 </div>
 <div class="container">
@@ -10,11 +9,11 @@ echo '
     <h1>LISTA DE ITEMS</h1>
     <table border="1" cellpadding="10" cellspacing="0">
       <tr>
-        <th>ID</th>
         <th>Nombre</th>
-        <th>Descripción</th>
         <th>Acciones</th>
       </tr>
+   </div>
+ </div>
 ';
 
 $hostname = "db";
@@ -28,17 +27,17 @@ if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
 
-$sql = "SELECT id, nombre, descripcion FROM items";
+$sql = "SELECT * FROM item";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $id = $row['nombre'];
+        $nombre = $row['nombre'];
         echo "<tr>
                 <td>{$row['nombre']}</td>
-                <td>{$row['descripcion']}</td>
                 <td>
-                    <a href='show_item.php?id=$id'><button>Ver</button></a>
+                    <a href='show_item.php?item={$nombre}'><button>Ver</button></a>
+                    <a href='modify_item.php?item={$nombre}'><button>Modificar</button></a>
                 </td>
               </tr>";
     }
@@ -49,7 +48,7 @@ if ($result->num_rows > 0) {
 $conn->close();
 
 echo '
-<link rel="stylesheet" href="css/login.css">
+<link rel="stylesheet" href="css/items.css">
     </table>
   </div>
 </div>

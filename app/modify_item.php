@@ -9,14 +9,14 @@ if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
 
-$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$id = isset($_GET['nombre']) ? intval($_GET['nombre']) : 0;
 
 // Si se ha enviado el formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = $_POST['nombre'];
     $descripcion = $_POST['descripcion'];
 
-    $stmt = $conn->prepare("UPDATE items SET nombre = ?, descripcion = ? WHERE id = ?");
+    $stmt = $conn->prepare("UPDATE item SET nombre = ?, descripcion = ? WHERE nombre = ?");
     $stmt->bind_param("ssi", $nombre, $descripcion, $id);
     $stmt->execute();
     $stmt->close();
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Obtener datos del ítem
-$sql = "SELECT * FROM items WHERE id = $id";
+$sql = "SELECT * FROM item WHERE nombre = $id";
 $result = $conn->query($sql);
 $item = $result->fetch_assoc();
 $conn->close();

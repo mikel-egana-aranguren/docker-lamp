@@ -9,8 +9,8 @@ if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
 
-$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-$sql = "SELECT * FROM items WHERE id = $id";
+$nombre = isset($_GET['nombre']) ? intval($_GET['nombre']) : 0;
+$sql = "SELECT * FROM item WHERE nombre = $nombre";
 $result = $conn->query($sql);
 $item = $result->fetch_assoc();
 $conn->close();
