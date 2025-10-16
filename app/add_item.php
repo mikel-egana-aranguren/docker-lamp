@@ -1,12 +1,20 @@
 <?php
-echo '
-<link rel="stylesheet" href="css/add_item.css">
+// Configuración de la base de datos
+$hostname = "db";
+$username = "admin";
+$password = "test";
+$db = "database";
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Añadir Item</title>
-<script>
+  <meta charset="UTF-8">
+  <title>Añadir Item</title>
+  <link rel="stylesheet" href="css/add_item.css">
+  <script src="js/add_item.js" defer></script>
+</head>
+<body>
 
   <div class="container">
     <div class="content">
@@ -26,12 +34,7 @@ echo '
       </form>
     </div>
   </div>
-<script src="js/add_item.js" defer></script>';
-// phpinfo();
 
-$hostname = "db";
-$username = "admin";
-$password = "test";
-$db = "database";
-?>
+</body>
+</html>
 
