@@ -1,29 +1,33 @@
 <?php
-  echo '<h1>Yeah, it works!<h1>';
-  // phpinfo();
-  $hostname = "db";
-  $username = "admin";
-  $password = "test";
-  $db = "database";
+session_start();//iniciar sesion, es una funcion nativa de PHP
+require_once __DIR__ . '/connectdb.php'; //Conectarse a la BD
+$request = $_SERVER['REQUEST_URI']; //Obtener la ruta
+switch ($request) { //Rutas
+    case '/':
+        //Página inicio
+        require __DIR__ . '/home.php';
+        break;
 
-  $conn = mysqli_connect($hostname,$username,$password,$db);
-  if ($conn->connect_error) {
-    die("Database connection failed: " . $conn->connect_error);
-  }
+    case '/register':
+        //Registro
+        require __DIR__ . '/register.php';
+        break;
 
+    case '/login':
+        //iniciar sesión
+        require __DIR__ . '/login.php';
+        break;
 
+    case '/items':
+        //Listado de items
+        require __DIR__ . '/items.php';
+        break;
 
-$query = mysqli_query($conn, "SELECT * FROM usuarios")
-   or die (mysqli_error($conn));
-
-while ($row = mysqli_fetch_array($query)) {
-  echo
-   "<tr>
-    <td>{$row['id']}</td>
-    <td>{$row['nombre']}</td>
-   </tr>";
-   
-
+    default:
+        // Página no encontrada
+        http_response_code(404);
+        require __DIR__ . '/404.php';
+        break;
 }
 
 ?>
