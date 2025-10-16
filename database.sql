@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: db
--- Tiempo de generación: 16-10-2025 a las 11:20:27
+-- Tiempo de generación: 16-10-2025 a las 16:22:26
 -- Versión del servidor: 10.8.2-MariaDB-1:10.8.2+maria~focal
 -- Versión de PHP: 8.3.26
 
@@ -49,6 +49,14 @@ CREATE TABLE `usuario` (
   `telefono` char(9) NOT NULL,
   `fecha_nacimiento` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`dni`, `nombre`, `apellidos`, `correo`, `contrasena`, `telefono`, `fecha_nacimiento`) VALUES
+('22768965G', 'mikel', 'garcia', 'mikel@gmail.com', '1234', '654788934', '2015-05-06'),
+('78652329F', 'aitor', 'zabaleta', 'aitor@gmail.com', '4321', '679853126', '2007-12-13');
 
 --
 -- Índices para tablas volcadas
