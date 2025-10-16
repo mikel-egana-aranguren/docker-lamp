@@ -37,21 +37,18 @@ CREATE TABLE `item` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios`
+-- Estructura de tabla para la tabla `usuario`
 --
 
-CREATE TABLE `usuarios` (
-  `id` int(11) NOT NULL,
-  `nombre` text NOT NULL
+CREATE TABLE `usuario` (
+  `dni` varchar(10) NOT NULL,
+  `nombre` text NOT NULL,
+  `apellidos` text NOT NULL,
+  `correo` text NOT NULL,
+  `contrasena` text NOT NULL,
+  `telefono` char(9) NOT NULL,
+  `fecha_nacimiento` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `usuarios`
---
-
-INSERT INTO `usuarios` (`id`, `nombre`) VALUES
-(1, 'mikel'),
-(2, 'aitor');
 
 --
 -- Índices para tablas volcadas
@@ -64,10 +61,10 @@ ALTER TABLE `item`
   ADD PRIMARY KEY (`nombre`(255));
 
 --
--- Indices de la tabla `usuarios`
+-- Indices de la tabla `usuario`
 --
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`dni`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
