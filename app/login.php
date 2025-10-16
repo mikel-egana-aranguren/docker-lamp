@@ -1,56 +1,70 @@
 <?php
-echo '
+$hostname = "db";
+$username = "admin";
+$password = "test";
+$dbname   = "database";
+
+$message = "";
+$message_color = "red";
+
+$conn = new mysqli($hostname, $username, $password, $dbname);
+if ($conn->connect_error) {
+    $message = "Error de conexión a la base de datos: " . $conn->connect_error;
+} else {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $email = $_POST['email'] ?? '';
+        $passwd = $_POST['passwd'] ?? '';
+
+        // Preparar consulta para buscar usuario
+        $stmt = $conn->prepare("SELECT contrasena FROM usuario WHERE correo = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->num_rows === 0) {
+            $message = "Correo no registrado.";
+        } else {
+            $stmt->bind_result($db_pass);
+            $stmt->fetch();
+
+            if ($db_pass === $passwd) { // sin hash
+                $message = "Login correcto. Redirigiendo...";
+                $message_color = "green";
+                // Redirigir después de 1.5s
+                header("refresh:1.5; url=items.php");
+            } else {
+                $message = "Contraseña incorrecta.";
+            }
+        }
+        $stmt->close();
+    }
+}
+$conn->close();
+?>
+
 <link rel="stylesheet" href="css/login.css">
 <div class="container">
   <div class="content">
     <h1>INICIAR SESIÓN</h1>
-    <div class="rellenar">
-    <form id="login_form" action="login.php" method="post" class="labels">
-      <label for="email">Correo</label>
-      <input type="text" id="email" name="email" required>
 
-      <label for="passwd">Contraseña</label>
-      <input type="password" id="passwd" name="passwd" required>
+    <?php if ($message !== ""): ?>
+        <p style="color: <?= $message_color ?>; font-weight:bold; margin-bottom:15px;">
+            <?= htmlspecialchars($message) ?>
+        </p>
+    <?php endif; ?>
+
+    <div class="rellenar">
+      <form id="login_form" action="" method="post" class="labels">
+        <label for="email">Correo</label>
+        <input type="text" id="email" name="email" required value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
+
+        <label for="passwd">Contraseña</label>
+        <input type="password" id="passwd" name="passwd" required>
+
+        <button type="submit" id="login_submit">Confirmar</button>
+      </form>
     </div>
-      <button type="submit" id="login_submit">Confirmar</button>
-    </form>
   </div>
 </div>
 
-<script src="js/login.js" defer></script>';
-// phpinfo();
-  $hostname = "db";
-  $username = "admin";
-  $password = "test";
-  $db = "database";
-
-// datos introducidos
-  $email = $_POST['email'];       
-  $passwd = $_POST['passwd'];
-  
-$conn = mysqli_connect($hostname,$username,$password,$db);
-if ($conn->connect_error) {
-    die("Database connection failed: " . $conn->connect_error);
-}
-
-mysqli_set_charset($conn, 'utf8mb4');
-$email_esc = mysqli_real_escape_string($conn, $email);
-
-$sql="SELECT contrasena FROM usuario WHERE correo= '$email_esc'";
-
-$result = mysqli_query($conn, $sql);
-if (!$result) {
-    error_log("DB query error: " . mysqli_error($conn));
-    echo "Error interno.";
-    mysqli_close($conn);
-    exit;
-}
-
-if (mysqli_num_rows($result) === 0) {
-    echo '<script>alert("Usuario o contraseña incorrectos.");</script>';
-    mysqli_free_result($result);
-    mysqli_close($conn);
-    exit;
-}
-?>
-
+<script src="js/login.js" defer></script>
