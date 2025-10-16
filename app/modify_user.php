@@ -1,4 +1,49 @@
 <?php
+echo '
+<link rel="stylesheet" href="css/modify_user.css">
+<div class="container">
+  <div class="content">
+    <h1>MODIFICAR USUARIO</h1>
+   <div class="rellenar">
+    <form id="user_modify_form" action="modify_user.php?user='.htmlspecialchars($userKey).'" method="post" class="labels">
+
+      <input type="hidden" name="id" value="'.htmlspecialchars($user["id"]).'">
+
+      <label for="name">Nombre *</label>
+      <input type="text" id="name" name="name" value="'.htmlspecialchars($user["name"]).'" required>
+
+      <label for="Apels">Apellidos *</label>
+      <input type="text" id="Apels" name="Apels" value="'.htmlspecialchars($user["Apels"]).'" required>
+
+      <label for="dni">DNI *</label>
+      <input type="text" id="dni" name="dni" value="'.htmlspecialchars($user["dni"]).'" required>
+
+      <label for="email">Correo *</label>
+      <input type="text" id="email" name="email" value="'.htmlspecialchars($user["email"]).'" required>
+
+      <label for="tlf">Teléfono *</label>
+      <input type="text" id="tlf" name="tlf" value="'.htmlspecialchars($user["tlf"]).'" required>
+
+      <label for="fechaNcto">Fecha de Nacimiento *</label>
+      <input type="date" id="fechaNcto" name="fechaNcto" value="'.htmlspecialchars($user["fechaNcto"]).'" required>
+
+      <details>
+        <summary>Cambiar contraseña (opcional)</summary>
+        <label for="passwd">Contraseña</label>
+        <input type="password" id="passwd" name="passwd">
+
+        <label for="passwd_repeat">Repetir Contraseña</label>
+        <input type="password" id="passwd_repeat" name="passwd_repeat">
+      </details>
+    </div>
+      <button type="submit" id="user_modify_submit">Guardar cambios</button>
+    </form>
+  </div>
+</div>
+
+<script src="js/login.js" defer></script>';
+';
+
 // phpinfo();
   $hostname = "db";
   $username = "admin";
