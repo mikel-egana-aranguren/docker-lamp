@@ -22,9 +22,9 @@ if ($userKey !== '') {
     $stmt = mysqli_prepare($cn, $sql);
     mysqli_stmt_bind_param($stmt, "s", $userKey);
   } else {
-    // Buscar por DNI o correo
+    // Buscar por DNI o correo o Nombre
     $sql = "SELECT dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento 
-            FROM usuario WHERE dni = ? OR correo = ?";
+            FROM usuario WHERE dni = ? OR correo = ? OR nombre = ?";
     $stmt = mysqli_prepare($cn, $sql);
     mysqli_stmt_bind_param($stmt, "ss", $userKey, $userKey);
   }
