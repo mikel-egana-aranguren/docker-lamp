@@ -1,6 +1,21 @@
 <?php
+
+session_start();
+$username_session = isset($_SESSION['username']) ? $_SESSION['username'] : 'Invitado';
+
 echo '
 <link rel="stylesheet" href="css/items.css">
+
+<div class="user-bar">
+    <div class="user-dropdown">
+        <button class="user-button">' . htmlspecialchars($username_session) . ' ▼</button>
+        <div class="user-dropdown-content">
+            <a href="modify_user.php">Modificar Usuario</a>
+            <a href="logout.php">Cerrar Sesión</a>
+        </div>
+    </div>
+</div>
+
 <div class="buttons">
   <a href="delete_item.php" class="btn-login">Eliminar Coches</a>
 </div>
