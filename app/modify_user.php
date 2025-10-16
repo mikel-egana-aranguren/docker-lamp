@@ -94,10 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 
-if (!$user) {
-  echo "Usuario no encontrado.";
-  exit;
-}
+
 ?>
 
 
