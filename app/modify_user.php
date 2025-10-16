@@ -1,8 +1,4 @@
 <?php
-// modify_user.php (adaptado a la tabla `usuario` y columnas de show_user.php)
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
 $hostname = "db";
 $username = "admin";
 $password = "test";
@@ -40,7 +36,7 @@ if ($userKey !== '') {
         $stmt = prepare_or_die($cn, $sql, 'SELECT por dni');
         mysqli_stmt_bind_param($stmt, "s", $userKey);
     } else {
-        // Buscar por nombre (puede devolver muchos; tomamos el primero). Mejor: mostrar lista.
+        // Buscar por nombre (puede devolver muchos; tomamos el primero)
         $sql = "SELECT dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento FROM `usuario` WHERE nombre = ? LIMIT 1";
         $stmt = prepare_or_die($cn, $sql, 'SELECT por nombre');
         mysqli_stmt_bind_param($stmt, "s", $userKey);
@@ -50,7 +46,7 @@ if ($userKey !== '') {
         die("Error al ejecutar la consulta: " . mysqli_stmt_error($stmt));
     }
 
-    // Obtener resultado (con fallback)
+    // Obtener resultado
     if (function_exists('mysqli_stmt_get_result')) {
         $res = mysqli_stmt_get_result($stmt);
         if ($res === false) {
@@ -85,7 +81,6 @@ if (!$user) {
 $successMsg = "";
 $errorMsg = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Esperamos que los name del form coincidan con los aquí usados: dni,nombre,apellidos,correo,telefono,fecha_nacimiento,contrasena (opcional)
     $dni_post    = trim($_POST['dni'] ?? '');
     $nombre_post = trim($_POST['nombre'] ?? '');
     $apellidos   = trim($_POST['apellidos'] ?? '');
@@ -95,20 +90,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $passwd      = $_POST['contrasena'] ?? '';
     $passwd_r    = $_POST['contrasena_repeat'] ?? '';
 
-    // Validaciones (ajusta según tus reglas)
+    // Validaciones actualizadas
     $nombreOk = (bool) preg_match('/^[A-Za-zÀ-ÿ ]+$/', $nombre_post);
     $apelsOk  = (bool) preg_match('/^[A-Za-zÀ-ÿ ]+$/', $apellidos);
     $emailOk  = (bool) filter_var($correo, FILTER_VALIDATE_EMAIL);
     $tlfOk    = (bool) preg_match('/^\d{9}$/', $telefono);
-    $fechaOk  = (bool) preg_match('/^\d{4}-\d{2}-\d{2}$/', $fecha_nac);
 
-    $dniOk = false;
-    if (preg_match('/^(\d{8})-?([A-Za-z])$/', $dni_post, $m)) {
-        $num   = (int)$m[1];
-        $letra = strtoupper($m[2]);
-        $tabla = "TRWAGMYFPDXBNJZSQVHLCKE";
-        $dniOk = (isset($tabla[$num % 23]) && $tabla[$num % 23] === $letra);
+    // Validar fecha (acepta 2008-03-14 o 14/03/2008)
+    if (preg_match('/^(\d{2})\/(\d{2})\/(\d{4})$/', $fecha_nac, $m)) {
+        $fecha_nac = "{$m[3]}-{$m[2]}-{$m[1]}";
     }
+    $fechaOk = (bool) preg_match('/^\d{4}-\d{2}-\d{2}$/', $fecha_nac);
+
+    // Validar DNI (solo formato, sin comprobar letra)
+    $dniOk = (bool) preg_match('/^\d{8}[A-Za-z]$/', $dni_post);
 
     if (!$nombreOk || !$apelsOk || !$emailOk || !$tlfOk || !$fechaOk || !$dniOk) {
         $errorMsg = "Algún campo no cumple el formato.";
@@ -138,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $successMsg = "Datos actualizados.";
         }
 
-        // Recargar datos actualizados (por dni)
+        // Recargar datos actualizados
         $sql = "SELECT dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento FROM `usuario` WHERE dni = ?";
         $stmt = prepare_or_die($cn, $sql, 'SELECT recarga');
         mysqli_stmt_bind_param($stmt, "s", $dni_post);
@@ -157,9 +152,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_stmt_close($stmt);
     }
 }
-
-// Mostrar formulario (ejemplo simple). Asegúrate de que los name coinciden con lo que procesa el POST arriba.
 ?>
+
 <link rel="stylesheet" href="css/modify_user.css">
 <div class="container">
   <div class="content">
