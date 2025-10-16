@@ -2,45 +2,53 @@
 $hostname = "db";
 $username = "admin";
 $password = "test";
-$dbname   = "database"; // Asegúrate que coincide con el nombre real de tu base de datos
+$dbname   = "database"; // Asegúrate que coincide con tu base de datos
 
 // Conexión a la base de datos
 $cn = mysqli_connect($hostname, $username, $password, $dbname);
 if (!$cn) {
-  die("Error de conexión: " . mysqli_connect_error());
+    die("Error de conexión: " . mysqli_connect_error());
 }
 
-// Obtener clave del usuario (por dni o correo)
+// Obtener clave del usuario (por dni, correo o teléfono)
 $userKey = isset($_GET['user']) ? trim($_GET['user']) : '';
 
 $user = null;
+
 if ($userKey !== '') {
-  if (ctype_digit($userKey)) {
-    // Buscar por teléfono
-    $sql = "SELECT dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento 
-            FROM usuario WHERE telefono = ?";
-    $stmt = mysqli_prepare($cn, $sql);
-    mysqli_stmt_bind_param($stmt, "s", $userKey);
-  } else {
-    // Buscar por DNI o correo o Nombre
-    $sql = "SELECT dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento 
-            FROM usuario WHERE dni = ? OR correo = ? OR nombre = ?";
-    $stmt = mysqli_prepare($cn, $sql);
-    mysqli_stmt_bind_param($stmt, "ss", $userKey, $userKey);
-  }
+    if (ctype_digit($userKey)) {
+        // Buscar por teléfono
+        $sql = "SELECT dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento 
+                FROM usuario WHERE telefono = ?";
+        $stmt = mysqli_prepare($cn, $sql);
+        if (!$stmt) {
+            die("Error al preparar la consulta: " . mysqli_error($cn));
+        }
+        mysqli_stmt_bind_param($stmt, "s", $userKey);
+    } else {
+        // Buscar por DNI, correo o nombre
+        $sql = "SELECT dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento 
+                FROM usuario WHERE dni = ? OR correo = ? OR nombre = ?";
+        $stmt = mysqli_prepare($cn, $sql);
+        if (!$stmt) {
+            die("Error al preparar la consulta: " . mysqli_error($cn));
+        }
+        // Aquí necesitamos 3 parámetros, todos con el mismo valor $userKey
+        mysqli_stmt_bind_param($stmt, "sss", $userKey, $userKey, $userKey);
+    }
 
-  if (!$stmt) {
-    die("Error al preparar la consulta: " . mysqli_error($cn));
-  }
-
-  mysqli_stmt_execute($stmt);
-  $res  = mysqli_stmt_get_result($stmt);
-  $user = mysqli_fetch_assoc($res);
+    // Ejecutar la consulta
+    if (mysqli_stmt_execute($stmt)) {
+        $res = mysqli_stmt_get_result($stmt);
+        $user = mysqli_fetch_assoc($res);
+    } else {
+        die("Error al ejecutar la consulta: " . mysqli_stmt_error($stmt));
+    }
 }
 
 if (!$user) {
-  echo "Usuario no encontrado.";
-  exit;
+    echo "Usuario no encontrado.";
+    exit;
 }
 
 // Mostrar la información del usuario
@@ -150,6 +158,7 @@ echo '
 </style>
 ';
 ?>
+
 
 
 
