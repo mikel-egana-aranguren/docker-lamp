@@ -1,54 +1,52 @@
 <?php
-echo '
-<link rel="stylesheet" href="css/delete_item.css">
-<div class="container">
-  <div class="content">
-    <h1>LISTA DE ITEMS</h1>
-    <table border="1" cellpadding="10" cellspacing="0">
-      <tr>
-        <th>Nombre</th>
-        <th>Acciones</th>
-      </tr>
-   </div>
- </div>
-';
-
 $hostname = "db";
 $username = "admin";
 $password = "test";
 $db = "database";
 
 $conn = new mysqli($hostname, $username, $password, $db);
-
 if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
 
-$sql = "SELECT * FROM item";
-$result = $conn->query($sql);
+$id = isset($_GET['nombre']) ? $_GET['nombre'] : '';
 
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $nombre = $row['nombre'];
-        echo "<tr>
-                <td>{$row['nombre']}</td>
-                <td>
-                    <button onclick=\"confirmDelete($nombre)\">Eliminar</button>
-                </td>
-              </tr>";
-    }
-} else {
-    echo "<tr><td colspan='4'>No hay items en la base de datos</td></tr>";
+// Confirmación de eliminación
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $stmt = $conn->prepare("DELETE FROM item WHERE nombre = ?");
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+    $stmt->close();
+
+    header("Location: items.php");
+    exit;
 }
 
-$conn->close();
-
-echo "
-    </table>
-  </div>
-</div>
-<script src="js/items.js" defer></script>
-";
+$stmt = $conn->prepare("SELECT * FROM item WHERE nombre = ?");
+$stmt->bind_param("s", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+$item = $result ? $result->fetch_assoc() : null;
+$stmt->close();
 ?>
 
-
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Eliminar Ítem</title>
+</head>
+<body>
+  <h1>Eliminar Ítem</h1>
+  <?php if ($item): ?>
+    <p>¿Estás seguro de que deseas eliminar <strong><?= htmlspecialchars($item['nombre']) ?></strong>?</p>
+    <form method="POST">
+      <button type="submit" id="item_delete_submit">Confirmar</button>
+      <button type="button" onclick="window.location.href='items.php'">Cancelar</button>
+    </form>
+  <?php else: ?>
+    <p>Ítem no encontrado.</p>
+    <a href="items.php"><button>Volver</button></a>
+  <?php endif; ?>
+</body>
+</html>
