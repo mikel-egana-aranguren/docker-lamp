@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 // --- CONFIGURACIÓN DE LA BASE DE DATOS ---
 $hostname = "db";        // o "localhost" si usas XAMPP
 $username = "admin";     // tu usuario
