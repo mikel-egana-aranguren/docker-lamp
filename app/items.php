@@ -69,12 +69,6 @@ echo '
   </div>
 </div>
 
-<script>
-function confirmDelete(id) {
-  if (confirm("¿Estás seguro de que deseas eliminar este ítem?")) {
-    window.location.href = "delete_item.php?id=" + id;
-  }
-}
-</script>
+
 ';
 ?>
