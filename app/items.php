@@ -36,7 +36,8 @@ $username = "admin";
 $password = "test";
 $db = "database";
 
-$conn = new mysqli($hostname, $username, $password, $db);
+$conn = @new mysqli($hostname, $username, $password, $db);
+
 
 if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
