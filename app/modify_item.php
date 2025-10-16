@@ -10,24 +10,27 @@ if ($conn->connect_error) {
 }
 
 $nombre = isset($_GET['item']) ? $_GET['item'] : '';
+$message = '';
 
-// Si se ha enviado el formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre_nuevo = $conn->real_escape_string($_POST['nombre']);
     $año = intval($_POST['año']);
     $combustible = $conn->real_escape_string($_POST['combustible']);
     $caballos = intval($_POST['caballos']);
-    $precio = floatval($_POST['precio']); // nuevo campo
+    $precio = floatval($_POST['precio']);
 
-    $stmt = $conn->prepare("UPDATE item SET nombre = ?, año = ?, combustible = ?, caballos = ?, precio = ? WHERE nombre = ?");
-    $stmt->bind_param("sisisd", $nombre_nuevo, $año, $combustible, $caballos, $precio, $nombre);
-    if ($stmt->execute()) {
-        header("Location: items.php");
-        exit;
-    } else {
-        echo "Error al actualizar el coche: " . $stmt->error;
+    // Si no hay mensaje de error, hacemos el UPDATE
+    if ($message === '') {
+        $stmt = $conn->prepare("UPDATE item SET año = ?, combustible = ?, caballos = ?, precio = ? WHERE nombre = ?");
+	$stmt->bind_param("isids", $año, $combustible, $caballos, $precio, $nombre);
+        if ($stmt->execute()) {
+            header("Location: items.php");
+            exit;
+        } else {
+            $message = "<p style='color:red;'>Error al actualizar el coche: " . $stmt->error . "</p>";
+        }
+        $stmt->close();
     }
-    $stmt->close();
 }
 
 // Obtener datos del ítem
@@ -42,26 +45,40 @@ $conn->close();
 ?>
 
 <!DOCTYPE html>
-<link rel="stylesheet" href="css/modify_item.css">
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Modificar Coche</title>
+  <link rel="stylesheet" href="css/modify_item.css">
+  <script src="js/modify_item.js" defer></script>
+</head>
+<body>
+
  <div class="container">
     <div class="content">
       <h1>Modificar Coche</h1>
+      <?= $message ?>
       <?php if ($item): ?>
         <form method="POST" id="item_modify_form">
-          <label>Nombre:</label><br>
-          <input type="text" name="nombre" value="<?= htmlspecialchars($item['nombre']) ?>" required><br><br>
-          <label>Año:</label><br>
-          <input type="number" name="año" value="<?= htmlspecialchars($item['año']) ?>" required><br><br>
-          <label>Combustible:</label><br>
-          <input type="text" name="combustible" value="<?= htmlspecialchars($item['combustible']) ?>" required><br><br>
-          <label>Caballos:</label><br>
-          <input type="number" name="caballos" value="<?= htmlspecialchars($item['caballos']) ?>" required><br><br>
-          <label>Precio:</label><br>
-  	  <input type="number" step="0.01" name="precio" value="<?= htmlspecialchars($item['precio']) ?>" required><br><br>
-          <div class="buttons">
-          	<button type="submit" id="item_modify_submit">Guardar cambios</button>
-          </div>
-        </form>
+	  <label>Nombre:</label><br>
+	  <input type="text" name="nombre" value="<?= htmlspecialchars($item['nombre']) ?>" readonly><br><br>
+	  
+	  <label>Año:</label><br>
+	  <input type="number" name="año" value="<?= htmlspecialchars($item['año']) ?>" required><br><br>
+	  
+	  <label>Combustible:</label><br>
+	  <input type="text" name="combustible" value="<?= htmlspecialchars($item['combustible']) ?>" required><br><br>
+	  
+	  <label>Caballos:</label><br>
+	  <input type="number" name="caballos" value="<?= htmlspecialchars($item['caballos']) ?>" required><br><br>
+	  
+	  <label>Precio:</label><br>
+	  <input type="number" step="0.01" name="precio" value="<?= htmlspecialchars($item['precio']) ?>" required><br><br>
+	  
+	  <div class="buttons">
+	    <button type="submit" id="item_modify_submit">Guardar cambios</button>
+	  </div>
+	</form>
       <?php else: ?>
         <p>Coche no encontrado.</p>
       <?php endif; ?>

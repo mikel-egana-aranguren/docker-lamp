@@ -11,9 +11,18 @@ if (!isset($_SESSION['username'])) {
 $username_session = $_SESSION['username'];
 
 echo '
-<link rel="stylesheet" href="css/items.css">
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Coches</title>
+  <link rel="stylesheet" href="css/items.css">
+  <script src="js/items.js" defer></script>
+</head>
+<body>
+
 
 <div class="user-bar">
+    <a href="add_item.php"><button>Añadir Coche</button></a>
     <div class="user-dropdown">
         <button class="user-button">' . htmlspecialchars($username_session) . ' ▼</button>
         <div class="user-dropdown-content">
@@ -71,6 +80,5 @@ echo '
     </table>
   </div>
 </div>
-<script src="js/items.js" defer></script>
 ';
 ?>
