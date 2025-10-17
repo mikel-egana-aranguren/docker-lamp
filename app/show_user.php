@@ -25,7 +25,7 @@ if ($userKey !== '') {
         die("Error al preparar la consulta: " . mysqli_error($cn));
     }
     // Vincular los 4 parámetros con el mismo valor
-    mmysqli_stmt_bind_param($stmt, "sss", $userKey, $userKey, $userKey);
+    mysqli_stmt_bind_param($stmt, "sss", $userKey, $userKey, $userKey);
 
 
     // Ejecutar la consulta
