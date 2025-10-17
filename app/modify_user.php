@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $sql = "UPDATE `usuario` 
                         SET `nombre`=?, `apellidos`=?, `dni`=?, `correo`=?, 
                             `telefono`=?, `fecha_nacimiento`=?, `contrasena`=? 
-                        WHERE `user`=?";
+                        WHERE `correo`=?";
                 $stmt = prepare_or_die($cn, $sql, 'UPDATE con contrasena');
                 mysqli_stmt_bind_param($stmt, "ssssssss", 
                     $nombre_post, $apellidos, $dni_post, $correo, 
@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $sql = "UPDATE `usuario` 
                     SET `nombre`=?, `apellidos`=?, `dni`=?, `correo`=?, 
                         `telefono`=?, `fecha_nacimiento`=? 
-                    WHERE `user`=?";
+                    WHERE `correo`=?";
             $stmt = prepare_or_die($cn, $sql, 'UPDATE sin contrasena');
             mysqli_stmt_bind_param($stmt, "sssssss", 
                 $nombre_post, $apellidos, $dni_post, $correo, 
