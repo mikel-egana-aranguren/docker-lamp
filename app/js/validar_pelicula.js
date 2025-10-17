@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector('.add-peli-dialog form');
+  const boton = null;
   if (!form) return;
 
   const msg = document.createElement("p");
@@ -29,8 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (genero.length < 2) {
       e.preventDefault(); return error("El género debe tener al menos 2 caracteres.");
     }
-    if (!/^\d+$/.test(duracion) || duracion <= 0) {
-      e.preventDefault(); return error("La duración debe ser un número positivo.");
+    if (!/^\d+$/.test(duracion) || duracion <= 30 || duracion >= 52000) {
+      e.preventDefault(); return error("La duración debe ser un número positivo asequible.");
     }
   });
 });

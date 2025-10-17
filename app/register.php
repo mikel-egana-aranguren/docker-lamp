@@ -1,7 +1,6 @@
 <?php
 
 session_start(); //iniciar sesion con php
-ob_end_flush();
 //parámetros para la conexión a la bd
 $servername = "db";
 $username = "admin";
@@ -51,11 +50,9 @@ if (isset($_POST['register_submit'])) {
 			window.location.href = 'login.php';
 			</script>";
 
-
 			//se cierra la conexión
 			$conn->close();
-			//header("Location: login.php");
-			header("login.php");
+			header("Location: login.php");
 			exit();
 		} 
 		else {
@@ -67,16 +64,15 @@ if (isset($_POST['register_submit'])) {
 	$conn->close();
 }
 }
-ob_end_flush();
 ?>
 
 <html>
 <head>
 	<title> Registro </title>
-	<script src="validar_user.js"></script>
+	<script src="js/validar_user.js"></script>	
 </head>
 	<body>
-	<form name="register_form" method="post" >
+	<form id="register_form" method="post" >
 		<p align="center">Rellena los datos para poder registrarte:</p>
 		Nombre :<br> <input type="text" name="nombre" placeholder="Nombre" required>  <br>
         Apellido:<br><input type="text" name="apellido" placeholder="Apellido" required><br>
@@ -89,9 +85,8 @@ ob_end_flush();
 		<br>
 		<input type="submit" value="Registrar" name="register_submit" style="color:black; background-color:lightpink;">
 	</form>
-		
 	<div class="button-container">
 		<a href="index.php" class="button">Volver a inicio</a>
 	</div>
-	
+	</body>
 <html>

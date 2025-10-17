@@ -1,6 +1,8 @@
 // Validación en cliente para /modify_user (requisito de la guía)
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("user_modify_form");
+  let numbien = false;
+  let letrabien = false;
   if (!form) return;
 
   const msg = document.createElement("p");
@@ -9,12 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function error(t) { msg.textContent = t; }
   function emailOk(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
-  function letraDNI(num8) {
-    const letras = "TRWAGMYFPDXBNJZSQVHLCKE";
-    const n = parseInt(num8, 10);
-    if (Number.isNaN(n)) return "";
-    return letras[n % 23];
-  }
 
   form.addEventListener("submit", (e) => {
     msg.textContent = "";
@@ -33,20 +29,39 @@ document.addEventListener("DOMContentLoaded", () => {
     if (apellido.length < 2 || !/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(apellido)) {
       e.preventDefault(); return error("Apellido inválido.");
     }
+
     if (!/^\d{8}$/.test(numDni)) {
       e.preventDefault(); return error("El DNI debe tener 8 dígitos.");
     }
+    else{numbien=true;}
+
     if (!/^[A-Z]$/.test(letra) ) {
       e.preventDefault(); return error("La letra del DNI debe ser una letra.");
     }
+    else{letrabien=true;}
+
     if (!/^\d{9}$/.test(tlfn)) {
       e.preventDefault(); return error("El teléfono debe tener 9 dígitos.");
     }
     if (!fecha) {
-      e.preventDefault(); return error("Selecciona una fecha de nacimiento.");
+      e.preventDefault(); return error("Selecciona una fecha de nacimiento válida.");
     }
     if (!emailOk(email)) {
       e.preventDefault(); return error("Email no válido.");
     }
+
+    //Comprobar que la letra del DNI corresponde al numero
+    if(letrabien && numbien)
+    {
+      const numero = parseInt(numDni, 10);
+      resto = numero % 23;
+      dniletras = ['T','R','W','A','G','M','Y','F','P','D','X','B','N','J','Z','S','Q','V','H','L','C','K','E'];
+      if(letra != dniletras[resto])
+      {
+        e.preventDefault(); return error("La letra del DNI debe ser una letra correspondiente al numero");
+      }
+
+    }
+
   });
 });

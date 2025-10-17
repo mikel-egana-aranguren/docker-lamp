@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+//Solo entrar a esta pagina si se entra con un metodo POST (mediante formulario)
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
   header('Location: items.php');
   exit;
@@ -32,8 +33,9 @@ if (strlen($titulo) < 2) $errors[] = "El título debe tener al menos 2 caractere
 if (!preg_match('/^\d{4}$/', $anio) || (int)$anio < 1900 || (int)$anio > (int)date('Y')) $errors[] = "Año inválido.";
 if (strlen($director) < 2) $errors[] = "El director debe tener al menos 2 caracteres.";
 if (strlen($genero) < 2) $errors[] = "El género debe tener al menos 2 caracteres.";
-if (!ctype_digit($duracion) || (int)$duracion <= 0) $errors[] = "La duración debe ser un número entero positivo.";
+if (!ctype_digit($duracion) || (int)$duracion <= 30 || (int)$duracion >= 52000 ) $errors[] = "La duración debe ser un número entero positivo asequible.";
 
+//Convertir caracteres especiales de los errores en html
 if (!empty($errors)) {
   foreach ($errors as $err) {
     echo htmlspecialchars($err, ENT_QUOTES, 'UTF-8') . "<br>";
