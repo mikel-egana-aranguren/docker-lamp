@@ -1,4 +1,9 @@
 <?php
+// Activar errores para depuración
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start(); 
 
 // --- PARÁMETROS Y CONEXIÓN A LA BD ---
@@ -164,39 +169,34 @@ $result = $stmt_select->get_result();
         if (!empty($duracion)) {
             $campos_a_actualizar[] = "duracion = ?";
             $tipos_de_datos .= 'i';
-            $valores[] = $duracion;
-        }
-
-		$stmt = $conn->prepare($sql_update);
-        if ($stmt) {
-            //$stmt->bind_param($tipos_de_datos, ...$valores);
-            // Si la ejecución es exitosa...
-            if ($stmt->execute()) {
-                
-                
-                // Cerramos la conexión y redirigimos al usuario.
-                $conn->close();
-                header("Location: items.php"); // Le decimos al navegador que vaya a items.php
-                exit(); // Detenemos el script para asegurar que la redirección ocurra.
-                
+            $valores[] = $id_pelicula;
+            
+            $stmt = $conn->prepare($sql_update);
+            if ($stmt) {
+                $stmt->bind_param($tipos_de_datos, ...$valores);
+                if ($stmt->execute()) {
+                    $stmt->close();
+                    $conn->close();
+                    header("Location: items.php");
+                    exit();
+                } else {
+                    $mensaje = "<p style='color:red;'>Error al guardar: " . htmlspecialchars($stmt->error) . "</p>";
+                }
+                $stmt->close(); // Cerrar también si la ejecución falla
             } else {
-                $mensaje = "<p style='color:red;'>Error al guardar: " . htmlspecialchars($stmt->error) . "</p>";
+                 $mensaje = "<p style='color:red;'>Error al preparar la consulta: " . htmlspecialchars($conn->error) . "</p>";
             }
-            $stmt->close();
         } else {
-             $mensaje = "<p style='color:red;'>Error al preparar la consulta: " . htmlspecialchars($conn->error) . "</p>";
+            $mensaje = "<p style='color:orange;'>No se introdujo ningún dato para modificar.</p>";
         }
-        */
-    } else {
-        $mensaje = "<p style='color:orange;'>No se introdujo ningún dato para modificar.</p>";
-    }
-}
-//CARGAR DATOS ACTUALES DE LA PELÍCULA 
-// Se necesita para mostrar los placeholders en el formulario
-$stmt = $conn->prepare("SELECT * FROM pelicula WHERE idPelicula = ?");
-$stmt->bind_param("i", $id_pelicula);
-$stmt->execute();
-$result = $stmt->get_result();
+    } 
+} 
+
+// --- OBTENER DATOS ACTUALES PARA MOSTRAR EN EL FORMULARIO ---
+$stmt_select = $conn->prepare("SELECT * FROM pelicula WHERE idPelicula = ?");
+$stmt_select->bind_param("i", $id_pelicula);
+$stmt_select->execute();
+$result = $stmt_select->get_result();
 if ($result->num_rows > 0) {
     $pelicula = $result->fetch_assoc();
 } else {
@@ -241,13 +241,13 @@ $conn->close();
         <input type="number" name="anio" id="anio" placeholder="<?php echo htmlspecialchars($pelicula['año']); ?>">
         
         <br>Director:<br>
-        <input type="text" name="director" id="director" placeholder="<?php echo htmlspecialchars($pelicula['director']); ?>">
+        <input type="text" name="director" id="director" placeholder="Actual: <?php echo htmlspecialchars($pelicula['director']); ?>">
         
         <br>Género:<br>
-        <input type="text" name="genero" id="genero" placeholder="<?php echo htmlspecialchars($pelicula['genero']); ?>">
+        <input type="text" name="genero" id="genero" placeholder="Actual: <?php echo htmlspecialchars($pelicula['genero']); ?>">
         
         <br>Duración (minutos):<br>
-        <input type="number" name="duracion" id="duracion" placeholder="<?php echo htmlspecialchars($pelicula['duracion']); ?>">
+        <input type="number" name="duracion" id="duracion" placeholder="Actual: <?php echo htmlspecialchars($pelicula['duracion']); ?>">
 
         <br><br>
         
