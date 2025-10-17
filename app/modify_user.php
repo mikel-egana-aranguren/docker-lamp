@@ -22,9 +22,9 @@ $userKey = isset($_GET['user']) ? trim($_GET['user']) : '';
 $usuario = null;
 
 if ($userKey !== '') {
-    $sql = "SELECT * FROM `usuario` WHERE correo = ? OR telefono = ? OR dni = ? LIMIT 1";
+    $sql = "SELECT * FROM `usuario` WHERE correo = ? OR telefono = ? OR dni = ? OR user = ? LIMIT 1";
     $stmt = prepare_or_die($cn, $sql, 'SELECT usuario');
-    mysqli_stmt_bind_param($stmt, "sss", $userKey, $userKey, $userKey);
+    mysqli_stmt_bind_param($stmt, "ssss", $userKey, $userKey, $userKey, $userKey);
     mysqli_stmt_execute($stmt);
     $res = mysqli_stmt_get_result($stmt);
     $usuario = mysqli_fetch_assoc($res);
@@ -134,11 +134,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
 
     <div class="rellenar">
-      <form id="user_modify_form" action="modify_user.php?user=<?= urlencode($usuario['correo']) ?>" method="post" class="labels">
-        <input type="hidden" name="user" value="<?= htmlspecialchars($usuario['correo']) ?>">
+      <form id="user_modify_form" action="modify_user.php?user=<?= urlencode($usuario['user']) ?>" method="post" class="labels">
+        <input type="hidden" name="user" value="<?= htmlspecialchars($usuario['user']) ?>">
 
         <label for="user_display">Usuario</label>
-        <input type="text" id="user_display" value="<?= htmlspecialchars($usuario['correo']) ?>" readonly>
+        <input type="text" id="user_display" value="<?= htmlspecialchars($usuario['user']) ?>" readonly>
 
         <label for="nombre">Nombre *</label>
         <input type="text" id="nombre" name="nombre" value="<?= htmlspecialchars($usuario['nombre']) ?>" required>

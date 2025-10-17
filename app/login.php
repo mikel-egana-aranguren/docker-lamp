@@ -16,7 +16,7 @@ if ($conn->connect_error) {
         $passwd = $_POST['passwd'] ?? '';
 
         // Preparar consulta para buscar usuario
-        $stmt = $conn->prepare("SELECT contrasena FROM usuario WHERE correo = ?");
+        $stmt = $conn->prepare("SELECT contrasena, user FROM usuario WHERE correo = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $stmt->store_result();
@@ -24,11 +24,11 @@ if ($conn->connect_error) {
         if ($stmt->num_rows === 0) {
             $message = "Correo no registrado.";
         } else {
-            $stmt->bind_result($db_pass);
+            $stmt->bind_result($db_pass, $user);
             $stmt->fetch();
-        if ($db_pass === $passwd) { // sin hash
+        if ($db_pass === $passwd) {
             session_start();
-            $_SESSION['usuario'] = $email;
+            $_SESSION['usuario'] = $user;
 
             $message = "Login correcto. Redirigiendo...";
             $message_color = "green";

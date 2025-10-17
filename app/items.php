@@ -9,9 +9,6 @@ if (!isset($_SESSION['usuario'])) {
 
 // Si llega aquí, el usuario está logeado:
 $usuario = $_SESSION['usuario'];
-echo "Bienvenido, " . htmlspecialchars($usuario);
-
-
 
 echo '
 <html lang="es">

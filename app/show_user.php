@@ -17,15 +17,15 @@ $user = null;
 
 if ($userKey !== '') {
     // Buscar en todos los campos relevantes
-    $sql = "SELECT dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento 
-            FROM usuario 
-            WHERE correo = ? OR dni = ? OR telefono = ?";
+    $sql = "SELECT user, dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento 
+        FROM usuario 
+        WHERE correo = ? OR dni = ? OR telefono = ? OR user = ?";
     $stmt = mysqli_prepare($cn, $sql);
     if (!$stmt) {
         die("Error al preparar la consulta: " . mysqli_error($cn));
     }
     // Vincular los 4 parámetros con el mismo valor
-    mysqli_stmt_bind_param($stmt, "sss", $userKey, $userKey, $userKey);
+    mysqli_stmt_bind_param($stmt, "ssss", $userKey, $userKey, $userKey, $userKey);
 
 
     // Ejecutar la consulta
@@ -50,7 +50,7 @@ echo '
     <h1>DATOS DEL USUARIO</h1>
     <div class="rellenar">
 
-      <p><strong>Usuario:</strong> '.htmlspecialchars($user["correo"]).'</p>
+      <p><strong>Usuario:</strong> '.htmlspecialchars($user["user"]).'</p>
       <p><strong>Nombre:</strong> '.htmlspecialchars($user["nombre"]).'</p>
       <p><strong>Apellidos:</strong> '.htmlspecialchars($user["apellidos"]).'</p>
       <p><strong>Correo:</strong> '.htmlspecialchars($user["correo"]).'</p>
@@ -61,7 +61,7 @@ echo '
     </div>
 
     <div class="botones">
-      <a href="modify_user.php?user='.urlencode($user["correo"]).'" class="boton">Modificar</a>
+      <a href="modify_user.php?user='.urlencode($user["user"]).'" class="boton">Modificar</a>
       <a href="items.php" class="boton-sec">Volver</a>
     </div>
   </div>
