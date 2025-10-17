@@ -55,6 +55,14 @@ INSERT INTO `usuarios` (`id`, `nombre`, `apellidos`, `dni`, `telefono`, `fecha_n
 --
 -- Índices para tablas volcadas
 --
+CREATE TABLE items (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  titulo VARCHAR(100),
+  descripcion TEXT,
+  categoria VARCHAR(50),
+  fecha DATE,
+  precio DECIMAL(10,2)
+);
 
 --
 -- Indices de la tabla `usuarios`
