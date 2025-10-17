@@ -2,7 +2,11 @@
 
 session_start();
 
-
+if (!isset($_SESSION['username'])) {
+    // Si no hay usuario logueado, redirigimos al login o mostramos mensaje
+    header("Location: login.php");
+    exit;
+}
 
 $username_session = $_SESSION['username'];
 
