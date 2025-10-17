@@ -1,19 +1,19 @@
 
-# Docker LAMP
-Linux + Apache + MariaDB (MySQL) + PHP 7.2 on Docker Compose. Mod_rewrite enabled by default.
+# PODCAST
 
-## Instructions
+## Integrantes
+Iker Fernández, Aitzol Rivera, Paula Tapias, Nahía Galván, María Fernández y Lucía Molinero.
 
-Enter the following command to start your containers:
+# Docker
+
+## Instrucciones
+
+Inserta el siguiente comando para inciar el contenedor:
 ```bash
 $ docker-compose up -d
 ```
 
-To stop them, use this:
+Para pararlo:
 ```bash
 $ docker-compose stop
 ```
-
-Feel free to make pull requests and help to improve this.
-
-If you are looking for phpMyAdmin, take a look at [this](https://github.com/celsocelante/docker-lamp/issues/2).
