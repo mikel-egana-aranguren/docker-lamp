@@ -22,14 +22,15 @@ $userKey = isset($_GET['user']) ? trim($_GET['user']) : '';
 $usuario = null;
 
 if ($userKey !== '') {
-    $sql = "SELECT * FROM `usuario` WHERE user = ? OR correo = ? OR telefono = ? OR dni = ? LIMIT 1";
+    $sql = "SELECT * FROM `usuario` WHERE correo = ? OR telefono = ? OR dni = ? LIMIT 1";
     $stmt = prepare_or_die($cn, $sql, 'SELECT usuario');
-    mysqli_stmt_bind_param($stmt, "ssss", $userKey, $userKey, $userKey, $userKey);
+    mysqli_stmt_bind_param($stmt, "sss", $userKey, $userKey, $userKey);
     mysqli_stmt_execute($stmt);
     $res = mysqli_stmt_get_result($stmt);
     $usuario = mysqli_fetch_assoc($res);
     mysqli_stmt_close($stmt);
 }
+
 
 if (!$usuario) {
     echo "Usuario no encontrado.";
