@@ -1,6 +1,6 @@
+Recordad que todavía hay q elegir el tema. Dentro de database.sql y de los archivos php se referencia a "items". Si vamos a hacer una biblioteca por ejemplo estaría bien refactorizar todos estos nombres, admas de actualizar el sql para que sus campos tengan sentido.
 
-# Docker LAMP
-Linux + Apache + MariaDB (MySQL) + PHP 7.2 on Docker Compose. Mod_rewrite enabled by default.
+
 
 ## Instructions
 
@@ -13,7 +13,3 @@ To stop them, use this:
 ```bash
 $ docker-compose stop
 ```
-
-Feel free to make pull requests and help to improve this.
-
-If you are looking for phpMyAdmin, take a look at [this](https://github.com/celsocelante/docker-lamp/issues/2).
