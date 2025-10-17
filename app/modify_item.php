@@ -13,6 +13,8 @@ if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
 $mensaje = "";
+$errors = []; 
+$pelicula = null;
 // OBTENER EL ID_PELÍCULA SELECCIONADA 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $id_pelicula = intval($_GET['id']);
@@ -34,14 +36,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['modify_submit'])) {
     $valores = [];
 	$sql_update = "UPDATE pelicula SET "; // Inicializar la consulta
 
-    if (strlen($titulo) < 2) $errors[] = "El título debe tener al menos 2 caracteres.";
-    if (!preg_match('/^\d{4}$/', $anio) || (int)$anio < 1900 || (int)$anio > (int)date('Y')) $errors[] = "Año inválido.";
-    if (strlen($director) < 2) $errors[] = "El director debe tener al menos 2 caracteres.";
-    if (strlen($genero) < 2) $errors[] = "El género debe tener al menos 2 caracteres.";
-    if (!ctype_digit($duracion) || (int)$duracion <= 30 || (int)$duracion >= 52000 ) $errors[] = "La duración debe ser un número entero positivo asequible.";
-
+    // VALIDACIÓN (Solo si el campo no está vacío)
+    if (!empty($titulo) && strlen($titulo) < 2) $errors[] = "El título debe tener al menos 2 caracteres.";
+    if (!empty($anio) && (!preg_match('/^\d{4}$/', $anio) || (int)$anio < 1900 || (int)$anio > (int)date('Y'))) $errors[] = "Año inválido.";
+    if (!empty($director) && strlen($director) < 2) $errors[] = "El director debe tener al menos 2 caracteres.";
+    if (!empty($genero) && strlen($genero) < 2) $errors[] = "El género debe tener al menos 2 caracteres.";
+    if (!empty($duracion) && (!ctype_digit($duracion) || (int)$duracion <= 30 || (int)$duracion >= 52000)) $errors[] = "La duración debe ser un número entero positivo asequible.";
     //Convertir caracteres especiales de los errores en html
-    if (!empty($errors)) {
+    if (empty($errors)) {
         foreach ($errors as $err) 
         {
             echo "<p style='color:red;'>" . htmlspecialchars($err, ENT_QUOTES, 'UTF-8') . "</p>";
