@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Recargar datos actualizados
-        $sql = "SELECT * FROM `usuario` WHERE user = ?";
+        $sql = "SELECT * FROM `usuario` WHERE correo = ?";
         $stmt = prepare_or_die($cn, $sql, 'SELECT recarga');
         mysqli_stmt_bind_param($stmt, "s", $user_post);
         mysqli_stmt_execute($stmt);
@@ -134,11 +134,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
 
     <div class="rellenar">
-      <form id="user_modify_form" action="modify_user.php?user=<?= urlencode($usuario['user']) ?>" method="post" class="labels">
-        <input type="hidden" name="user" value="<?= htmlspecialchars($usuario['user']) ?>">
+      <form id="user_modify_form" action="modify_user.php?user=<?= urlencode($usuario['correo']) ?>" method="post" class="labels">
+        <input type="hidden" name="user" value="<?= htmlspecialchars($usuario['correo']) ?>">
 
         <label for="user_display">Usuario</label>
-        <input type="text" id="user_display" value="<?= htmlspecialchars($usuario['user']) ?>" readonly>
+        <input type="text" id="user_display" value="<?= htmlspecialchars($usuario['correo']) ?>" readonly>
 
         <label for="nombre">Nombre *</label>
         <input type="text" id="nombre" name="nombre" value="<?= htmlspecialchars($usuario['nombre']) ?>" required>
