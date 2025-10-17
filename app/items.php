@@ -37,9 +37,12 @@ session_start();
     //Mostrar un popup mediante "dialog", solo si se hace click en el boton
     while ($row = mysqli_fetch_array($query)) {
     echo "
-    <p align='center'>
+    <div style='text-align: center; margin-bottom: 1em;'>
       <button class='btn-ver-info-peli'>{$row['titulo']}</button>
-      <td>({$row['anio']})</td><br><br>
+      <span style='margin: 0 10px;'>({$row['anio']})</span>
+
+      <a href='modify_item.php?id={$row['idPelicula']}' style='margin-left: 10px;'>Modificar</a>
+
       <dialog class='info-peli'>
        <td>Título: {$row['titulo']}</td><br>
        <td>Año: ({$row['anio']})</td><br>
@@ -48,7 +51,7 @@ session_start();
        <td>Duración: {$row['duracion']} minutos</td><br><br>
        <button class='btn-cerrar-info-peli'>Cerrar</button>
       </dialog>
-    </p>
+    </div>
     ";
     }
   ?>

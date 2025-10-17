@@ -1,8 +1,8 @@
 # Integrantes
-Mbarek Galloul Ezzakraoui
-Alicia Maizkurrena
-Adrián Vinagre
-Maira Gabriela Herbas Jaldin
+Mbarek Galloul Ezzakraoui,
+Alicia Maizkurrena,
+Adrián Vinagre,
+Maira Gabriela Herbas Jaldin y
 Ana Victoria Cernatescu
 
 # Docker LAMP
