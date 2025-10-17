@@ -17,7 +17,7 @@ $user = null;
 
 if ($userKey !== '') {
     // Buscar en todos los campos relevantes
-    $sql = "SELECT user, dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento 
+    $sql = "SELECT dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento 
             FROM usuario 
             WHERE correo = ? OR dni = ? OR telefono = ?";
     $stmt = mysqli_prepare($cn, $sql);
@@ -50,7 +50,7 @@ echo '
     <h1>DATOS DEL USUARIO</h1>
     <div class="rellenar">
 
-      <p><strong>Usuario:</strong> '.htmlspecialchars($user["user"]).'</p>
+      <p><strong>Usuario:</strong> '.htmlspecialchars($user["correo"]).'</p>
       <p><strong>Nombre:</strong> '.htmlspecialchars($user["nombre"]).'</p>
       <p><strong>Apellidos:</strong> '.htmlspecialchars($user["apellidos"]).'</p>
       <p><strong>Correo:</strong> '.htmlspecialchars($user["correo"]).'</p>
