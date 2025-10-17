@@ -40,9 +40,13 @@ session_start();
     <div style='text-align: center; margin-bottom: 1em;'>
       <button class='btn-ver-info-peli'>{$row['titulo']}</button>
       <span style='margin: 0 10px;'>({$row['anio']})</span>
-
-      <a href='modify_item.php?id={$row['idPelicula']}' style='margin-left: 10px;'>Modificar</a>
-
+      ";
+      
+      if (isset($_SESSION['usuario'])) {
+          // Si el usuario ha iniciado sesión, muestra el botón "Modificar"
+          echo "<a href='modify_item.php?id={$row['idPelicula']}' style='margin-left: 10px;'>Modificar</a>";
+      }
+     echo "
       <dialog class='info-peli'>
        <td>Título: {$row['titulo']}</td><br>
        <td>Año: ({$row['anio']})</td><br>
