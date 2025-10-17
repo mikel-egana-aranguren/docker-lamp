@@ -29,7 +29,7 @@ echo '
     <div class="user-dropdown">
     <button class="user-button">' . htmlspecialchars($usuario) . ' ▼</button>
     <div class="user-dropdown-content">
-        <a href="show_user.php?user=' . urlencode($usuario) . '">Modificar Usuario</a>
+        <a href="show_user.php?user=' . urlencode($usuario) . '">Ver Usuario</a>
         <a href="logout.php">Cerrar Sesión</a>
     </div>
 </div>
