@@ -27,12 +27,13 @@ echo '
 <div class="user-bar">
     <a href="add_item.php"><button>Añadir Coche</button></a>
     <div class="user-dropdown">
-        <button class="user-button">' . htmlspecialchars($username_session) . ' ▼</button>
-        <div class="user-dropdown-content">
-            <a href="show_user.php?user={$username}">Mi Usuario</a>
-            <a href="logout.php">Cerrar Sesión</a>
-        </div>
+    <button class="user-button">' . htmlspecialchars($usuario) . ' ▼</button>
+    <div class="user-dropdown-content">
+        <a href="show_user.php?user=' . urlencode($usuario) . '">Modificar Usuario</a>
+        <a href="logout.php">Cerrar Sesión</a>
     </div>
+</div>
+
 </div>
 
 <div class="container">
