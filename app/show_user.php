@@ -19,7 +19,7 @@ if ($userKey !== '') {
     // Buscar en todos los campos relevantes
     $sql = "SELECT user, dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento 
             FROM usuario 
-            WHERE user = ? OR dni = ? OR correo = ? OR telefono = ?";
+            WHERE correo = ? OR dni = ? OR telefono = ?";
     $stmt = mysqli_prepare($cn, $sql);
     if (!$stmt) {
         die("Error al preparar la consulta: " . mysqli_error($cn));
@@ -60,7 +60,7 @@ echo '
     </div>
 
     <div class="botones">
-      <a href="modify_user.php?user='.urlencode($user["user"]).'" class="boton">Modificar</a>
+      <a href="modify_user.php?user='.urlencode($user["correo"]).'" class="boton">Modificar</a>
       <a href="items.php" class="boton-sec">Volver</a>
     </div>
   </div>
