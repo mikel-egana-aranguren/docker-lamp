@@ -61,7 +61,7 @@ echo '
 
     <div class="botones">
       <a href="modify_user.php?user='.urlencode($user["user"]).'" class="boton">Modificar</a>
-      <a href="list_users.php" class="boton-sec">Volver</a>
+      <a href="items.php" class="boton-sec">Volver</a>
     </div>
   </div>
 </div>

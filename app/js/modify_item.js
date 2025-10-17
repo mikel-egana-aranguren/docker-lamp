@@ -1,17 +1,17 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const form = document.getElementById("item_add_form");
-  const nameInput = document.getElementById("item_name");
-  const priceInput = document.getElementById("item_price");
+  const form = document.getElementById("item_modify_form");
+  const priceInput = document.querySelector('input[name="precio"]');
+
+  if (!form || !priceInput) {
+    console.warn("⚠️ No se encontró el formulario o el campo de precio");
+    return;
+  }
 
   form.addEventListener("submit", function(event) {
-      const name = nameInput.value.trim();
       const priceStr = priceInput.value.trim();
-      const priceRegex = /^\d+$/;
+      const priceRegex = /^\d+$/; // solo dígitos, sin puntos ni comas
 
-      if (name === "") {
-          alert("Por favor, introduce un nombre válido");
-          event.preventDefault();
-      } else if (!priceRegex.test(priceStr)) {
+      if (!priceRegex.test(priceStr)) {
           alert("El formato del precio no es correcto (solo números sin puntos ni comas).");
           event.preventDefault();
       } else if (parseInt(priceStr, 10) <= 0) {
