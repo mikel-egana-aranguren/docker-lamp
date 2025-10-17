@@ -2,15 +2,15 @@
 $hostname = "db";
 $username = "admin";
 $password = "test";
-$dbname   = "database"; // Asegúrate que coincide con tu base de datos
+$dbname   = "database"; 
 
-// Conexión a la base de datos
+
 $cn = mysqli_connect($hostname, $username, $password, $dbname);
 if (!$cn) {
     die("Error de conexión: " . mysqli_connect_error());
 }
 
-// Obtener clave del usuario (puede ser user, dni, correo o teléfono)
+
 $userKey = isset($_GET['user']) ? trim($_GET['user']) : '';
 
 $user = null;
