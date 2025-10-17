@@ -1,9 +1,4 @@
 <?php
-// Activar errores para depuración
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 session_start(); 
 
 // parametros paraconexion a la bd
@@ -18,9 +13,7 @@ if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
 $mensaje = "";
-$errors = []; 
-$pelicula = null;
-
+// OBTENER EL ID_PELÍCULA SELECCIONADA 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $id_pelicula = intval($_GET['id']);
 } else {
@@ -35,118 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['modify_submit'])) {
     $genero = $_POST['genero'];
     $duracion = $_POST['duracion'];
     
-    // Preparar los arrays para construir la consulta dinámica
-    $campos_a_actualizar = [];
-    $tipos_de_datos = '';
-    $valores = [];
-	$sql_update = "UPDATE pelicula SET "; 
-
-    // VALIDACIÓN (Solo si el campo no está vacío)
-    if (!empty($titulo) && strlen($titulo) < 2) $errors[] = "El título debe tener al menos 2 caracteres.";
-    if (!empty($anio) && (!preg_match('/^\d{4}$/', $anio) || (int)$anio < 1900 || (int)$anio > (int)date('Y'))) $errors[] = "Año inválido.";
-    if (!empty($director) && strlen($director) < 2) $errors[] = "El director debe tener al menos 2 caracteres.";
-    if (!empty($genero) && strlen($genero) < 2) $errors[] = "El género debe tener al menos 2 caracteres.";
-    if (!empty($duracion) && (!ctype_digit($duracion) || (int)$duracion <= 30 || (int)$duracion >= 52000)) $errors[] = "La duración debe ser un número entero positivo asequible.";
-   
-    if (empty($errors)) {
-       $campos_a_actualizar = [];
-    
-        // Construimos el array de campos a actualizar
-        if (!empty($titulo)) {
-            $campos_a_actualizar[] = "titulo = '$titulo'";          
-        }
-        if (!empty($anio)) {
-            $campos_a_actualizar[] = "anio = '$anio'";
-        }
-        if (!empty($director)) {
-            $campos_a_actualizar[] = "director = '$director'";
-        }
-        if (!empty($genero)) {
-            $campos_a_actualizar[] = "genero = '$genero'";
-        }
-        if (!empty($duracion)) {
-            $campos_a_actualizar[] = "duracion = '$duracion'";
-        }
-        // Solo ejecutamos la consulta si hay algo que actualizar
-        if (!empty($campos_a_actualizar)) {
-            $sql_update .= implode(', ', $campos_a_actualizar); // Une los campos con comas
-            $sql_update .= " WHERE idPelicula = $id_pelicula"; // Condición para modificar solo la película correcta. Poner ? en vez de $pelicula para mas seguro
-            
-            $tipos_de_datos .= 'i'; // Añadimos el tipo del ID
-            $valores[] = $id_pelicula; // Añadimos el valor del ID
-
-            //Ejecutar cambios
-            if($conn ->query($sql_update))
-            {
-                $conn->close();
-                header("Location: items.php");
-                exit();
-            }
-            else
-            {
-                $mensaje = "<p style='color:red;'>Error al guardar: " . htmlspecialchars($conn->errpr) . "</p>";
-            }
-
-        /*//Modificacion mas segura para otra entrega
-
-        // Verificamos cada campo. Si el usuario ha escrito algo, lo añadimos a la consulta.
-        // .= para concatenar
-	    if (!empty($titulo)) {
-            $campos_a_actualizar[] = "titulo = ?"; 
-            $tipos_de_datos .= 's';                  // 's' = string
-            $valores[] = $titulo;               
-        }
-        if (!empty($anio)) {
-            $campos_a_actualizar[] = "anio = ?";
-            $tipos_de_datos .= 's';                 
-            $valores[] = $anio;
-        }
-        if (!empty($director)) {
-            $campos_a_actualizar[] = "director = ?";
-            $tipos_de_datos .= 's';
-            $valores[] = $director;
-        }
-        if (!empty($genero)) {
-            $campos_a_actualizar[] = "genero = ?";
-            $tipos_de_datos .= 's';
-            $valores[] = $genero;
-        }
-        if (!empty($duracion)) {
-            $campos_a_actualizar[] = "duracion = ?";
-            $tipos_de_datos .= 'i';
-            $valores[] = $duracion;
-        }
-
-		$stmt = $conn->prepare($sql_update);
-        if ($stmt) {
-            //$stmt->bind_param($tipos_de_datos, ...$valores);
-            // Si la ejecución es exitosa...
-            if ($stmt->execute()) {
-                
-                
-                // Cerramos la conexión y redirigimos al usuario.
-                $conn->close();
-                header("Location: items.php"); // Le decimos al navegador que vaya a items.php
-                exit(); // Detenemos el script para asegurar que la redirección ocurra.
-                
-            } else {
-                $mensaje = "<p style='color:red;'>Error al guardar: " . htmlspecialchars($stmt->error) . "</p>";
-            }
-            $stmt->close();
-        } else {
-             $mensaje = "<p style='color:red;'>Error al preparar la consulta: " . htmlspecialchars($conn->error) . "</p>";
-        }
-        */
-        } else {
-            $mensaje = "<p style='color:orange;'>No se introdujo ningún dato para modificar.</p>";
-        }
-    } 
-} 
-
-$stmt_select = $conn->prepare("SELECT * FROM pelicula WHERE idPelicula = ?");
-$stmt_select->bind_param("i", $id_pelicula);
-$stmt_select->execute();
-$result = $stmt_select->get_result();
     // Preparar los arrays para construir la consulta dinámica
     $campos_a_actualizar = [];
     $tipos_de_datos = '';
@@ -234,34 +115,31 @@ $result = $stmt_select->get_result();
         if (!empty($duracion)) {
             $campos_a_actualizar[] = "duracion = ?";
             $tipos_de_datos .= 'i';
-            $valores[] = $id_pelicula;
-            
-            $stmt = $conn->prepare($sql_update);
-            if ($stmt) {
-                $stmt->bind_param($tipos_de_datos, ...$valores);
-                if ($stmt->execute()) {
-                    $stmt->close();
-                    $conn->close();
-                    header("Location: items.php");
-                    exit();
-                } else {
-                    $mensaje = "<p style='color:red;'>Error al guardar: " . htmlspecialchars($stmt->error) . "</p>";
-                }
-                $stmt->close(); // Cerrar también si la ejecución falla
-            } else {
-                 $mensaje = "<p style='color:red;'>Error al preparar la consulta: " . htmlspecialchars($conn->error) . "</p>";
-            }
-        } else {
-            $mensaje = "<p style='color:orange;'>No se introdujo ningún dato para modificar.</p>";
+            $valores[] = $duracion;
         }
-    } 
-} 
 
-// --- OBTENER DATOS ACTUALES PARA MOSTRAR EN EL FORMULARIO ---
-$stmt_select = $conn->prepare("SELECT * FROM pelicula WHERE idPelicula = ?");
-$stmt_select->bind_param("i", $id_pelicula);
-$stmt_select->execute();
-$result = $stmt_select->get_result();
+		$stmt = $conn->prepare($sql_update);
+        if ($stmt) {
+            //$stmt->bind_param($tipos_de_datos, ...$valores);
+            // Si la ejecución es exitosa...
+            if ($stmt->execute()) {
+                
+                
+                // Cerramos la conexión y redirigimos al usuario.
+                $conn->close();
+                header("Location: items.php"); // Le decimos al navegador que vaya a items.php
+                exit(); // Detenemos el script para asegurar que la redirección ocurra.
+                
+            } else {
+                $mensaje = "<p style='color:red;'>Error al guardar: " . htmlspecialchars($stmt->error) . "</p>";
+            }
+            $stmt->close();
+        } else {
+             $mensaje = "<p style='color:red;'>Error al preparar la consulta: " . htmlspecialchars($conn->error) . "</p>";
+        }
+        */
+    } else {
+        $mensaje = "<p style='color:orange;'>No se introdujo ningún dato para modificar.</p>";
     }
 }
 //CARGAR DATOS ACTUALES DE LA PELÍCULA 
@@ -277,8 +155,7 @@ if ($result->num_rows > 0) {
 }
 $stmt->close();
 $conn->close();
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html>
 <head>
     <title>Modificar Película</title>
@@ -298,13 +175,13 @@ $conn->close();
         <input type="number" name="anio" id="anio" placeholder="<?php echo htmlspecialchars($pelicula['anio']); ?>">
         
         <br>Director:<br>
-        <input type="text" name="director" id="director" placeholder="Actual: <?php echo htmlspecialchars($pelicula['director']); ?>">
+        <input type="text" name="director" id="director" placeholder="<?php echo htmlspecialchars($pelicula['director']); ?>">
         
         <br>Género:<br>
-        <input type="text" name="genero" id="genero" placeholder="Actual: <?php echo htmlspecialchars($pelicula['genero']); ?>">
+        <input type="text" name="genero" id="genero" placeholder="<?php echo htmlspecialchars($pelicula['genero']); ?>">
         
         <br>Duración (minutos):<br>
-        <input type="number" name="duracion" id="duracion" placeholder="Actual: <?php echo htmlspecialchars($pelicula['duracion']); ?>">
+        <input type="number" name="duracion" id="duracion" placeholder="<?php echo htmlspecialchars($pelicula['duracion']); ?>">
 
         <br><br>
         
