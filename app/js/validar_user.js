@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const fecha    = form.fNacimiento.value;
     const email    = form.email.value.trim();
     const usuario  = form.usuario.value.trim();
-    const contrasena = form.usuario.value.trim();
+    const contrasena = form.contrasena.value.trim();
 
     if (nombre.length < 2 || !/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(nombre)) {
       e.preventDefault(); return error("Nombre inválido.");
@@ -62,8 +62,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if(letrabien && numbien)
     {
       const numero = parseInt(numDni, 10);
-      resto = numero % 23;
-      dniletras = ['T','R','W','A','G','M','Y','F','P','D','X','B','N','J','Z','S','Q','V','H','L','C','K','E'];
+      const resto = numero % 23;
+      const dniletras = ['T','R','W','A','G','M','Y','F','P','D','X','B','N','J','Z','S','Q','V','H','L','C','K','E'];
       if(letra != dniletras[resto])
       {
         e.preventDefault(); return error("La letra del DNI debe ser una letra correspondiente al numero");

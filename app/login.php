@@ -30,13 +30,12 @@ if (isset($_POST['login_submit'])) {
     //pillamos la contraseña de la bd
     $row = $result->fetch_assoc();
 
-	if ($result->num_rows > 0){ //comprobar si el usuario existe y si la contraseña es correcta
+	if ($result->num_rows > 0 && $row['contrasena'] === $contrasena) {
 		$_SESSION['usuario'] = $usuario;
 		$_SESSION['idU'] = $row['idU'];
 		header("Location: items.php");
-		exit(); // Asegura que el código se detiene después de la redirección
-		}
-	else{
+		exit();
+	} else {
 		echo "<script> window.alert('Nombre de usuario o contraseña incorrectos'); </script>";
 	}
 	$conn->close();
