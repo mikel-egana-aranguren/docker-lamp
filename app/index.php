@@ -42,7 +42,6 @@ index.php --> register.php :
         <button class="inic" onclick="window.location.href='login.php'">Iniciar sesión</button>
        </p>
     <?php endif; ?>
-    <h2>(sabemos que en cuanto a diseño está feisima, pretendemos ponerla bonita para la entrega)<h2>
    
    </body>
   </html>
