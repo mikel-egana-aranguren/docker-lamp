@@ -31,7 +31,6 @@ if ($conn->connect_error) {
         ) {
             $message = "Por favor, completa todos los campos obligatorios.";
         } else {
-
             $sql = "INSERT INTO usuario 
                     (user, dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -78,17 +77,24 @@ $conn->close();
 ?>
 
 <link rel="stylesheet" href="css/register.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<div class="bar">
+  <div class="volver_button">
+    <a href="index.php" title="Volver al inicio">
+      <i class="fa-solid fa-house"></i>
+    </a>
+  </div>
+  <h1>REGISTRARSE</h1>
+</div>
 
 <div class="container">
   <div class="content">
-    <h1>REGISTRARSE</h1>
-
     <?php if ($message !== ""): ?>
         <p style="color: <?= $message_color ?>; font-weight: bold; margin-bottom: 15px;">
             <?= htmlspecialchars($message) ?>
         </p>
     <?php endif; ?>
-
     <div class="rellenar">
       <form id="register_form" action="" method="post" class="labels">
         <label for="user">Usuario *</label>
