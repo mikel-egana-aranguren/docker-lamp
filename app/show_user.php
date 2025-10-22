@@ -54,23 +54,18 @@ if (!$user) {
     </a>
   </div>
   <h1>DATOS DEL USUARIO</h1>
+  <a href="modify_user.php?user=<?= urlencode($user["user"]) ?>"><button>Modificar</button></a>
 </div>
 <div class="container">
   <div class="content">
     <div class="rellenar">
-
-      <p><strong>Usuario:</strong> <?= htmlspecialchars($user["user"]) ?></p>
+        <p><strong>Usuario:</strong> <?= htmlspecialchars($user["user"]) ?></p>
 	<p><strong>Nombre:</strong> <?= htmlspecialchars($user["nombre"]) ?></p>
 	<p><strong>Apellidos:</strong> <?= htmlspecialchars($user["apellidos"]) ?></p>
 	<p><strong>Correo:</strong> <?= htmlspecialchars($user["correo"]) ?></p>
 	<p><strong>DNI:</strong> <?= htmlspecialchars($user["dni"]) ?></p>
 	<p><strong>Teléfono:</strong> <?= htmlspecialchars($user["telefono"]) ?></p>
 	<p><strong>Fecha de nacimiento:</strong> <?= htmlspecialchars($user["fecha_nacimiento"]) ?></p>
-
-    </div>
-
-    <div class="botones">
-      <a href="modify_user.php?user=<?= urlencode($user["user"]) ?>" class="boton">Modificar</a>
-    </div>
+     </div>
   </div>
 </div>

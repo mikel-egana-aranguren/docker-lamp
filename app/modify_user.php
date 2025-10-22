@@ -160,22 +160,22 @@ mysqli_stmt_close($stmt);
     		<input type="text" id="user_display" value="<?= htmlspecialchars($usuario['user']) ?>" readonly class="input-readonly">
 	</div>
 
-        <label for="nombre">Nombre *</label>
+        <label for="nombre">Nombre</label>
         <input type="text" id="nombre" name="nombre" value="<?= htmlspecialchars($usuario['nombre']) ?>" required>
 
-        <label for="apellidos">Apellidos *</label>
+        <label for="apellidos">Apellidos</label>
         <input type="text" id="apellidos" name="apellidos" value="<?= htmlspecialchars($usuario['apellidos']) ?>" required>
 
-        <label for="correo">Correo *</label>
+        <label for="correo">Correo (usuario@servidor.extension)</label>
         <input type="email" id="correo" name="correo" value="<?= htmlspecialchars($usuario['correo']) ?>" required>
         
-        <label for="dni">DNI *</label>
+        <label for="dni">DNI (Ejemplo: 12345678Z)</label>
         <input type="text" id="dni" name="dni" value="<?= htmlspecialchars($usuario['dni']) ?>" required>
 
-        <label for="telefono">Teléfono *</label>
+        <label for="telefono">Teléfono (Télefono válido en España, 6, 7 o 9 + 8 dígitos)</label>
         <input type="text" id="telefono" name="telefono" value="<?= htmlspecialchars($usuario['telefono']) ?>" required>
 
-        <label for="fecha_nacimiento">Fecha de Nacimiento *</label>
+        <label for="fecha_nacimiento">Fecha de Nacimiento</label>
         <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" value="<?= htmlspecialchars($usuario['fecha_nacimiento']) ?>" required>
 
         <details>
