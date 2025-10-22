@@ -29,10 +29,23 @@ document.addEventListener("DOMContentLoaded", function () {
     input.addEventListener("input", clearMessage);
   });
 
+  // Función auxiliar para validar fecha real
+  const esFechaValida = (fecha) => {
+    const partes = fecha.split("-");
+    if (partes.length !== 3) return false;
+    const [año, mes, dia] = partes.map(Number);
+    const date = new Date(año, mes - 1, dia);
+    return (
+      date.getFullYear() === año &&
+      date.getMonth() === mes - 1 &&
+      date.getDate() === dia
+    );
+  };
+
   form.addEventListener("submit", function (event) {
     const nombre = nombreInput.value.trim();
     const apellidos = apellidosInput.value.trim();
-    const dni = dniInput.value.trim();
+    const dni = dniInput.value.trim().toUpperCase();
     const correo = correoInput.value.trim();
     const telefono = telefonoInput.value.trim();
     const fecha = fechaInput.value.trim();
@@ -41,10 +54,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const nombreRegex = /^[A-Za-zÀ-ÿ ]+$/;
     const apellidosRegex = /^[A-Za-zÀ-ÿ ]+$/;
-    const dniRegex = /^[0-9]{8}[A-Za-z]$/;
+    const dniRegex = /^(\d{8})([A-Za-z])$/;
     const correoRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const telefonoRegex = /^[0-9]{9}$/;
-    const fechaRegex = /^\d{4}-\d{2}-\d{2}$/; // formato YYYY-MM-DD
+    const fechaRegex = /^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 
     if (!nombreRegex.test(nombre)) {
       showMessage("El nombre no es válido.");
@@ -58,8 +71,20 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    if (!dniRegex.test(dni)) {
+    const dniMatch = dni.match(dniRegex);
+    if (!dniMatch) {
       showMessage("El DNI debe tener 8 números y 1 letra (sin guion).");
+      event.preventDefault();
+      return;
+    }
+
+    // Validar letra del DNI
+    const dniNumbers = parseInt(dniMatch[1], 10);
+    const dniLetter = dniMatch[2].toUpperCase();
+    const letters = "TRWAGMYFPDXBNJZSQVHLCKE";
+    const correctLetter = letters[dniNumbers % 23];
+    if (dniLetter !== correctLetter) {
+      showMessage("DNI inválido");
       event.preventDefault();
       return;
     }
@@ -76,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    if (!fechaRegex.test(fecha)) {
+    if (!fechaRegex.test(fecha) || !esFechaValida(fecha)) {
       showMessage("La fecha de nacimiento no es válida.");
       event.preventDefault();
       return;
