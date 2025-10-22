@@ -35,7 +35,7 @@ echo '
 
 <div class="container">
   <div class="content">
-    <h1>LISTA DE ITEMS</h1>
+    <h1>LISTA DE COCHES</h1>
     <table border="1" cellpadding="10" cellspacing="0">
       <tr>
         <th>Nombre</th>
@@ -72,7 +72,7 @@ if ($result->num_rows > 0) {
               </tr>";
     }
 } else {
-    echo "<tr><td colspan='4'>No hay items en la base de datos</td></tr>";
+    echo "<tr><td colspan='4'>No hay coches disponibles</td></tr>";
 }
 
 $conn->close();

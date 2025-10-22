@@ -137,7 +137,7 @@ mysqli_stmt_close($stmt);
 <div class="bar">
   <div class="volver_button">
     <a href="show_user.php?user=<?= urlencode($usuario['user']) ?>" title="Volver al inicio">
-      <i class="fa-solid fa-house"></i>
+      <i class="fa-solid fa-arrow-left"></i>
     </a>
   </div>
   <h1>MODIFICAR USUARIO</h1>
@@ -154,14 +154,11 @@ mysqli_stmt_close($stmt);
 
     <div class="rellenar">
       <form id="user_modify_form" action="modify_user.php?user=<?= urlencode($usuario['user']) ?>" method="post" class="labels">
-        <input type="hidden" name="user" value="<?= htmlspecialchars($usuario['user']) ?>">
 	
 	<div class="readonly-field">
     		<label for="user_display">Usuario</label>
     		<input type="text" id="user_display" value="<?= htmlspecialchars($usuario['user']) ?>" readonly class="input-readonly">
 	</div>
-
-
 
         <label for="nombre">Nombre *</label>
         <input type="text" id="nombre" name="nombre" value="<?= htmlspecialchars($usuario['nombre']) ?>" required>

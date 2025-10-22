@@ -44,24 +44,29 @@ $stmt->close();
 $conn->close();
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Modificar Coche</title>
-  <link rel="stylesheet" href="css/modify_item.css">
-  <script src="js/modify_item.js" defer></script>
-</head>
-<body>
+<title>Modificar <?= htmlspecialchars($nombre) ?></title>
+<link rel="stylesheet" href="css/modify_item.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
- <div class="container">
-    <div class="content">
-      <h1>Modificar Coche</h1>
-      <?= $message ?>
-      <?php if ($item): ?>
-        <form method="POST" id="item_modify_form">
-	  <label>Nombre:</label><br>
-	  <input type="text" name="nombre" value="<?= htmlspecialchars($item['nombre']) ?>" readonly><br><br>
+<div class="bar">
+  <div class="volver_button">
+    <a href="items.php" title="Volver al inicio">
+      <i class="fa-solid fa-house"></i>
+    </a>
+  </div>
+  <h1>MODIFICAR <?= htmlspecialchars($nombre) ?></h1>
+</div>
+
+<div class="container">
+	<div class="content">
+	<?= $message ?>
+	<?php if ($item): ?>
+	<form method="POST" id="item_modify_form">
+
+	  <div class="readonly-field">
+	  	<label>Nombre:</label><br>
+	  	<input type="text" name="nombre" value="<?= htmlspecialchars($item['nombre']) ?>" readonly class="input-readonly"><br><br>
+	  </div>
 	  
 	  <label>Año:</label><br>
 	  <input type="number" name="año" value="<?= htmlspecialchars($item['año']) ?>" required><br><br>
@@ -79,12 +84,10 @@ $conn->close();
 	    <button type="submit" id="item_modify_submit">Guardar cambios</button>
 	  </div>
 	</form>
-      <?php else: ?>
-        <p>Coche no encontrado.</p>
-      <?php endif; ?>
-      <a href="items.php"><button>Volver</button></a>
-    </div>
-  </div>
-</html>
+	<?php else: ?>
+		<p>Coche no encontrado.</p>
+	<?php endif; ?>
+	</div>
+</div>
 
 

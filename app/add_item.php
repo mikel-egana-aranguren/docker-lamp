@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_stmt_bind_param($stmt, "sisid", $nombre, $anio, $combustible, $caballos, $precio);
 
         if (mysqli_stmt_execute($stmt)) {
-            $message = "<p style='color:green;'>Item añadido correctamente.</p>";
+            $message = "<p style='color:green;'>Coche añadido correctamente.</p>";
         } else {
             $message = "<p style='color:red;'>Este Coche ya existe.</p>";
         }

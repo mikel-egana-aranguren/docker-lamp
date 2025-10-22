@@ -42,30 +42,35 @@ if (!$user) {
     exit;
 }
 
-// Mostrar la información del usuario
-echo '
+?>
+
+<title>Datos del Usuario</title>
 <link rel="stylesheet" href="css/show_user.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<div class="bar">
+  <div class="volver_button">
+    <a href="items.php" title="Volver al inicio">
+      <i class="fa-solid fa-house"></i>
+    </a>
+  </div>
+  <h1>DATOS DEL USUARIO</h1>
+</div>
 <div class="container">
   <div class="content">
-    <h1>DATOS DEL USUARIO</h1>
     <div class="rellenar">
 
-      <p><strong>Usuario:</strong> '.htmlspecialchars($user["user"]).'</p>
-      <p><strong>Nombre:</strong> '.htmlspecialchars($user["nombre"]).'</p>
-      <p><strong>Apellidos:</strong> '.htmlspecialchars($user["apellidos"]).'</p>
-      <p><strong>Correo:</strong> '.htmlspecialchars($user["correo"]).'</p>
-      <p><strong>DNI:</strong> '.htmlspecialchars($user["dni"]).'</p>
-      <p><strong>Teléfono:</strong> '.htmlspecialchars($user["telefono"]).'</p>
-      <p><strong>Fecha de nacimiento:</strong> '.htmlspecialchars($user["fecha_nacimiento"]).'</p>
+      <p><strong>Usuario:</strong> <?= htmlspecialchars($user["user"]) ?></p>
+	<p><strong>Nombre:</strong> <?= htmlspecialchars($user["nombre"]) ?></p>
+	<p><strong>Apellidos:</strong> <?= htmlspecialchars($user["apellidos"]) ?></p>
+	<p><strong>Correo:</strong> <?= htmlspecialchars($user["correo"]) ?></p>
+	<p><strong>DNI:</strong> <?= htmlspecialchars($user["dni"]) ?></p>
+	<p><strong>Teléfono:</strong> <?= htmlspecialchars($user["telefono"]) ?></p>
+	<p><strong>Fecha de nacimiento:</strong> <?= htmlspecialchars($user["fecha_nacimiento"]) ?></p>
 
     </div>
 
     <div class="botones">
-      <a href="modify_user.php?user='.urlencode($user["user"]).'" class="boton">Modificar</a>
-      <a href="items.php" class="boton-sec">Volver</a>
+      <a href="modify_user.php?user=<?= urlencode($user["user"]) ?>" class="boton">Modificar</a>
     </div>
   </div>
 </div>
-';
-?>
-
