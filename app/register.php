@@ -22,7 +22,6 @@ if ($conn->connect_error) {
         $passwd     = $_POST['passwd'] ?? '';
         $passwd_repeat = $_POST['passwd_repeat'] ?? '';
 
-        // ⚠️ Validaciones básicas
         if ($passwd !== $passwd_repeat) {
             $message = "Las contraseñas no coinciden.";
         } elseif (
@@ -45,7 +44,7 @@ if ($conn->connect_error) {
                 );
 
                 if ($stmt->execute()) {
-                    $message = "✅ Usuario registrado correctamente.";
+                    $message = "Usuario registrado correctamente.";
                     $message_color = "green";
                     $_POST = []; // limpiar el formulario
                 } else {
@@ -53,13 +52,13 @@ if ($conn->connect_error) {
 			    $errorText = $stmt->error;
 
 			    if (strpos($errorText, "dni") !== false) {
-				$message = "⚠️ El DNI ya está registrado.";
+				$message = "El DNI ya está registrado.";
 			    } elseif (strpos($errorText, "correo") !== false) {
-				$message = "⚠️ El correo electrónico ya está registrado.";
+				$message = "El correo electrónico ya está registrado.";
 			    } elseif (strpos($errorText, "telefono") !== false) {
-				$message = "⚠️ El teléfono ya está registrado.";
+				$message = "El teléfono ya está registrado.";
 			    } else {
-				$message = "⚠️ El nombre de usuario ya está registrado.";
+				$message = "El nombre de usuario ya está registrado.";
 			    }
 			} else {
 			    $message = "Error al registrar el usuario: " . $stmt->error;
@@ -97,31 +96,31 @@ $conn->close();
     <?php endif; ?>
     <div class="rellenar">
       <form id="register_form" action="" method="post" class="labels">
-        <label for="user">Usuario *</label>
+        <label for="user">Usuario (No modificable)</label>
         <input type="text" id="user" name="user" required value="<?= htmlspecialchars($_POST['user'] ?? '') ?>">
 
-        <label for="name">Nombre *</label>
+        <label for="name">Nombre</label>
         <input type="text" id="name" name="name" required value="<?= htmlspecialchars($_POST['name'] ?? '') ?>">
 
-        <label for="surnames">Apellidos *</label>
+        <label for="surnames">Apellidos</label>
         <input type="text" id="surnames" name="surnames" required value="<?= htmlspecialchars($_POST['surnames'] ?? '') ?>">
 
-        <label for="dni">DNI *</label>
+        <label for="dni">DNI (Ejemplo: 12345678Z)</label>
         <input type="text" id="dni" name="dni" required value="<?= htmlspecialchars($_POST['dni'] ?? '') ?>">
 
-        <label for="email">Correo *</label>
+        <label for="email">Correo (usuario@servidor.extension)</label>
         <input type="email" id="email" name="email" required value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
 
-        <label for="tlfn">Teléfono *</label>
+        <label for="tlfn">Teléfono (Télefono válido en España, 6, 7 o 9 + 8 dígitos)</label>
         <input type="text" id="tlfn" name="tlfn" required value="<?= htmlspecialchars($_POST['tlfn'] ?? '') ?>">
 
-        <label for="fNcto">Fecha de Nacimiento *</label>
+        <label for="fNcto">Fecha de Nacimiento</label>
         <input type="date" id="fNcto" name="fNcto" required value="<?= htmlspecialchars($_POST['fNcto'] ?? '') ?>">
 
-        <label for="passwd">Contraseña *</label>
+        <label for="passwd">Contraseña</label>
         <input type="password" id="passwd" name="passwd" required>
 
-        <label for="passwd_repeat">Repetir Contraseña *</label>
+        <label for="passwd_repeat">Repetir Contraseña</label>
         <input type="password" id="passwd_repeat" name="passwd_repeat" required>
 
         <button type="submit" id="register_submit">Confirmar</button>

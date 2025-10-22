@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: db
--- Tiempo de generación: 16-10-2025 a las 21:34:43
+-- Tiempo de generación: 22-10-2025 a las 22:31:28
 -- Versión del servidor: 10.8.2-MariaDB-1:10.8.2+maria~focal
 -- Versión de PHP: 8.2.27
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `item` (
   `nombre` text NOT NULL,
-  `año` year(4) NOT NULL,
+  `año` int(4) NOT NULL,
   `combustible` text NOT NULL,
   `caballos` int(11) NOT NULL,
   `precio` int(12) NOT NULL

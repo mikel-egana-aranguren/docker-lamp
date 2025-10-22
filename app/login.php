@@ -70,7 +70,7 @@ $conn->close();
 
     <div class="rellenar">
       <form id="login_form" action="" method="post" class="labels">
-        <label for="email">Correo</label>
+        <label for="email">Correo (usuario@servidor.extension)</label>
         <input type="text" id="email" name="email" required value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
 
         <label for="passwd">Contraseña</label>
