@@ -7,7 +7,7 @@ session_start();
   <head>
     <link rel="stylesheet" type="text/css" href="inicioStyle.css">
    </head>
- <body class="fondo-rosaClaro">
+ <body class="items">
   <?php if (isset($_SESSION['usuario'])): ?>
       <p>
         <a href="show_user.php?user=<?= intval($_SESSION['idU']) ?>"> Mi perfil </a>
@@ -18,7 +18,7 @@ session_start();
     <a href="<?= $ruta ?>" class="button">Volver a inicio</a>
     <?php endif; ?>
 
-  <br><h1 align="center">CATÁLOGO: </h1><br>
+  <br><h1 align="center">Catálogo: </h1><br>
   <?php
     $hostname = "db";
     $username = "admin";
@@ -40,7 +40,7 @@ session_start();
     //Mostrar un popup mediante "dialog", solo si se hace click en el boton
     while ($row = mysqli_fetch_array($query)) {
     echo "
-    <div style='text-align: center; margin-bottom: 1em;'>
+    <div class='catalog' style='text-align: center; margin-bottom: 1em;'>
       <button class='btn-ver-info-peli'>{$row['titulo']}</button>
       <span style='margin: 0 10px;'>({$row['anio']})</span>
       ";
@@ -70,7 +70,7 @@ session_start();
       <label>Director: <input type="text" name="director" required></label><br>
       <label>Género: <input type="text" name="genero" required></label><br>
       <label>Duración: <input type="number" name="duracion" required> minutos</label><br><br>
-      <button type="submit">Guardar</button>
+      <button class="guardar"type="submit">Guardar</button>
       <button type="button" class='btn-cerrar-add-peli'>Cerrar</button>
     </form>
   </dialog>
