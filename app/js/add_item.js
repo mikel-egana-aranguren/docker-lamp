@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
       
       // --- Validación de los caballos ---
       const caballos = parseInt(caballosStr, 10);
-      if (caballos < 1 || year > 2001) {
+      if (caballos < 1 || caballos > 2001) {
           alert("Los caballos deben estar entre 1 y 2000.");
           event.preventDefault();
           return;

@@ -63,21 +63,21 @@ $conn->close();
 	<form method="POST" id="item_modify_form">
 
 	  <div class="readonly-field">
-	  	<label>Nombre:</label><br>
+	  	<label>Nombre</label><br>
 	  	<input type="text" name="nombre" value="<?= htmlspecialchars($item['nombre']) ?>" readonly class="input-readonly"><br><br>
 	  </div>
 	  
-	  <label>Año:</label><br>
-	  <input type="number" name="año" value="<?= htmlspecialchars($item['año']) ?>" required><br><br>
+	  <label>Año (>=1886)</label><br>
+	  <input type="number" name="año" id="año" value="<?= htmlspecialchars($item['año']) ?>" min="1886" max="9999" required><br><br>
 	  
-	  <label>Combustible:</label><br>
+	  <label>Combustible</label><br>
 	  <input type="text" name="combustible" value="<?= htmlspecialchars($item['combustible']) ?>" required><br><br>
 	  
-	  <label>Caballos:</label><br>
-	  <input type="number" name="caballos" value="<?= htmlspecialchars($item['caballos']) ?>" required><br><br>
+	  <label>Caballos (1-2000)</label><br>
+	  <input type="number" name="caballos" id="caballos" value="<?= htmlspecialchars($item['caballos']) ?>" min="1" max="2000" required><br><br>
 	  
-	  <label>Precio:</label><br>
-	  <input type="number" step="0.01" name="precio" value="<?= htmlspecialchars($item['precio']) ?>" required><br><br>
+	  <label>Precio (Máx 12 cifras)</label><br>
+	  <input type="number" name="precio" id="precio" value="<?= htmlspecialchars($item['precio']) ?>" min="1" max="999999999999" required><br><br>
 	  
 	  <div class="buttons">
 	    <button type="submit" id="item_modify_submit">Guardar cambios</button>
