@@ -104,6 +104,7 @@ if (!$user) { http_response_code(404); die("Usuario no encontrado."); }
 <head>
   <meta charset="UTF-8" />
   <title>Modificar usuario</title>
+  <link rel="stylesheet" type="text/css" href="inicioStyle.css">
   <script src="js/validar_user_modify.js"></script>
 </head>
 <body>

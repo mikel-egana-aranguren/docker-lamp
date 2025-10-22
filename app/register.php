@@ -70,6 +70,7 @@ if (isset($_POST['register_submit'])) {
 <head>
 	<title> Registro </title>
 	<script src="js/validar_user.js"></script>	
+	<link rel="stylesheet" type="text/css" href="inicioStyle.css">
 </head>
 	<body>
 	<form id="register_form" method="post" >

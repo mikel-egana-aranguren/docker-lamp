@@ -47,9 +47,9 @@ ob_end_flush();
 <html>
 <head>
 	<title> Inicio de sesión </title>
-	<script src="validar_user.js"></script>
+    <link rel="stylesheet" type="text/css" href="inicioStyle.css">
 </head>
-	<body>
+	<body class="fondo-rosaMedio">
 	<form name="login_form" method="post" >
 		<p align="center">Rellena los datos de inicio de sesión</p>
 		Nombre de usuario<br><input type="text" name="usuario" required><br>

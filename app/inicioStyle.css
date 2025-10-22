@@ -1,26 +1,61 @@
-button.ctlg 
-{
-    width: 200px;
-    height: 100px;
-    font-size: 30;    
+:root {
+  /* Colores de texto */
+  --texto-negro: #1f2937;
+  --texto-gris: #6b7280;
+  
+  /* fondos */
+  --fondo-rosaClaro: #fbdaff;
+  --fondo-rosaMedio: #ffc3fa;
+  --fondo-amarillo: #ffe9a2;
+  --fondo-verde: #acd4b2;
+  --fondo-lila: #dfccf3;
+  
+  /* Bordes y sombras */
+  --borde-color: #d1d5db;
+  --sombra-suave: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --sombra-media: 0 4px 8px rgba(0, 0, 0, 0.15);
+  
+  /* Espaciado */
+  --espaciado-sm: 0.5rem;
+  --espaciado-md: 1rem;
+  --espaciado-lg: 1.5rem;
+  --espaciado-xl: 2rem;
+  
+}
+html, body {
+    height: 100%;
+    margin: 0;
+}
+h1, h2{
+    font-family: "Optima", "Segoe UI", sans-serif;
+    text-align: center;
+}
+/*Cuerpos*/
+
+body.index { 
+    background-color: var(--fondo-rosaClaro);
+    /*para el gif del gato*/
+    background-image: url('img/gatoCola.gif');
+    background-position: left bottom;
+    background-repeat: no-repeat;
 }
 
-button.inic
-{
-    position: absolute;
-    left: 1500px;
-    top: 30px;
-    width: 150px;
-    height: 50px;
-    font-size: 20;    
+/* BOTONES */
+
+/*botones catálogo, iniciar sesión y registrarse de index.php */
+button.b1 {
+  font-family: "Georgia", "Times New Roman", Times, serif;
+  background-color: #fca2ff;
+
+  border: 2px solid #000000;
+  border-radius: 10px; /* esquinas redondeadas */
+  font-size: 16px;
+  padding: 12px 24px;
+  cursor: pointer;
+}
+/* para cuando pones el ratón encima del botón */
+button.b1:hover {
+  background-color: #9f66a1;
+  cursor: url("img/pataGato32.png"), auto; /* cambiar cursor */
 }
 
-button.reg
-{
-    position: absolute;
-    left: 1675px;
-    top: 30px;
-    width: 150px;
-    height: 50px;
-    font-size: 20;    
-}

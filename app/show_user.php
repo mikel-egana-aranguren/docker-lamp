@@ -31,6 +31,7 @@ if (!$user) { http_response_code(404); die("Usuario no encontrado."); }
 <head>
   <meta charset="UTF-8" />
   <title>Perfil de usuario</title>
+  <link rel="stylesheet" type="text/css" href="inicioStyle.css">
 </head>
 <body>
   <h1>Perfil de usuario</h1>

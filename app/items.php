@@ -4,7 +4,10 @@ session_start();
 ?>
 
 <html>
- <body>
+  <head>
+    <link rel="stylesheet" type="text/css" href="inicioStyle.css">
+   </head>
+ <body class="fondo-rosaClaro">
   <?php if (isset($_SESSION['usuario'])): ?>
       <p>
         <a href="show_user.php?user=<?= intval($_SESSION['idU']) ?>"> Mi perfil </a>
