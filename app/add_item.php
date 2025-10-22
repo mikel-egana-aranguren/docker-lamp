@@ -40,22 +40,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 mysqli_close($cn);
 ?>
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Añadir Coche</title>
-  <link rel="stylesheet" href="css/add_item.css">
-  <script src="js/add_item.js" defer></script>
-</head>
-<body>
-
+<title>Añadir Coche</title>
+<link rel="stylesheet" href="css/add_item.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<script src="js/add_item.js" defer></script>
+	<div class="bar">
+	  <div class="volver_button">
+	    <a href="items.php" title="Volver al inicio">
+	      <i class="fa-solid fa-house"></i>
+	    </a>
+	  </div>
+	  <h1>AÑADIR COCHE</h1>
+	</div>
   <div class="container">
     <div class="content">
-      <h1>Añadir Coche</h1>
-      
-      <!-- Mensaje de éxito o error -->
       <?= $message ?>
 
       <form id="item_add_form" action="add_item.php" method="post" class="labels">
@@ -74,6 +72,4 @@ mysqli_close($cn);
     </div>
   </div>
 
-</body>
-</html>
 
