@@ -44,7 +44,7 @@ h1 {
 
 .volver_button {
   position: absolute;
-  left: 20px; /* Mueve el icono a la izquierda */
+  left: 20px;
 }
 
 .volver_button a {
@@ -55,7 +55,7 @@ h1 {
 }
 
 .volver_button a:hover {
-  color: #45a049; /* Verde al pasar el mouse */
+  color: #45a049;
 }
 
 
