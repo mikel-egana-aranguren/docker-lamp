@@ -30,16 +30,19 @@ index.php --> register.php :
    <head>
     <link rel="stylesheet" type="text/css" href="inicioStyle.css">
    </head>
-   <body>
+   <body class="index">
       <h1>¡Bienvenid@ a SafeFilms!<h1>
     <?php if (isset($_SESSION['usuario'])): ?>
       
       <?php else: ?>
         <p>
         <h2>Consulta nuestro catálogo con lo mejor del cine: <h2>
-        <button class="ctlg" onclick="window.location.href='items.php'">Catálogo</button>
-        <button class="reg" onclick="window.location.href='register.php'">Registrarse</button> 
-        <button class="inic" onclick="window.location.href='login.php'">Iniciar sesión</button>
+        <button class="b1" onclick="window.location.href='items.php'">
+        <span class="texto">Catálogo</span>
+      </button>
+        <h2>o también puedes: <h2>
+        <button class="b1" onclick="window.location.href='register.php'">Registrarte</button> 
+        <button class="b1" onclick="window.location.href='login.php'">Iniciar sesión</button>
        </p>
     <?php endif; ?>
    

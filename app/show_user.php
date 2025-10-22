@@ -31,8 +31,9 @@ if (!$user) { http_response_code(404); die("Usuario no encontrado."); }
 <head>
   <meta charset="UTF-8" />
   <title>Perfil de usuario</title>
+  <link rel="stylesheet" type="text/css" href="inicioStyle.css">
 </head>
-<body>
+<body class="show-user">
   <h1>Perfil de usuario</h1>
 
   <p><strong>ID:</strong> <?= htmlspecialchars($user["idU"]) ?></p>
@@ -48,7 +49,7 @@ if (!$user) { http_response_code(404); die("Usuario no encontrado."); }
     <a href="modify_user.php?user=<?= urlencode($user['idU']) ?>">Modificar</a> |
     <a href="items.php">Volver</a>
     <form method="post" action="logout.php" style="display:inline;">
-      <button type="submit">Cerrar sesión</button>
+      <button class="cerrarS"type="submit">Cerrar sesión</button>
     </form>
   </p>
 </body>

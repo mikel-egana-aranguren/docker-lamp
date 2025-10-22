@@ -4,10 +4,13 @@ session_start();
 ?>
 
 <html>
- <body>
+  <head>
+    <link rel="stylesheet" type="text/css" href="inicioStyle.css">
+   </head>
+ <body class="items">
   <?php if (isset($_SESSION['usuario'])): ?>
       <p>
-        <a href="show_user.php?user=<?= intval($_SESSION['idU']) ?>"> Mi perfil </a>
+        <a class="miperf"href="show_user.php?user=<?= intval($_SESSION['idU']) ?>"> <img src='img/miperfilgato.png' style='width:70px; height: 70px; vertical-align:middle;'>Mi perfil</a>
         <?php $ruta="items.php"; ?>
       </p>
   <?php else: ?>
@@ -15,7 +18,7 @@ session_start();
     <a href="<?= $ruta ?>" class="button">Volver a inicio</a>
     <?php endif; ?>
 
-  <br><h1 align="center">CATÁLOGO: </h1><br>
+  <br><h1 align="center">Catálogo: </h1><br>
   <?php
     $hostname = "db";
     $username = "admin";
@@ -37,12 +40,13 @@ session_start();
     //Mostrar un popup mediante "dialog", solo si se hace click en el boton
     while ($row = mysqli_fetch_array($query)) {
     echo "
-    <div style='text-align: center; margin-bottom: 1em;'>
+    <div class='catalog' style='text-align: center; margin-bottom: 1em;'>
       <button class='btn-ver-info-peli'>{$row['titulo']}</button>
       <span style='margin: 0 10px;'>({$row['anio']})</span>
       ";
       
-    echo "<a href='modify_item.php?id={$row['idPelicula']}' style='margin-left: 10px;'>Modificar</a>";
+    echo "<a href='modify_item.php?id={$row['idPelicula']}' style='margin-left: 10px;' class='btn-modificar'>
+    <img src='img/modificar.png' alt='Modificar' style='width:24px; height:24px; vertical-align:middle;'></a>";
       
      echo "
       <dialog class='info-peli'>
@@ -61,13 +65,13 @@ session_start();
   <!-- Botón para añadir película -->
   <button class='btn-add-pelicula'>Añadir película</button>
   <dialog class='add-peli-dialog'>
-    <form id="add_peli_form" method="post" action="add_pelicula.php">
+    <form class="addPeli"id="add_peli_form" method="post" action="add_pelicula.php">
       <label>Título: <input type="text" name="titulo" required></label><br>
       <label>Año: <input type="number" name="anio" required></label><br>
       <label>Director: <input type="text" name="director" required></label><br>
       <label>Género: <input type="text" name="genero" required></label><br>
       <label>Duración: <input type="number" name="duracion" required> minutos</label><br><br>
-      <button type="submit">Guardar</button>
+      <button class="guardar"type="submit">Guardar</button>
       <button type="button" class='btn-cerrar-add-peli'>Cerrar</button>
     </form>
   </dialog>

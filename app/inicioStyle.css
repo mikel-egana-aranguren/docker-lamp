@@ -1,26 +1,181 @@
-button.ctlg 
-{
-    width: 200px;
-    height: 100px;
-    font-size: 30;    
+:root {
+  /* Colores de texto */
+  --texto-negro: #1f2937;
+  --texto-gris: #6b7280;
+  
+  /* fondos */
+  --fondo-rosaClaro: #fbdaff;
+  --fondo-rosaMedio: #ffc3fa;
+  --fondo-amarillo: #ffe9a2;
+  --fondo-verde: #acd4b2;
+  --fondo-lila: #dfccf3;
+  --fondo-grisClaro: #e7e7e7;
+
+  
+  /* Espaciado */
+  --espaciado-sm: 0.5rem;
+  --espaciado-md: 1rem;
+  --espaciado-lg: 1.5rem;
+  --espaciado-xl: 2rem;
+  
+}
+html, body {
+    height: 100%;
+    margin: 0;
+}
+h1,p{
+    font-family: "Optima", "Segoe UI", sans-serif;
+    text-align: center;
+    color: var(--texto-negro)
+}
+h2{
+    font-family: "Optima", "Segoe UI", sans-serif;
+    text-align: center;
+    color: var(--texto-gris)
+}
+/*CUERPOS*/
+
+body.index { 
+    background-color: var(--fondo-rosaClaro);
+    /*para el gif del gato*/
+    background-image: url('img/gatoCola.gif');
+    background-position: left bottom;
+    background-repeat: no-repeat;
 }
 
-button.inic
-{
-    position: absolute;
-    left: 1500px;
-    top: 30px;
-    width: 150px;
-    height: 50px;
-    font-size: 20;    
+body.items, body.login, body.register, body.modify_item, body.show-user, body.modify_user{
+    background-color: var(--fondo-rosaClaro);
+
+}
+body.delete-item{
+    background-color: #ffb7b7
+
+}
+    /*CATÁLOGO*/
+    div.catalog {
+        background-color: var(--fondo-rosaMedio);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        padding: var(--espaciado-lg);
+    }
+    .gato {
+    display: block;       /* hace que la imagen sea un bloque */
+    margin: 20px auto; /* espacio arriba y abajo del GIF */
+    width: 150px;    /* tamaño opcional */
+    height: auto;
 }
 
-button.reg
-{
-    position: absolute;
-    left: 1675px;
-    top: 30px;
-    width: 150px;
-    height: 50px;
-    font-size: 20;    
+
+
+/* BOTONES */
+
+/*botones catálogo, iniciar sesión y registrarse de index.php */
+input.btn_login, input.btn_register, button.b1 , button.cerrarS{
+  font-family: "Georgia", "Times New Roman", Times, serif;
+  background-color: #fca2ff;
+
+  border: 2px solid #000000;
+  border-radius: 10px; /* esquinas redondeadas */
+  font-size: 16px;
+  padding: 12px 24px;
+  cursor: pointer;
+
+  margin: 20px auto;
+}
+/* para cuando pones el ratón encima del botón */
+input.btn_login:hover, input.btn_register:hover , button.b1:hover, button.cerrarS:hover {
+  background-color: #9f66a1;
+  cursor: url("img/pataGato32.png"), auto; /* cambiar cursor */
+}
+
+
+
+a.delete-button, button.btn-cerrar-add-peli , button.btn-cerrar-info-peli{
+    font-family: "Georgia", "Times New Roman", Times, serif;
+    color: var(--texto-negro);
+    background-color: #ff9999;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 10px;
+     margin: 20px auto;
+}
+button.btn-cerrar-add-peli:hover , button.btn-cerrar-info-peli:hover, a.delete-button:hover {
+  background-color: #c76a6a;
+  cursor: url("img/pataGato32.png"), auto; /* cambiar cursor */
+}
+button.btn-add-pelicula  {
+
+    font-family: "Georgia", "Times New Roman", Times, serif;
+    background-color: #fca2ff;
+
+    border: 2px solid #000000;
+    font-size: 16px;
+
+    border-radius: 5px; /* esquinas redondeadas */
+    padding: 12px 24px;
+    cursor: pointer;
+
+}
+a.btn-modificar, a.miperf{
+    background-color: #fca2ff;
+    border-radius: 10px; /* esquinas redondeadas */
+    padding: 12px 12px;
+    cursor: pointer;
+}
+button.btn-add-pelicula:hover , a.btn-modificar:hover, a.miperf:hover {
+  background-color: #9f66a1;
+  cursor: url("img/pataGato32.png"), auto; /* cambiar cursor */
+}
+button.guardar, .save-button, button.yes-button, button.guardar_modUser{
+    font-family: "Georgia", "Times New Roman", Times, serif;
+    color: var(--texto-negro);
+    background-color: #acd4b2;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+button.guardar:hover , .save-button:hover , button.yes-button:hover, button.guardar_modUser:hover{
+  background-color: #50b650;
+  cursor: url("img/pataGato32.png"), auto; /* cambiar cursor */
+}
+button.btn-ver-info-peli {
+    font-family: "Baskerville", serif;
+    background-color: #e7e7e7;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+button.btn-ver-info-peli:hover {
+  background-color: #b5b5b5;
+  cursor: url("img/pataGato32.png"), auto; /* cambiar cursor */
+}
+
+/*FORMULARIOS*/
+form.addPeli{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: var(--espaciado-md);
+    background-color: var(--fondo-grisClaro);
+    border-radius: 10px;
+    width: 300px;
+    margin: 0 auto;
+}
+form.login, form.register, form.modify_item, form.modUser{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: var(--espaciado-md);
+    background-color: var(--fondo-rosaMedio);
+    border-radius: 10px;
+    width: 300px;
+    margin: 0 auto;
 }

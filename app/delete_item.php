@@ -39,19 +39,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <title>Eliminar Película</title>
-    <link rel="stylesheet" href="inicioStyle.css">
+     <link rel="stylesheet" type="text/css" href="inicioStyle.css">
 </head>
-<body style="text-align: center;">
+<body class="delete-item">
     <div class="confirmation-box">
         <h1>¿Estás segur@?</h1>
         <p>Esta acción no se puede deshacer.</p>
 
-        <div class="buttons-container">
+        <div class="buttons-container" style="text-align:center; margin-top:20px;">
             <form method="post" action="delete_item.php?id=<?php echo $id_pelicula; ?>" style="display: inline;">
-                <button type="submit" class="button yes-button">Sí</button>
+                <button type="submit" class="yes-button">Sí</button>
             </form>
 
-            <a href="modify_item.php?id=<?php echo $id_pelicula; ?>" class="button no-button">No, volver</a>
+            <a href="modify_item.php?id=<?php echo $id_pelicula; ?>" class="no-button">No, volver</a>
+            <img src="img/gatoBasura.png" alt="Gato en la basura" style="display:block; margin:20px auto; width:150px;">
         </div>
     </div>
 

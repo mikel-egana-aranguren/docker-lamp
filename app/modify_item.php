@@ -163,12 +163,12 @@ $conn->close();
     <title>Modificar Película</title>
     <link rel="stylesheet" href="inicioStyle.css">
 </head>
-<body style="text-align: center;">
+<body class="modify_item">
 
-    <h1 style="text-align: center;">Modificar: <?php echo htmlspecialchars($pelicula['titulo']); ?></h1>
-    <p style="text-align: center; color: #555;">Rellena los campos que quieras cambiar.</p>
+    <h1 ">Modificar: <?php echo htmlspecialchars($pelicula['titulo']); ?></h1>
+    <h2> Rellena los campos que quieras cambiar</h2>
     
-    <form name="modify_form" method="post" action="">
+    <form class="modify_item"name="modify_form" method="post" action="">
         
         Título:<br>
         <input type="text" name="titulo" id="titulo" placeholder="<?php echo htmlspecialchars($pelicula['titulo']); ?>">
@@ -187,14 +187,16 @@ $conn->close();
 
         <br><br>
         
-        <input type="submit" value="Guardar Cambios" name="modify_submit" class="button save-button">
-        
+        <input type="submit" value="Guardar Cambios" name="modify_submit" class="save-button">   
     </form>
         
-    <div class="button-container">
-        <a href="delete_item.php?id=<?php echo $pelicula['idPelicula']; ?>" class="button delete-button">Eliminar</a>
-        <a href="items.php" class="button back-button">Volver</a>
-    </div>
+    <div style="text-align:center; margin-top:20px;">
+    <a href="delete_item.php?id=<?php echo $pelicula['idPelicula']; ?>" class="delete-button">Eliminar Película
+    </a>
+</div>
+<div class="button-container" style="text-align:center; margin-top:10px;">
+    <a href="items.php" class="button back-button">Volver</a>
+</div>
 
 </body>
 </html>
