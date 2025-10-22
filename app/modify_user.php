@@ -31,7 +31,6 @@ if ($userKey !== '') {
     mysqli_stmt_close($stmt);
 }
 
-
 if (!$usuario) {
     echo "Usuario no encontrado.";
     exit;
@@ -74,45 +73,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         mysqli_stmt_close($dup_stmt);
 
+        
         // --- Actualización (con o sin contraseña) ---
-        if ($passwd !== '') {
-            if ($passwd !== $passwd_r) {
-                $errorMsg = "Las contraseñas no coinciden.";
-            } else {
-                $sql = "UPDATE `usuario` 
-                        SET `nombre`=?, `apellidos`=?, `dni`=?, `correo`=?, 
-                            `telefono`=?, `fecha_nacimiento`=?, `contrasena`=? 
-                        WHERE `correo`=?";
-                $stmt = prepare_or_die($cn, $sql, 'UPDATE con contrasena');
-                mysqli_stmt_bind_param($stmt, "ssssssss", 
-                    $nombre_post, $apellidos, $dni_post, $correo, 
-                    $telefono, $fecha_nac, $passwd, $user_post
-                );
-                mysqli_stmt_execute($stmt);
-                mysqli_stmt_close($stmt);
-                $successMsg = "Datos actualizados (contraseña incluida).";
-                $message_color = "green";
-            }
-        } else {
-            $sql = "UPDATE `usuario` 
-                    SET `nombre`=?, `apellidos`=?, `dni`=?, `correo`=?, 
-                        `telefono`=?, `fecha_nacimiento`=? 
-                    WHERE `correo`=?";
-            $stmt = prepare_or_die($cn, $sql, 'UPDATE sin contrasena');
-            mysqli_stmt_bind_param($stmt, "sssssss", 
-                $nombre_post, $apellidos, $dni_post, $correo, 
-                $telefono, $fecha_nac, $user_post
-            );
-            mysqli_stmt_execute($stmt);
-            mysqli_stmt_close($stmt);
-            $successMsg = "Datos actualizados.";
-            $message_color = "green";
-        }
+if ($passwd !== '') {
+    if ($passwd !== $passwd_r) {
+        $errorMsg = "Las contraseñas no coinciden.";
+    } else {
+        $sql = "UPDATE `usuario` 
+                SET `nombre`=?, `apellidos`=?, `dni`=?, `correo`=?, 
+                    `telefono`=?, `fecha_nacimiento`=?, `contrasena`=? 
+                WHERE `user`=?";
+        $stmt = prepare_or_die($cn, $sql, 'UPDATE con contrasena');
+        mysqli_stmt_bind_param($stmt, "ssssssss", 
+            $nombre_post, $apellidos, $dni_post, $correo, 
+            $telefono, $fecha_nac, $passwd, $user_post
+        );
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        $successMsg = "Datos actualizados (contraseña incluida).";
+        $message_color = "green";
+    }
+} else {
+    $sql = "UPDATE `usuario` 
+            SET `nombre`=?, `apellidos`=?, `dni`=?, `correo`=?, 
+                `telefono`=?, `fecha_nacimiento`=? 
+            WHERE `user`=?";
+    $stmt = prepare_or_die($cn, $sql, 'UPDATE sin contrasena');
+    mysqli_stmt_bind_param($stmt, "sssssss", 
+        $nombre_post, $apellidos, $dni_post, $correo, 
+        $telefono, $fecha_nac, $user_post
+    );
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    $successMsg = "Datos actualizados.";
+    $message_color = "green";
+}
+
+// --- Recargar datos actualizados ---
+$sql = "SELECT * FROM `usuario` WHERE user = ?";
+$stmt = prepare_or_die($cn, $sql, 'SELECT recarga');
+mysqli_stmt_bind_param($stmt, "s", $user_post);
+mysqli_stmt_execute($stmt);
+$res = mysqli_stmt_get_result($stmt);
+$usuario = mysqli_fetch_assoc($res);
+mysqli_stmt_close($stmt);
+
 
         // Recargar datos actualizados
-        $sql = "SELECT * FROM `usuario` WHERE correo = ?";
-        $stmt = prepare_or_die($cn, $sql, 'SELECT recarga');
-        mysqli_stmt_bind_param($stmt, "s", $user_post);
+        $sql = "SELECT * FROM `usuario` WHERE user = ?";
+	$stmt = prepare_or_die($cn, $sql, 'SELECT recarga');
+	mysqli_stmt_bind_param($stmt, "s", $user_post);
         mysqli_stmt_execute($stmt);
         $res = mysqli_stmt_get_result($stmt);
         $usuario = mysqli_fetch_assoc($res);
@@ -145,9 +155,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="rellenar">
       <form id="user_modify_form" action="modify_user.php?user=<?= urlencode($usuario['user']) ?>" method="post" class="labels">
         <input type="hidden" name="user" value="<?= htmlspecialchars($usuario['user']) ?>">
+	
+	<div class="readonly-field">
+    		<label for="user_display">Usuario</label>
+    		<input type="text" id="user_display" value="<?= htmlspecialchars($usuario['user']) ?>" readonly class="input-readonly">
+	</div>
 
-        <label for="user_display">Usuario</label>
-        <input type="text" id="user_display" value="<?= htmlspecialchars($usuario['user']) ?>" readonly>
+
 
         <label for="nombre">Nombre *</label>
         <input type="text" id="nombre" name="nombre" value="<?= htmlspecialchars($usuario['nombre']) ?>" required>
