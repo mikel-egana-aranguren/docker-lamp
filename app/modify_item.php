@@ -43,7 +43,6 @@ $item = $result ? $result->fetch_assoc() : null;
 $stmt->close();
 $conn->close();
 ?>
-
 <title>Modificar <?= htmlspecialchars($nombre) ?></title>
 <link rel="stylesheet" href="css/modify_item.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">

@@ -37,7 +37,7 @@ $conn->close();
   </div>
   <h1>DATOS DEL <?= htmlspecialchars($nombre) ?></h1>
   <div class="modificar_button">
-  	<a href="modify_item.php?item=<?= urlencode($item['nombre']) ?>"><button>Modificar</button></a>
+  	<a href="modify_item.php?item=<?= htmlspecialchars($item['nombre']) ?>"><button>Modificar</button></a>
   </div>
 </div>
 <div class="container">
