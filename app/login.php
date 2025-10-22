@@ -48,9 +48,19 @@ $conn->close();
 ?>
 
 <link rel="stylesheet" href="css/login.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<script src="js/index.js" defer></script>
+<div class="bar">
+  <div class="volver_button">
+    <a href="index.php" title="Volver al inicio">
+      <i class="fa-solid fa-house"></i>
+    </a>
+  </div>
+  <h1>INICIAR SESIÓN</h1>
+</div>
+
 <div class="container">
   <div class="content">
-    <h1>INICIAR SESIÓN</h1>
 
     <?php if ($message !== ""): ?>
         <p style="color: <?= $message_color ?>; font-weight:bold; margin-bottom:15px;">

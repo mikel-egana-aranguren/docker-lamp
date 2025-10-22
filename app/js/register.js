@@ -29,6 +29,17 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!emailRegex.test(email)) { alert("Correo inválido."); event.preventDefault(); return; }
     if (!tlfnRegex.test(tlfn)) { alert("Teléfono inválido."); event.preventDefault(); return; }
     if (passwd !== passwdRepeat) { alert("Contraseñas no coinciden."); event.preventDefault(); return; }
-    // Si pasa todo, no hacemos preventDefault -> formulario se envía
+    
+    const dniNumbers = parseInt(dniMatch[1], 10);
+    const dniLetter = dniMatch[2].toUpperCase();
+
+    const letters = "TRWAGMYFPDXBNJZSQVHLCKE";
+    const correctLetter = letters[dniNumbers % 23];
+
+    if (dniLetter !== correctLetter) {
+        alert("La letra del DNI no corresponde a los números.");
+        event.preventDefault();
+        return;
+    }
   });
 });
