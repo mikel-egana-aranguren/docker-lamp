@@ -120,12 +120,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
+<title>Modificar Usuario</title>
 <link rel="stylesheet" href="css/modify_user.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<script src="js/modify_user.js" defer></script>
+<div class="bar">
+  <div class="volver_button">
+    <a href="show_user.php?user=<?= urlencode($usuario['user']) ?>" title="Volver al inicio">
+      <i class="fa-solid fa-house"></i>
+    </a>
+  </div>
+  <h1>MODIFICAR USUARIO</h1>
+</div>
+
 <div class="container">
   <div class="content">
-    <h1>MODIFICAR USUARIO</h1>
-
     <?php if ($errorMsg): ?>
       <p style="color: red; font-weight: bold;"><?= htmlspecialchars($errorMsg) ?></p>
     <?php endif; ?>
@@ -171,4 +180,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
   </div>
 </div>
-<script src="js/modify_user.js" defer></script>
+

@@ -78,7 +78,7 @@ $conn->close();
 
 <link rel="stylesheet" href="css/register.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-
+<script src="js/register.js" defer></script>
 <div class="bar">
   <div class="volver_button">
     <a href="index.php" title="Volver al inicio">
@@ -130,5 +130,5 @@ $conn->close();
   </div>
 </div>
 
-<script src="js/register.js" defer></script>
+
 
