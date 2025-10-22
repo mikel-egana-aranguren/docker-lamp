@@ -41,7 +41,7 @@ index.php --> register.php :
         <span class="texto">Catálogo</span>
       </button>
         <h2>o también puedes: <h2>
-        <button class="b1" onclick="window.location.href='register.php'">Registrarse</button> 
+        <button class="b1" onclick="window.location.href='register.php'">Registrarte</button> 
         <button class="b1" onclick="window.location.href='login.php'">Iniciar sesión</button>
        </p>
     <?php endif; ?>

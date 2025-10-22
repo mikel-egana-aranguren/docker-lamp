@@ -107,7 +107,7 @@ if (!$user) { http_response_code(404); die("Usuario no encontrado."); }
   <link rel="stylesheet" type="text/css" href="inicioStyle.css">
   <script src="js/validar_user_modify.js"></script>
 </head>
-<body>
+<body class="modify_user">
   <h1>Modificar usuario</h1>
 
   <?php if ($mensaje): ?>
@@ -115,7 +115,7 @@ if (!$user) { http_response_code(404); die("Usuario no encontrado."); }
   <?php endif; ?>
 
   <!-- IDs exigidos por la guía -->
-  <form id="user_modify_form" name="user_modify_form" method="post">
+  <form class="modUser"id="user_modify_form" name="user_modify_form" method="post">
     <p>Usuario (solo lectura): <strong><?= htmlspecialchars($user["usuario"]) ?></strong></p>
 
     Nombre:<br>
@@ -137,7 +137,7 @@ if (!$user) { http_response_code(404); die("Usuario no encontrado."); }
     Email:<br>
     <input type="text" name="email" value="<?= htmlspecialchars($user["email"]) ?>" required><br><br>
 
-    <button id="user_modify_submit" name="user_modify_submit" type="submit">Guardar cambios</button>
+    <button class="guardar_modUser" id="user_modify_submit" name="user_modify_submit" type="submit">Guardar cambios</button>
   </form>
 
   <p><a href="show_user.php?user=<?= urlencode($user['idU']) ?>">Volver</a></p>

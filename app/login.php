@@ -49,13 +49,14 @@ ob_end_flush();
 	<title> Inicio de sesión </title>
     <link rel="stylesheet" type="text/css" href="inicioStyle.css">
 </head>
-	<body class="fondo-rosaMedio">
-	<form name="login_form" method="post" >
-		<p align="center">Rellena los datos de inicio de sesión</p>
-		Nombre de usuario<br><input type="text" name="usuario" required><br>
+	<body class="login">
+		<h1>Rellena los datos de inicio de sesión: </h1>
+		<img src="/img/gatoMoviendoPatas.gif" alt="Gato" class="gato">
+	<form class="login" name="login_form" method="post" >
+		Nombre de usuario:<br><input type="text" name="usuario" required><br>
 		Contraseña:<br> <input type="text" name="contrasena" required> <br>
 		<br>
-		<input type="submit" value="Iniciar sesión" name="login_submit" style="color:black; background-color:lightpink;">
+		<input type="submit" value="Iniciar sesión" name="login_submit" class="btn_login">
 	</form>
 		
 	<div class="button-container">

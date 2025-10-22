@@ -10,7 +10,7 @@ session_start();
  <body class="items">
   <?php if (isset($_SESSION['usuario'])): ?>
       <p>
-        <a href="show_user.php?user=<?= intval($_SESSION['idU']) ?>"> Mi perfil </a>
+        <a class="miperf"href="show_user.php?user=<?= intval($_SESSION['idU']) ?>"> <img src='img/miperfilgato.png' style='width:70px; height: 70px; vertical-align:middle;'>Mi perfil</a>
         <?php $ruta="items.php"; ?>
       </p>
   <?php else: ?>
@@ -45,7 +45,8 @@ session_start();
       <span style='margin: 0 10px;'>({$row['anio']})</span>
       ";
       
-    echo "<a href='modify_item.php?id={$row['idPelicula']}' style='margin-left: 10px;'>Modificar</a>";
+    echo "<a href='modify_item.php?id={$row['idPelicula']}' style='margin-left: 10px;' class='btn-modificar'>
+    <img src='img/modificar.png' alt='Modificar' style='width:24px; height:24px; vertical-align:middle;'></a>";
       
      echo "
       <dialog class='info-peli'>
@@ -64,7 +65,7 @@ session_start();
   <!-- Botón para añadir película -->
   <button class='btn-add-pelicula'>Añadir película</button>
   <dialog class='add-peli-dialog'>
-    <form id="add_peli_form" method="post" action="add_pelicula.php">
+    <form class="addPeli"id="add_peli_form" method="post" action="add_pelicula.php">
       <label>Título: <input type="text" name="titulo" required></label><br>
       <label>Año: <input type="number" name="anio" required></label><br>
       <label>Director: <input type="text" name="director" required></label><br>

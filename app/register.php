@@ -69,12 +69,12 @@ if (isset($_POST['register_submit'])) {
 <html>
 <head>
 	<title> Registro </title>
-	<script src="js/validar_user.js"></script>	
 	<link rel="stylesheet" type="text/css" href="inicioStyle.css">
+	<script src="js/validar_user.js"></script>	
 </head>
-	<body>
-	<form id="register_form" method="post" >
-		<p align="center">Rellena los datos para poder registrarte:</p>
+	<body class="register">
+		<h1> Rellena los datos para poder registrarte</h1>
+	<form class="register" id="register_form" method="post" >
 		Nombre :<br> <input type="text" name="nombre" placeholder="Nombre" required>  <br>
         Apellido:<br><input type="text" name="apellido" placeholder="Apellido" required><br>
 		DNI: <br> <input type="text" name="numDni" placeholder="12345678" required> <input type="text" name="letraDni" placeholder="Letra DNI" required> <br>
@@ -83,11 +83,10 @@ if (isset($_POST['register_submit'])) {
 		Email:<br> <input type="text" name="email" placeholder="email@xxx.yyy" required> <br>
 		Nombre de usuario<br><input type="text" name="usuario" required><br>
 		Contraseña:<br> <input type="text" name="contrasena" required> <br>
-		<br>
-		<input type="submit" value="Registrar" name="register_submit" style="color:black; background-color:lightpink;">
+		<input type="submit" value="Registrar" name="register_submit" class="btn_register">
 	</form>
 	<div class="button-container">
 		<a href="index.php" class="button">Volver a inicio</a>
 	</div>
 	</body>
-<html>
+</html>
