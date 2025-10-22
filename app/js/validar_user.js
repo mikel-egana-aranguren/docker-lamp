@@ -26,10 +26,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const contrasena = form.contrasena.value.trim();
 
     if (nombre.length < 2 || !/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(nombre)) {
-      e.preventDefault(); return error("Nombre inválido.");
+      e.preventDefault(); return error("El nombre debe tener al menos 2 caracteres.");
     }
     if (apellido.length < 2 || !/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(apellido)) {
-      e.preventDefault(); return error("Apellido inválido.");
+      e.preventDefault(); return error("El apellido debe tener al menos 2 caracteres.");
     }
 
     if (!/^\d{8}$/.test(numDni)) {
@@ -38,24 +38,24 @@ document.addEventListener("DOMContentLoaded", () => {
     else{numbien=true;}
 
     if (!/^[A-Z]$/.test(letra) ) {
-      e.preventDefault(); return error("La letra del DNI debe ser una letra.");
+      e.preventDefault(); return error("El caracter debe ser una letra.");
     }
     else{letrabien=true;}
 
     if (!/^\d{9}$/.test(tlfn)) {
       e.preventDefault(); return error("El teléfono debe tener 9 dígitos.");
     }
-    if (!fecha) {
-      e.preventDefault(); return error("Selecciona una fecha de nacimiento válida.");
+    if (!fecha || fecha < 1915 || fecha > new Date().getFullYear()) {
+      e.preventDefault(); return error("Introduzca una fecha entre 1915 y el año actual.");
     }
     if (!emailOk(email)) {
       e.preventDefault(); return error("Email no válido.");
     }
     if (usuario.length < 3) {
-      e.preventDefault(); return error("El nombre de usuario debe tener 3 caracteres o más");
+      e.preventDefault(); return error("El nombre de usuario debe tener al menos 3 caracteres.");
     }
     if (contrasena.length < 4) {
-      e.preventDefault(); return error("La contraseña debe ser más larga");
+      e.preventDefault(); return error("La contraseña debe tener al menos 4 caracteres.");
     }
 
     //Comprobar que la letra del DNI corresponde al numero

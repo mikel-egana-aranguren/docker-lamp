@@ -7,7 +7,7 @@ session_start();
  <body>
   <?php if (isset($_SESSION['usuario'])): ?>
       <p>
-        <a href="show_user.php?user=<?= intval($_SESSION['idU']) ?>"> Mi perfil </a>?>
+        <a href="show_user.php?user=<?= intval($_SESSION['idU']) ?>"> Mi perfil </a>
         <?php $ruta="items.php"; ?>
       </p>
   <?php else: ?>
@@ -42,10 +42,8 @@ session_start();
       <span style='margin: 0 10px;'>({$row['anio']})</span>
       ";
       
-      if (isset($_SESSION['usuario'])) {
-          // Si el usuario ha iniciado sesión, muestra el botón "Modificar"
-          echo "<a href='modify_item.php?id={$row['idPelicula']}' style='margin-left: 10px;'>Modificar</a>";
-      }
+    echo "<a href='modify_item.php?id={$row['idPelicula']}' style='margin-left: 10px;'>Modificar</a>";
+      
      echo "
       <dialog class='info-peli'>
        <td>Título: {$row['titulo']}</td><br>

@@ -38,10 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['modify_submit'])) {
 
     // VALIDACIÓN (Solo si el campo no está vacío)
     if (!empty($titulo) && strlen($titulo) < 2) $errors[] = "El título debe tener al menos 2 caracteres.";
-    if (!empty($anio) && (!preg_match('/^\d{4}$/', $anio) || (int)$anio < 1900 || (int)$anio > (int)date('Y'))) $errors[] = "Año inválido.";
+    if (!empty($anio) && (!preg_match('/^\d{4}$/', $anio) || (int)$anio < 1900 || (int)$anio > (int)date('Y'))) $errors[] = "El año debe ser entre 1900 y el año actual.";
     if (!empty($director) && strlen($director) < 2) $errors[] = "El director debe tener al menos 2 caracteres.";
     if (!empty($genero) && strlen($genero) < 2) $errors[] = "El género debe tener al menos 2 caracteres.";
-    if (!empty($duracion) && (!ctype_digit($duracion) || (int)$duracion <= 29 || (int)$duracion >= 52000)) $errors[] = "La duración debe ser un número entero positivo asequible.";
+    if (!empty($duracion) && (!ctype_digit($duracion) || (int)$duracion < 30 || (int)$duracion >= 52000)) $errors[] = "La duración debe ser un número entero positivo asequible. El número mínimo es 30.";
     //Convertir caracteres especiales de los errores en html
     if (!empty($errors)) {
         foreach ($errors as $err) 

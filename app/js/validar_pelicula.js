@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault(); return error("El título debe tener al menos 2 caracteres.");
     }
     if (!/^\d{4}$/.test(anio) || anio < 1900 || anio > new Date().getFullYear()) {
-      e.preventDefault(); return error("El año debe ser un número de 4 dígitos válido.");
+      e.preventDefault(); return error("El año debe ser entre 1900 y el año actual.");
     }
     if (director.length < 2) {
       e.preventDefault(); return error("El director debe tener al menos 2 caracteres.");
@@ -30,8 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (genero.length < 2) {
       e.preventDefault(); return error("El género debe tener al menos 2 caracteres.");
     }
-    if (!/^\d+$/.test(duracion) || duracion <= 30 || duracion >= 52000) {
-      e.preventDefault(); return error("La duración debe ser un número positivo asequible.");
+    if (!/^\d+$/.test(duracion) || duracion < 30 || duracion >= 52000) {
+      e.preventDefault(); return error("La duración debe ser un número positivo asequible. El número mínimo es 30.");
     }
   });
 });
