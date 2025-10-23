@@ -1,9 +1,4 @@
 <?php
-<<<<<<< Updated upstream
-
-
-?>
-=======
 require 'connect.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -42,4 +37,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </form>
 <script src="js/validation.js"></script>
 
->>>>>>> Stashed changes
+?>
+
