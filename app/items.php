@@ -38,6 +38,7 @@ session_start();
     //para cada peli mostrar el nombre (a modo de boton) y fecha
     //Agregar a los botones la clase correspondiente para que hagan su funcion definida en el js
     //Mostrar un popup mediante "dialog", solo si se hace click en el boton
+    
     while ($row = mysqli_fetch_array($query)) {
     echo "
     <div class='catalog' style='text-align: center; margin-bottom: 1em;'>

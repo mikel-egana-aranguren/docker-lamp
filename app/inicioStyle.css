@@ -2,21 +2,30 @@
   /* Colores de texto */
   --texto-negro: #1f2937;
   --texto-gris: #6b7280;
-  
+
+  /*tipografía*/
+  --fuenteOptima: "Optima", "Segoe UI", sans-serif;
+  --fuenteGeorgia: "Georgia", "Times New Roman", Times, serif;
   /* fondos */
   --fondo-rosaClaro: #fbdaff;
   --fondo-rosaMedio: #ffc3fa;
-  --fondo-amarillo: #ffe9a2;
-  --fondo-verde: #acd4b2;
-  --fondo-lila: #dfccf3;
   --fondo-grisClaro: #e7e7e7;
+  --fondo-rojoClaro: #ffb7b7;
 
   
-  /* Espaciado */
-  --espaciado-sm: 0.5rem;
+  /* otros*/
   --espaciado-md: 1rem;
-  --espaciado-lg: 1.5rem;
-  --espaciado-xl: 2rem;
+  --btnRosa:#fca2ff;
+  --btnRosaOscuro:#9f66a1;
+  --btnRojo: #ff9999;
+  --btnRojoOscuro: #c76a6a;
+  --btnVerde:#acd4b2;
+  --btnVerdeOscuro:#50b650;
+  /*
+  --btnGrisClaro:#e7e7e7;
+  --btnGrisMedio: #b5b5b5;
+  */
+  
   
 }
 html, body {
@@ -24,12 +33,12 @@ html, body {
     margin: 0;
 }
 h1,p{
-    font-family: "Optima", "Segoe UI", sans-serif;
+    font-family: var(--fuenteOptima);
     text-align: center;
     color: var(--texto-negro)
 }
 h2{
-    font-family: "Optima", "Segoe UI", sans-serif;
+    font-family: var(--fuenteOptima);
     text-align: center;
     color: var(--texto-gris)
 }
@@ -48,7 +57,7 @@ body.items, body.login, body.register, body.modify_item, body.show-user, body.mo
 
 }
 body.delete-item{
-    background-color: #ffb7b7
+    background-color: var(--fondo-rojoClaro);
 
 }
     /*CATÁLOGO*/
@@ -59,11 +68,14 @@ body.delete-item{
         justify-content: center;
         gap: 20px;
         padding: var(--espaciado-lg);
+        align-items: center; 
+        padding: 10px; 
+        margin-bottom: 10px;
     }
     .gato {
     display: block;       /* hace que la imagen sea un bloque */
-    margin: 20px auto; /* espacio arriba y abajo del GIF */
-    width: 150px;    /* tamaño opcional */
+    margin: 20px auto; /* espacio arriba y abajo del gif*/
+    width: 150px;  
     height: auto;
 }
 
@@ -73,8 +85,8 @@ body.delete-item{
 
 /*botones catálogo, iniciar sesión y registrarse de index.php */
 input.btn_login, input.btn_register, button.b1 , button.cerrarS{
-  font-family: "Georgia", "Times New Roman", Times, serif;
-  background-color: #fca2ff;
+  font-family: var(--fuenteGeorgia);
+  background-color: var(--btnRosa);
 
   border: 2px solid #000000;
   border-radius: 10px; /* esquinas redondeadas */
@@ -86,11 +98,11 @@ input.btn_login, input.btn_register, button.b1 , button.cerrarS{
 }
 /* para cuando pones el ratón encima del botón */
 input.btn_login:hover, input.btn_register:hover , button.b1:hover, button.cerrarS:hover {
-  background-color: #9f66a1;
+  background-color: var(--btnRosaOscuro);
   cursor: url("img/pataGato32.png"), auto; /* cambiar cursor */
 }
 a.buttonVolver{
-    font-family: "Georgia", "Times New Roman", Times, serif;
+    font-family: var(--fuenteGeorgia);
 
     font-size: 16px;
     padding: 12px 24px;
@@ -102,14 +114,14 @@ a.buttonVolver{
     margin: 20px auto;
     display: inline-block;
     text-decoration: none;
-    color: black;
+    color: var(--texto-negro);
 }
 
 
 a.delete-button, button.btn-cerrar-add-peli , button.btn-cerrar-info-peli{
-    font-family: "Georgia", "Times New Roman", Times, serif;
+    font-family: var(--fuenteGeorgia);
     color: var(--texto-negro);
-    background-color: #ff9999;
+    background-color: var(--btnRojo);
     border: none;
     border-radius: 5px;
     padding: 5px 10px;
@@ -118,13 +130,15 @@ a.delete-button, button.btn-cerrar-add-peli , button.btn-cerrar-info-peli{
      margin: 20px auto;
 }
 button.btn-cerrar-add-peli:hover , button.btn-cerrar-info-peli:hover, a.delete-button:hover {
-  background-color: #c76a6a;
+  background-color: var(--btnRojoOscuro);
   cursor: url("img/pataGato32.png"), auto; /* cambiar cursor */
 }
 button.btn-add-pelicula  {
 
-    font-family: "Georgia", "Times New Roman", Times, serif;
-    background-color: #fca2ff;
+    font-family: var(--fuenteGeorgia);
+    color: var(--texto-negro);
+    background-color: var(--btnRosa);
+
 
     border: 2px solid #000000;
     font-size: 16px;
@@ -135,19 +149,19 @@ button.btn-add-pelicula  {
 
 }
 a.btn-modificar, a.miperf{
-    background-color: #fca2ff;
+    background-color: var(--btnRosa);
     border-radius: 10px; /* esquinas redondeadas */
     padding: 12px 12px;
     cursor: pointer;
 }
 button.btn-add-pelicula:hover , a.btn-modificar:hover, a.miperf:hover {
-  background-color: #9f66a1;
+  background-color: var(--btnRosaOscuro);
   cursor: url("img/pataGato32.png"), auto; /* cambiar cursor */
 }
 button.guardar, .save-button, button.yes-button, button.guardar_modUser{
-    font-family: "Georgia", "Times New Roman", Times, serif;
+    font-family: var(--fuenteGeorgia);
     color: var(--texto-negro);
-    background-color: #acd4b2;
+    background-color: var(--btnVerde);
     border: none;
     border-radius: 5px;
     padding: 5px 10px;
@@ -155,7 +169,7 @@ button.guardar, .save-button, button.yes-button, button.guardar_modUser{
     margin-top: 10px;
 }
 button.guardar:hover , .save-button:hover , button.yes-button:hover, button.guardar_modUser:hover{
-  background-color: #50b650;
+  background-color: var(--btnVerdeOscuro);
   cursor: url("img/pataGato32.png"), auto; /* cambiar cursor */
 }
 button.btn-ver-info-peli {

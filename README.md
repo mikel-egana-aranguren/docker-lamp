@@ -1,9 +1,9 @@
 # Integrantes
-Mbarek Galloul Ezzakraoui,
-Alicia Maizkurrena,
-Adrián Vinagre,
-Maira Gabriela Herbas Jaldin y
-Ana Victoria Cernatescu
+* Mbarek Galloul Ezzakraoui
+* Alicia Maizkurrena
+* Adrián Vinagre
+* Maira Gabriela Herbas Jaldin 
+* Ana Victoria Cernatescu
 
 # Docker LAMP
 Linux + Apache + MariaDB (MySQL) + PHP 7.2 on Docker Compose. Mod_rewrite enabled by default.
@@ -26,7 +26,7 @@ $ docker build -t web .
 $ docker-compose up -d
 ```
 
-Para pararlo y borrar contenedor y tal
+Para pararlo: 
 ```bash
 $ docker-compose down -v
 
