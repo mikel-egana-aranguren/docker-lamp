@@ -19,10 +19,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $caballos = intval($_POST['caballos']);
     $precio = floatval($_POST['precio']);
 
-    // Si no hay mensaje de error, hacemos el UPDATE
-    if ($message === '') {
-        $stmt = $conn->prepare("UPDATE item SET año = ?, combustible = ?, caballos = ?, precio = ? WHERE nombre = ?");
-	$stmt->bind_param("isids", $año, $combustible, $caballos, $precio, $nombre);
+    // Verificar si el nuevo nombre ya existe y pertenece a otro registro
+    $stmt_check = $conn->prepare("SELECT id FROM item WHERE nombre = ? AND nombre != ?");
+    $stmt_check->bind_param("ss", $nombre_nuevo, $nombre);
+    $stmt_check->execute();
+    $result_check = $stmt_check->get_result();
+    if ($result_check->num_rows > 0) {
+        $message = "<p style='color:red;'>Ya existe un coche con el nombre '{$nombre_nuevo}'.</p>";
+    } else {
+        // UPDATE incluyendo el nombre
+        $stmt = $conn->prepare("UPDATE item SET nombre = ?, año = ?, combustible = ?, caballos = ?, precio = ? WHERE nombre = ?");
+        $stmt->bind_param("sisids", $nombre_nuevo, $año, $combustible, $caballos, $precio, $nombre);
+        
         if ($stmt->execute()) {
             header("Location: items.php");
             exit;
@@ -31,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $stmt->close();
     }
+    $stmt_check->close();
 }
 
 // Obtener datos del ítem
@@ -61,11 +70,8 @@ $conn->close();
 	<?= $message ?>
 	<?php if ($item): ?>
 	<form method="POST" id="item_modify_form">
-
-	  <div class="readonly-field">
-	  	<label>Nombre</label><br>
-	  	<input type="text" name="nombre" value="<?= htmlspecialchars($item['nombre']) ?>" readonly class="input-readonly"><br><br>
-	  </div>
+  	  <label>Nombre</label><br>
+  	  <input type="text" name="nombre" value="<?= htmlspecialchars($item['nombre']) ?>" required"><br><br>
 	  
 	  <label>Año (>=1886)</label><br>
 	  <input type="number" name="año" id="año" value="<?= htmlspecialchars($item['año']) ?>" min="1886" max="9999" required><br><br>

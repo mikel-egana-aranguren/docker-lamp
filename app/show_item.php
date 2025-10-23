@@ -14,6 +14,7 @@ $nombre = isset($_GET['item']) ? $_GET['item'] : '';
 // Obtener datos del ítem
 $sql = "SELECT * FROM item WHERE nombre = ?";
 $stmt = $conn->prepare($sql);
+
 if (!$stmt) {
     die("Error en la preparación de la consulta: " . $conn->error);
 }
@@ -46,7 +47,7 @@ $conn->close();
             <p><strong>Año:</strong> <?= htmlspecialchars($item['año']) ?></p>
             <p><strong>Combustible:</strong> <?= htmlspecialchars($item['combustible']) ?></p>
             <p><strong>Caballos:</strong> <?= htmlspecialchars($item['caballos']) ?></p>
-            <p><strong>Precio:</strong> <?= $item['precio'] ?>€</p> <!-- NUEVO -->
+            <p><strong>Precio:</strong> <?= $item['precio'] ?>€</p>
         <?php else: ?>
             <p>Coche no encontrado.</p>
         <?php endif; ?>

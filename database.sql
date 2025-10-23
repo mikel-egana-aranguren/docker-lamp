@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: db
--- Tiempo de generación: 22-10-2025 a las 22:31:28
+-- Tiempo de generación: 23-10-2025 a las 10:06:56
 -- Versión del servidor: 10.8.2-MariaDB-1:10.8.2+maria~focal
 -- Versión de PHP: 8.2.27
 
@@ -28,11 +28,12 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `item` (
-  `nombre` text NOT NULL,
-  `año` int(4) NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `nombre` varchar(255) NOT NULL,
   `combustible` text NOT NULL,
   `caballos` int(11) NOT NULL,
-  `precio` int(12) NOT NULL
+  `precio` int(11) NOT NULL,
+  `año` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -60,7 +61,8 @@ CREATE TABLE `usuario` (
 -- Indices de la tabla `item`
 --
 ALTER TABLE `item`
-  ADD PRIMARY KEY (`nombre`(255));
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `nombre` (`nombre`);
 
 --
 -- Indices de la tabla `usuario`
@@ -70,6 +72,16 @@ ALTER TABLE `usuario`
   ADD UNIQUE KEY `dni` (`dni`),
   ADD UNIQUE KEY `telefono` (`telefono`),
   ADD UNIQUE KEY `correo` (`correo`) USING HASH;
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `item`
+--
+ALTER TABLE `item`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

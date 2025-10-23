@@ -111,17 +111,6 @@ button:hover {
   box-shadow: 0 10px 15px rgba(0,0,0,0.2);
 }
 
-.labels .readonly-field label {
-    color: #000 !important;
-}
-
-.input-readonly {
-    background-color: #f0f0f0 !important;
-    color: #777 !important;
-    border: 2px solid #ccc !important;
-    cursor: not-allowed !important;
-}
-
 
 
 

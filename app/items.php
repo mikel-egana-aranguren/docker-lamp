@@ -39,6 +39,7 @@ echo '
     <table border="1" cellpadding="10" cellspacing="0">
       <tr>
         <th>Nombre</th>
+        <th>Año</th>
         <th>Acciones</th>
       </tr>
    </div>
@@ -64,6 +65,7 @@ if ($result->num_rows > 0) {
         $nombre = $row['nombre'];
         echo "<tr>
                 <td>{$row['nombre']}</td>
+                <td>{$row['año']}</td>
                 <td>
                     <a href='show_item.php?item={$nombre}'><button>Ver</button></a>
                     <a href='modify_item.php?item={$nombre}'><button>Modificar</button></a>
