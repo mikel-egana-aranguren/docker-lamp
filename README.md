@@ -25,6 +25,8 @@ $ docker build -t web .
 ```bash
 $ docker-compose up -d
 ```
+Accede a la web mediante: http://localhost:81
+Accede a la base de datos mediante: http://localhost:8890
 
 Para pararlo: 
 ```bash
