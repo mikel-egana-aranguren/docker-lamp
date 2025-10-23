@@ -1,15 +1,32 @@
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.getElementById("item_modify_form");
+  const nameInput = document.getElementById("nombre");
   const priceInput = document.getElementById("precio");
   const yearInput = document.getElementById("año");
   const caballosInput = document.getElementById("caballos");
 
   form.addEventListener("submit", function(event) {
+      const name = nameInput.value.trim();
       const caballosStr = caballosInput.value.trim();
       const priceStr = priceInput.value.trim();
       const yearStr = yearInput ? yearInput.value.trim() : "";
       const priceRegex = /^\d+$/;
       const yearRegex = /^\d{4}$/;
+      
+      // --- Validación del nombre ---
+      if (name === "") {
+          alert("Por favor, introduce un nombre válido.");
+          event.preventDefault();
+          return;
+      }
+
+      // Dividimos el nombre en palabras ignorando espacios extra
+      const words = name.split(/\s+/).filter(word => word.length > 0);
+      if (words.length < 2) {
+          alert("El nombre debe contener al menos dos palabras: marca y modelo.");
+          event.preventDefault();
+          return;
+      }
       
       // --- Validación de los caballos ---
       const caballos = parseInt(caballosStr, 10);

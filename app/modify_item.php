@@ -71,7 +71,7 @@ $conn->close();
 	<?php if ($item): ?>
 	<form method="POST" id="item_modify_form">
   	  <label>Nombre</label><br>
-  	  <input type="text" name="nombre" value="<?= htmlspecialchars($item['nombre']) ?>" required"><br><br>
+  	  <input type="text" name="nombre" id="nombre" value="<?= htmlspecialchars($item['nombre']) ?>" required"><br><br>
 	  
 	  <label>Año (>=1886)</label><br>
 	  <input type="number" name="año" id="año" value="<?= htmlspecialchars($item['año']) ?>" min="1886" max="9999" required><br><br>
