@@ -1,15 +1,26 @@
-Recordad que todavía hay q elegir el tema. Dentro de database.sql y de los archivos php se referencia a "items". Si vamos a hacer una biblioteca por ejemplo estaría bien refactorizar todos estos nombres, admas de actualizar el sql para que sus campos tengan sentido.
-
-
-
-## Instructions
-
-Enter the following command to start your containers:
+## Instrucciones
+Para buildear
+Posicionarse dentro del diractorio del .yml y escribir el comando
 ```bash
-$ docker-compose up -d
+$ bash build
 ```
 
-To stop them, use this:
+
+Para encender el server:
 ```bash
-$ docker-compose stop
+$ docker-compose up
 ```
+y visitar localhost:81
+Prueba a iniciar sesion con usuario: Juan y contraseña: 123
+
+Para apagarlo:
+```bash
+$ docker-compose down
+```
+
+Para resetearlo y borrar los datos de la base de datos:
+```bash
+$ docker-compose down
+$ sudo rm -rf mysql
+```
+
