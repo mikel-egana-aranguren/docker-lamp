@@ -42,6 +42,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     else{letrabien=true;}
 
+    //Comprobar que la letra del DNI corresponde al numero
+    if(letrabien && numbien)
+    {
+      const numero = parseInt(numDni, 10);
+      const resto = numero % 23;
+      const dniletras = ['T','R','W','A','G','M','Y','F','P','D','X','B','N','J','Z','S','Q','V','H','L','C','K','E'];
+      if(letra != dniletras[resto])
+      {
+        e.preventDefault(); return error("La letra del DNI debe ser una letra correspondiente al numero");
+      }
+
+    }
+
     if (!/^\d{9}$/.test(tlfn)) {
       e.preventDefault(); return error("El teléfono debe tener 9 dígitos.");
     }
@@ -56,19 +69,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if (contrasena.length < 4) {
       e.preventDefault(); return error("La contraseña debe tener al menos 4 caracteres.");
-    }
-
-    //Comprobar que la letra del DNI corresponde al numero
-    if(letrabien && numbien)
-    {
-      const numero = parseInt(numDni, 10);
-      const resto = numero % 23;
-      const dniletras = ['T','R','W','A','G','M','Y','F','P','D','X','B','N','J','Z','S','Q','V','H','L','C','K','E'];
-      if(letra != dniletras[resto])
-      {
-        e.preventDefault(); return error("La letra del DNI debe ser una letra correspondiente al numero");
-      }
-
     }
 
   });

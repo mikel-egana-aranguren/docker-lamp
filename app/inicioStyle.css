@@ -138,7 +138,9 @@ button.btn-add-pelicula  {
     font-family: var(--fuenteGeorgia);
     color: var(--texto-negro);
     background-color: var(--btnRosa);
-
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
 
     border: 2px solid #000000;
     font-size: 16px;

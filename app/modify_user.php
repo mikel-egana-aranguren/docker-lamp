@@ -114,7 +114,6 @@ if (!$user) { http_response_code(404); die("Usuario no encontrado."); }
     <p style="color:red;"><?= htmlspecialchars($mensaje) ?></p>
   <?php endif; ?>
 
-  <!-- IDs exigidos por la guía -->
   <form class="modUser"id="user_modify_form" name="user_modify_form" method="post">
     <p>Usuario (solo lectura): <strong><?= htmlspecialchars($user["usuario"]) ?></strong></p>
 

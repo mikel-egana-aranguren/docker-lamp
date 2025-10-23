@@ -1,4 +1,5 @@
-// Validación en cliente para /modify_user (requisito de la guía)
+// Validación en cliente para
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("user_modify_form");
   let numbien = false;
@@ -20,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const numDni   = form.numDni.value.trim();
     const letra    = form.letraDni.value.trim().toUpperCase();
     const tlfn     = form.tlfn.value.trim();
-    const fecha    = form.fNacimiento.value;
+    const fecha    = new Date(form.fNacimiento.value);
     const email    = form.email.value.trim();
 
     if (nombre.length < 2 || !/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(nombre)) {
@@ -40,6 +41,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     else{letrabien=true;}
 
+    //Comprobar que la letra del DNI corresponde al numero
+    if(letrabien && numbien)
+    {
+      const numero = parseInt(numDni, 10);
+      const resto = numero % 23;
+      const dniletras = ['T','R','W','A','G','M','Y','F','P','D','X','B','N','J','Z','S','Q','V','H','L','C','K','E'];
+      if(letra != dniletras[resto])
+      {
+        e.preventDefault(); return error("La letra del DNI debe ser una letra correspondiente al numero");
+      }
+
+    }
+
     if (!/^\d{9}$/.test(tlfn)) {
       e.preventDefault(); return error("El teléfono debe tener 9 dígitos.");
     }
@@ -48,19 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if (!emailOk(email)) {
       e.preventDefault(); return error("Email no válido.");
-    }
-
-    //Comprobar que la letra del DNI corresponde al numero
-    if(letrabien && numbien)
-    {
-      const numero = parseInt(numDni, 10);
-      resto = numero % 23;
-      dniletras = ['T','R','W','A','G','M','Y','F','P','D','X','B','N','J','Z','S','Q','V','H','L','C','K','E'];
-      if(letra != dniletras[resto])
-      {
-        e.preventDefault(); return error("La letra del DNI debe ser una letra correspondiente al numero");
-      }
-
     }
 
   });
