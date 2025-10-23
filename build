@@ -1,0 +1,14 @@
+#!/bin/bash
+echo "*"
+echo "**"
+echo "***"
+echo "Este script buildea las imágenes."
+echo "Debe ejecutarse dentro del directorio del .yml"
+echo "Puede que te pida la contraseña"
+echo "Para encender/apagar el server usar docker-compose up/down"
+echo "***"
+echo "**"
+echo "*"
+docker-compose down
+sudo rm -rf mysql/
+docker build -t="web" .

@@ -50,7 +50,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `apellidos`, `dni`, `telefono`, `fecha_nacimiento`, `email`, `nombre_usuario`, `contrasena`) VALUES
-(1, 'David', 'Miguez', '11111111-Z', '622342924', '2005-09-01', 'dmiguez001@ikasle.ehu.eus', 'davidmiguez', '123');
+(1, 'David', 'Miguez', '11111111-Z', '622342924', '2005-09-01', 'dmiguez001@ikasle.ehu.eus', 'Juan', '123');
 
 --
 -- Índices para tablas volcadas
@@ -63,15 +63,6 @@ CREATE TABLE items (
   fecha DATE,
   precio DECIMAL(10,2)
 );
-
---
--- Indices de la tabla `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD UNIQUE KEY `dni` (`dni`),
-  ADD UNIQUE KEY `email` (`email`),
-  ADD UNIQUE KEY `nombre_usuario` (`nombre_usuario`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

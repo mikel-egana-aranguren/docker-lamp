@@ -1,6 +1,7 @@
 <?php
 require 'connect.php';
 
+session_start();
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $usuario = $_POST["usuario"];
     $pass = $_POST["password"];
@@ -10,9 +11,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $res->execute();
     $user = $res->get_result()->fetch_assoc();
 
-    if ($user && password_verify($pass, $user["contrasena"])) {
+    if ($user["nombre_usuario"] == $usuario && $pass == $user["contrasena"]) {
         $_SESSION["user"] = $user["id"];
-        header("Location: /home.php");
+        header("Location: home.php");
         exit;
     } else {
         echo "<p>Usuario o contraseña incorrectos.</p>";

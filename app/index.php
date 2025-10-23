@@ -1,5 +1,4 @@
 <?php
-<<<<<<< Updated upstream
 session_start();//iniciar sesion, es una funcion nativa de PHP
 require_once __DIR__ . '/connectdb.php'; //Conectarse a la BD
 $request = $_SERVER['REQUEST_URI']; //Obtener la ruta
@@ -30,7 +29,6 @@ switch ($request) { //Rutas
         require __DIR__ . '/404.php';
         break;
 }
-=======
 session_start();
 require_once __DIR__ . '/connect.php';
 
@@ -76,8 +74,6 @@ switch ($request) {
     case '/show_item':
         require __DIR__ . '/show_item.php';
         break;
->>>>>>> Stashed changes
-
     // Modificar item
     case '/modify_item':
         require __DIR__ . '/modify_item.php';
