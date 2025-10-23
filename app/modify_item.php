@@ -55,6 +55,7 @@ $conn->close();
 <title>Modificar <?= htmlspecialchars($nombre) ?></title>
 <link rel="stylesheet" href="css/modify_item.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<script src="js/modify_item.js" defer></script>
 
 <div class="bar">
   <div class="volver_button">
@@ -70,7 +71,7 @@ $conn->close();
 	<?= $message ?>
 	<?php if ($item): ?>
 	<form method="POST" id="item_modify_form">
-  	  <label>Nombre</label><br>
+  	  <label>Nombre (Marca + Modelo)</label><br>
   	  <input type="text" name="nombre" id="nombre" value="<?= htmlspecialchars($item['nombre']) ?>" required"><br><br>
 	  
 	  <label>Año (>=1886)</label><br>
