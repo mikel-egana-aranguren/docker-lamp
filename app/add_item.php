@@ -22,6 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -57,7 +58,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <?php 
     endif; 
     ?>
-    
+
+    <?php if ($tipo_alerta != "success"): ?>
+    <div class="links">
+        <a href="/">Ir a Inicio</a> | <a href="/items">Volver a la lista</a>
+    </div>
+    <?php endif; ?>
+
   </div>
 </body>
 </html>

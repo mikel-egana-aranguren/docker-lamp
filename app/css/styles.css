@@ -112,6 +112,42 @@ p {
     font-size: 1.1em;
 }
 
+.links {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 15px;
+    border-top: 1px solid #333333;
+}
+.links a {
+    font-weight: 600;
+    color: #a907e9;
+    margin: 0 15px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.links a:hover {
+    color: #c433ff;
+    text-decoration: underline;
+}
 p a {
     text-decoration: underline;
+}
+
+.header-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.list-item-entry {
+    background-color: #1a1a1a;
+    padding: 15px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #333333;
 }
