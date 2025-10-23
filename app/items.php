@@ -15,7 +15,7 @@ session_start();
       </p>
   <?php else: ?>
     <?php $ruta="index.php"; ?>
-    <a href="<?= $ruta ?>" class="button">Volver a inicio</a>
+    <a href="<?= $ruta ?>" class="buttonVolver">Volver a inicio</a>
     <?php endif; ?>
 
   <br><h1 align="center">Catálogo: </h1><br>

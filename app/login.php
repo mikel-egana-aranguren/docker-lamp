@@ -59,8 +59,8 @@ ob_end_flush();
 		<input type="submit" value="Iniciar sesión" name="login_submit" class="btn_login">
 	</form>
 		
-	<div class="button-container">
-		<a href="index.php" class="button">volver</a>
+	<div class="button-container" >
+		<a href="index.php" class="buttonVolver">Volver a inicio</a>
 	</div>
 	
 <html>
