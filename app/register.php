@@ -85,8 +85,8 @@ if (isset($_POST['register_submit'])) {
 		Contraseña:<br> <input type="text" name="contrasena" required> <br>
 		<input type="submit" value="Registrar" name="register_submit" class="btn_register">
 	</form>
-	<div class="button-container">
-		<a href="index.php" class="button">Volver a inicio</a>
+	<div class="button-container" >
+		<a href="index.php" class="buttonVolver">Volver a inicio</a>
 	</div>
 	</body>
 </html>

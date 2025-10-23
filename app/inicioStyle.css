@@ -89,7 +89,21 @@ input.btn_login:hover, input.btn_register:hover , button.b1:hover, button.cerrar
   background-color: #9f66a1;
   cursor: url("img/pataGato32.png"), auto; /* cambiar cursor */
 }
+a.buttonVolver{
+    font-family: "Georgia", "Times New Roman", Times, serif;
 
+    font-size: 16px;
+    padding: 12px 24px;
+    cursor: pointer;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 10px 15px;
+    margin: 20px auto;
+    display: inline-block;
+    text-decoration: none;
+    color: black;
+}
 
 
 a.delete-button, button.btn-cerrar-add-peli , button.btn-cerrar-info-peli{
