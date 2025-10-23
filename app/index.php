@@ -32,8 +32,11 @@ index.php --> register.php :
    </head>
    <body class="index">
       <h1>¡Bienvenid@ a SafeFilms!<h1>
-    <?php if (isset($_SESSION['usuario'])): ?>
-      
+    <?php
+      if (isset($_SESSION['usuario'])) : ?>
+        echo "<script>window.location.href='items.php';</script>";
+        exit;
+
       <?php else: ?>
         <p>
         <h2>Consulta nuestro catálogo con lo mejor del cine: <h2>
