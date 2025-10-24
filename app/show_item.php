@@ -1,14 +1,18 @@
 <?php
+
+// Configuración de la base de datos
 $hostname = "db";
 $username = "admin";
 $password = "test";
 $db = "database";
 
+// Conexión con la base de datos
 $conn = new mysqli($hostname, $username, $password, $db);
 if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
 
+// Se obtiene el item al que hacemos referencia
 $nombre = isset($_GET['item']) ? $_GET['item'] : '';
 
 // Obtener datos del ítem
@@ -23,6 +27,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 $item = $result ? $result->fetch_assoc() : null;
 
+// Se cierra la conexión con la base de datos
 $stmt->close();
 $conn->close();
 ?>

@@ -1,4 +1,6 @@
 <?php
+
+// Configuración de la base de datos
 $hostname = "db";
 $username = "admin";
 $password = "test";
@@ -7,6 +9,7 @@ $dbname   = "database";
 $message = "";
 $message_color = "red";
 
+// Conexión con la base de datos
 $conn = new mysqli($hostname, $username, $password, $dbname);
 if ($conn->connect_error) {
     $message = "Error de conexión a la base de datos: " . $conn->connect_error;
@@ -23,13 +26,16 @@ if ($conn->connect_error) {
         $passwd_repeat = $_POST['passwd_repeat'] ?? '';
 
         if ($passwd !== $passwd_repeat) {
+            // Contraseñas iguales
             $message = "Las contraseñas no coinciden.";
         } elseif (
             $user === '' || $name === '' || $surnames === '' ||
             $dni === '' || $email === '' || $tlfn === '' || $fNcto === '' || $passwd === ''
-        ) {
+        ) { 
+            // Si no se rellena algún campo
             $message = "Por favor, completa todos los campos obligatorios.";
         } else {
+            // Insercción del usuario en la base de datos
             $sql = "INSERT INTO usuario 
                     (user, dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -48,22 +54,20 @@ if ($conn->connect_error) {
                     $message_color = "green";
                     $_POST = []; // limpiar el formulario
                 } else {
-                    if ($stmt->errno === 1062) { // Código de error MySQL para "Duplicate entry"
-			    $errorText = $stmt->error;
-
-			    if (strpos($errorText, "dni") !== false) {
-				$message = "El DNI ya está registrado.";
-			    } elseif (strpos($errorText, "correo") !== false) {
-				$message = "El correo electrónico ya está registrado.";
-			    } elseif (strpos($errorText, "telefono") !== false) {
-				$message = "El teléfono ya está registrado.";
-			    } else {
-				$message = "El nombre de usuario ya está registrado.";
-			    }
-			} else {
-			    $message = "Error al registrar el usuario: " . $stmt->error;
-			}
-
+                    if ($stmt->errno === 1062) {
+                        $errorText = $stmt->error;
+                        if (strpos($errorText, "dni") !== false) {
+                            $message = "El DNI ya está registrado.";
+                        } elseif (strpos($errorText, "correo") !== false) {
+                            $message = "El correo electrónico ya está registrado.";
+                        } elseif (strpos($errorText, "telefono") !== false) {
+                            $message = "El teléfono ya está registrado.";
+                        } else {
+                            $message = "El nombre de usuario ya está registrado.";
+                        }
+                    } else {
+                        $message = "Error al registrar el usuario: " . $stmt->error;
+                    }
                 }
 
                 $stmt->close();
@@ -72,62 +76,73 @@ if ($conn->connect_error) {
     }
 }
 
+// Se cierra la conexión con la base de datos
 $conn->close();
 ?>
 
-<link rel="stylesheet" href="css/register.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-<script src="js/register.js" defer></script>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse</title>
+    <link rel="stylesheet" href="css/register.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script src="js/register.js" defer></script>
+</head>
+<body>
+
 <div class="bar">
-  <div class="volver_button">
-    <a href="index.php" title="Volver al inicio">
-      <i class="fa-solid fa-house"></i>
-    </a>
-  </div>
-  <h1>REGISTRARSE</h1>
+    <div class="volver_button">
+        <a href="index.php" title="Volver al inicio">
+            <i class="fa-solid fa-house"></i>
+        </a>
+    </div>
+    <h1>REGISTRARSE</h1>
 </div>
 
 <div class="container">
-  <div class="content">
-    <?php if ($message !== ""): ?>
-        <p style="color: <?= $message_color ?>; font-weight: bold; margin-bottom: 15px;">
-            <?= htmlspecialchars($message) ?>
-        </p>
-    <?php endif; ?>
-    <div class="rellenar">
-      <form id="register_form" action="" method="post" class="labels">
-        <label for="user">Usuario (No modificable)</label>
-        <input type="text" id="user" name="user" required value="<?= htmlspecialchars($_POST['user'] ?? '') ?>">
+    <div class="content">
+        <?php if ($message !== ""): ?>
+            <p style="color: <?= $message_color ?>; font-weight: bold; margin-bottom: 15px;">
+                <?= htmlspecialchars($message) ?>
+            </p>
+        <?php endif; ?>
+        <div class="rellenar">
+            <form id="register_form" action="" method="post" class="labels">
+                <label for="user">Usuario</label>
+                <input type="text" id="user" name="user" required value="<?= htmlspecialchars($_POST['user'] ?? '') ?>">
 
-        <label for="name">Nombre</label>
-        <input type="text" id="name" name="name" required value="<?= htmlspecialchars($_POST['name'] ?? '') ?>">
+                <label for="name">Nombre</label>
+                <input type="text" id="name" name="name" required value="<?= htmlspecialchars($_POST['name'] ?? '') ?>">
 
-        <label for="surnames">Apellidos</label>
-        <input type="text" id="surnames" name="surnames" required value="<?= htmlspecialchars($_POST['surnames'] ?? '') ?>">
+                <label for="surnames">Apellidos</label>
+                <input type="text" id="surnames" name="surnames" required value="<?= htmlspecialchars($_POST['surnames'] ?? '') ?>">
 
-        <label for="dni">DNI (Ejemplo: 12345678Z)</label>
-        <input type="text" id="dni" name="dni" required value="<?= htmlspecialchars($_POST['dni'] ?? '') ?>">
+                <label for="dni">DNI (Ejemplo: 12345678Z)</label>
+                <input type="text" id="dni" name="dni" required value="<?= htmlspecialchars($_POST['dni'] ?? '') ?>">
 
-        <label for="email">Correo (usuario@servidor.extension)</label>
-        <input type="email" id="email" name="email" required value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
+                <label for="email">Correo (usuario@servidor.extension)</label>
+                <input type="email" id="email" name="email" required value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
 
-        <label for="tlfn">Teléfono (Télefono válido en España, 6, 7 o 9 + 8 dígitos)</label>
-        <input type="text" id="tlfn" name="tlfn" required value="<?= htmlspecialchars($_POST['tlfn'] ?? '') ?>">
+                <label for="tlfn">Teléfono (6, 7 o 9 + 8 dígitos)</label>
+                <input type="text" id="tlfn" name="tlfn" required value="<?= htmlspecialchars($_POST['tlfn'] ?? '') ?>">
 
-        <label for="fNcto">Fecha de Nacimiento</label>
-        <input type="date" id="fNcto" name="fNcto" required value="<?= htmlspecialchars($_POST['fNcto'] ?? '') ?>">
+                <label for="fNcto">Fecha de Nacimiento</label>
+                <input type="date" id="fNcto" name="fNcto" required value="<?= htmlspecialchars($_POST['fNcto'] ?? '') ?>">
 
-        <label for="passwd">Contraseña</label>
-        <input type="password" id="passwd" name="passwd" required>
+                <label for="passwd">Contraseña</label>
+                <input type="password" id="passwd" name="passwd" required>
 
-        <label for="passwd_repeat">Repetir Contraseña</label>
-        <input type="password" id="passwd_repeat" name="passwd_repeat" required>
+                <label for="passwd_repeat">Repetir Contraseña</label>
+                <input type="password" id="passwd_repeat" name="passwd_repeat" required>
 
-        <button type="submit" id="register_submit">Confirmar</button>
-      </form>
+                <button type="submit" id="register_submit">Confirmar</button>
+            </form>
+        </div>
     </div>
-  </div>
 </div>
 
-
+</body>
+</html>
 

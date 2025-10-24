@@ -8,6 +8,7 @@ $username = "admin";
 $password = "test";
 $db = "database";
 
+// Conexión con la base de datos
 $cn = mysqli_connect($hostname, $username, $password, $db);
 if (!$cn) {
     die("Error de conexión: " . mysqli_connect_error());
@@ -26,7 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Preparar e insertar
     $stmt = mysqli_prepare($cn, "INSERT INTO item (nombre, año, combustible, caballos, precio) VALUES (?, ?, ?, ?, ?)");
     mysqli_stmt_bind_param($stmt, "sisid", $nombre, $anio, $combustible, $caballos, $precio);
-
+    
+    // Mensaje que aparece por pantalla dependiendo del estado del proceso
     if (mysqli_stmt_execute($stmt)) {
         $message = "<p style='color:green;'>Coche añadido correctamente.</p>";
     } else {
@@ -43,43 +45,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     mysqli_stmt_close($stmt);
 }
 
+// Cerramos conexión con la base de datos
 mysqli_close($cn);
 ?>
 
-<title>Añadir Coche</title>
-<link rel="stylesheet" href="css/add_item.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-<script src="js/add_item.js" defer></script>
-<div class="bar">
-  <div class="volver_button">
-    <a href="items.php" title="Volver al inicio">
-      <i class="fa-solid fa-house"></i>
-    </a>
-  </div>
-  <h1>AÑADIR COCHE</h1>
-</div>
-<div class="container">
-  <div class="content">
-    <?= $message ?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir Coche</title>
+    <link rel="stylesheet" href="css/add_item.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script src="js/add_item.js" defer></script>
+</head>
+<body>
+    <div class="bar">
+        <div class="volver_button">
+            <a href="items.php" title="Volver al inicio">
+                <i class="fa-solid fa-house"></i>
+            </a>
+        </div>
+        <h1>AÑADIR COCHE</h1>
+    </div>
 
-    <form id="item_add_form" action="add_item.php" method="post" class="labels">
-     <label for="item_name">Nombre del coche (Marca + Modelo)</label>
-     <input type="text" id="item_name" name="item_name" required>
+    <div class="container">
+        <div class="content">
+            <?= $message ?>
 
-     <label for="item_year">Año (>=1886)</label>
-     <input type="number" id="item_year" name="item_year" min="1886" max="9999" required>
+            <form id="item_add_form" action="add_item.php" method="post" class="labels">
+                <label for="item_name">Nombre del coche (Marca + Modelo)</label>
+                <input type="text" id="item_name" name="item_name" required>
 
-     <label for="item_combustible">Combustible</label>
-     <input type="text" id="item_combustible" name="item_combustible" required>
+                <label for="item_year">Año (>=1886)</label>
+                <input type="number" id="item_year" name="item_year" min="1886" max="9999" required>
 
-     <label for="item_caballos">Caballos (1-2000)</label>
-     <input type="number" id="item_caballos" name="item_caballos" min="1" max="2000"required>
+                <label for="item_combustible">Combustible</label>
+                <input type="text" id="item_combustible" name="item_combustible" required>
 
-     <label for="precio">Precio (Máx 12 cifras)</label>
-     <input type="number" id="precio" name="precio" min="1" max="999999999999" required>
+                <label for="item_caballos">Caballos (1-2000)</label>
+                <input type="number" id="item_caballos" name="item_caballos" min="1" max="2000" required>
 
-     <button type="submit" id="item_add_submit">Añadir</button>
-    </form>
-  </div>
-</div>
+                <label for="precio">Precio (Máx 12 cifras)</label>
+                <input type="number" id="precio" name="precio" min="1" max="999999999999" required>
 
+                <button type="submit" id="item_add_submit">Añadir</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
