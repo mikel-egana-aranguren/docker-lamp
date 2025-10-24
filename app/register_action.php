@@ -63,7 +63,11 @@ $stmt->bind_param("ssssssss", $nombre, $apellidos, $dni, $telefono, $fecha, $ema
 
 if ($stmt->execute()) {
     header('Content-Type: application/json');
-    echo json_encode(['status' => 'ok', 'message' => 'Registro completado']);
+    echo json_encode([
+        'status' => 'ok',
+        'message' => 'Registro completado',
+        'redirect' => 'login.php'
+    ]);
 } else {
     header('Content-Type: application/json');
     echo json_encode(['status' => 'error', 'errors' => ["DB error: " . $stmt->error]]);

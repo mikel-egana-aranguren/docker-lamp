@@ -1,0 +1,19 @@
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	# Ajustar la base si la aplicación no está en la raíz, modificar si es necesario
+	RewriteBase /
+
+	# Si el recurso pedido existe, servirlo directamente
+	RewriteCond %{REQUEST_FILENAME} -f [OR]
+	RewriteCond %{REQUEST_FILENAME} -d
+	RewriteRule ^ - [L]
+
+	# Si existe una versión .php del recurso, reescribir internamente a ese archivo
+	RewriteCond %{REQUEST_FILENAME}.php -f
+	RewriteRule ^(.+)$ $1.php [L,QSA]
+</IfModule>
+
+# Denegar acceso a archivos ocultos
+<FilesMatch "^\.">
+	Require all denied
+</FilesMatch>

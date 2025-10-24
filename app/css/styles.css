@@ -39,6 +39,31 @@ form {
   border: 1px solid #333333;
 }
 
+.auth-grid {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.auth-column {
+    flex: 1 1 220px;
+    background: #141414;
+    padding: 20px;
+    border-radius: 6px;
+    border: 1px solid #2a2a2a;
+}
+.auth-column h3 {
+    margin-top: 0;
+    color: #e6d0ff;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 800px) {
+    .container { width: 100%; padding: 20px; }
+    .auth-grid { flex-direction: column; }
+}
+
 input, button {
     width: 100%;
     padding: 14px;
