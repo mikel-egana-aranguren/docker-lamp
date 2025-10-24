@@ -23,6 +23,8 @@ Inserta el siguiente comando dentro del repositorio para acceder a la rama:
 $ git checkout entrega_1
 ```
 
+Importa la base de datos con nombre database.sql en la base de datos.
+
 Inserta el siguiente comando para iniciar el contenedor:
 ```bash
 $ docker-compose up -d
