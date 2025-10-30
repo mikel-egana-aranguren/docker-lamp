@@ -1,3 +1,8 @@
+EGILEAK:
+	1. Lier Laiseka
+	2. Asier Fernández
+	3. Hodei Castro
+	4. Andoni Ortiz De Zarate
 
 # Docker LAMP
 Linux + Apache + MariaDB (MySQL) + PHP 7.2 on Docker Compose. Mod_rewrite enabled by default.

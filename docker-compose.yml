@@ -1,6 +1,6 @@
 services:
    web:
-      image: web
+      build: .
       environment:
         - ALLOW_OVERRIDE=true
       ports:
