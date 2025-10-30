@@ -1,0 +1,33 @@
+RewriteEngine On
+RewriteBase /
+
+# Reglas para que no reescriba archivos que SÍ existen (como CSS o JS)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# --- REGLAS DE USUARIO ---
+# Si la URL es 'register', carga 'register.php'
+RewriteRule ^register/?$ register.php [L]
+# Si la URL es 'login', carga 'login.php'
+RewriteRule ^login/?$ login.php [L]
+
+
+# Si la URL es 'modify_user', carga 'modify_user.php'
+RewriteRule ^modify_user/?$ modify_user.php [L]
+
+# --- REGLAS DE ITEMS (Aún no los hemos hecho) ---
+RewriteRule ^items/?$ items.php [L]
+RewriteRule ^add_item/?$ add_item.php [L]
+RewriteRule ^show_item/?$ show_item.php [L]
+RewriteRule ^modify_item/?$ modify_item.php [L]
+
+
+# --- REGLA PARA 'Home' (localhost:81/) ---
+# Si la URL está vacía, carga 'index.php'
+RewriteRule ^$ index.php [L]
+# ... (debajo de las otras reglas) ...
+RewriteRule ^logout/?$ logout.php [L]
+RewriteRule ^confirm_delete_item/?$ confirm_delete_item.php [L]
+RewriteRule ^procesar_delete_item/?$ procesar_delete_item.php [L]
+RewriteRule ^procesar_gehitu_pertsonala/?$ procesar_gehitu_pertsonala.php [L]
+RewriteRule ^procesar_kendu_pertsonala/?$ procesar_kendu_pertsonala.php [L]

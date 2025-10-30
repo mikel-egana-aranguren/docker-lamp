@@ -1,29 +1,26 @@
 <?php
-  echo '<h1>Yeah, it works!<h1>';
-  // phpinfo();
-  $hostname = "db";
-  $username = "admin";
-  $password = "test";
-  $db = "database";
 
-  $conn = mysqli_connect($hostname,$username,$password,$db);
-  if ($conn->connect_error) {
-    die("Database connection failed: " . $conn->connect_error);
-  }
+require_once('config.php');
 
 
+include('header.php');
+?>
 
-$query = mysqli_query($conn, "SELECT * FROM usuarios")
-   or die (mysqli_error($conn));
+<h1>Ongi Etorri Nire Web Sistemara!</h1>
 
-while ($row = mysqli_fetch_array($query)) {
-  echo
-   "<tr>
-    <td>{$row['id']}</td>
-    <td>{$row['nombre']}</td>
-   </tr>";
-   
+<?php if (isset($_SESSION['user_id'])): ?>
+    
+    <p>Kaixo berriro, <?php echo htmlspecialchars($_SESSION['user_nombre']); ?>.</p>
+    <p>Zure <a href="modify_user">profila</a> ikus dezakezu zure datuak aldatzeko.</p>
 
-}
+<?php else: ?>
 
+    <p>Mesedez, <a href="register">erregistratu</a> edo <a href="login">hasi saioa</a> jarraitzeko.</p>
+
+<?php endif; ?>
+
+
+<?php
+
+include('footer.php');
 ?>
