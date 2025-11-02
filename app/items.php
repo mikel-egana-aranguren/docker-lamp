@@ -16,14 +16,14 @@ $password = "test";
 $db = "database";
 
 // Conexión con la base de datos
-$conn = @new mysqli($hostname, $username, $password, $db);
-if ($conn->connect_error) {
-    die("Error de conexión: " . $conn->connect_error);
+$conexion = @new mysqli($hostname, $username, $password, $db);
+if ($conexion->connect_error) {
+    die("Error de conexión: " . $conexion->connect_error);
 }
 
 // Obtener items
 $sql = "SELECT * FROM item";
-$result = $conn->query($sql);
+$result = $conexion->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -62,7 +62,7 @@ $result = $conn->query($sql);
                 <?php while ($row = $result->fetch_assoc()): ?>
                     <tr>
                         <td><?= htmlspecialchars($row['nombre']) ?></td>
-                        <td><?= htmlspecialchars($row['año']) ?></td>
+                        <td><?= htmlspecialchars($row['anio']) ?></td>
                         <td>
                             <a href="show_item.php?item=<?= urlencode($row['nombre']) ?>"><button>Ver</button></a>
                             <a href="modify_item.php?item=<?= urlencode($row['nombre']) ?>"><button>Modificar</button></a>
@@ -85,6 +85,6 @@ $result = $conn->query($sql);
 
 <?php
 // Se cierra la conexión con la base de datos
-$conn->close();
+$conexion->close();
 ?>
 

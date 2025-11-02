@@ -8,32 +8,42 @@ $username = "admin";
 $password = "test";
 $db = "database";
 
+session_start();
+// Generación de token
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 // Conexión con la base de datos
-$cn = mysqli_connect($hostname, $username, $password, $db);
-if (!$cn) {
+$conexion = mysqli_connect($hostname, $username, $password, $db);
+if (!$conexion) {
     die("Error de conexión: " . mysqli_connect_error());
 }
 
 $message = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Comprobación de token
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        die("Error de seguridad: token CSRF inválido.");
+    }
     // Escapar y limpiar los datos por seguridad
-    $nombre = mysqli_real_escape_string($cn, $_POST['item_name']);
+    $nombre = mysqli_real_escape_string($conexion, $_POST['item_name']);
     $anio = intval($_POST['item_year']);
-    $combustible = mysqli_real_escape_string($cn, $_POST['item_combustible']);
+    $combustible = mysqli_real_escape_string($conexion, $_POST['item_combustible']);
     $caballos = floatval($_POST['item_caballos']);
     $precio = floatval($_POST['precio']);
 
     // Preparar e insertar
-    $stmt = mysqli_prepare($cn, "INSERT INTO item (nombre, año, combustible, caballos, precio) VALUES (?, ?, ?, ?, ?)");
-    mysqli_stmt_bind_param($stmt, "sisid", $nombre, $anio, $combustible, $caballos, $precio);
+    $stmt = $conexion->prepare("INSERT INTO item (nombre, anio, combustible, caballos, precio) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sisid", $nombre, $anio, $combustible, $caballos, $precio);
     
     // Mensaje que aparece por pantalla dependiendo del estado del proceso
-    if (mysqli_stmt_execute($stmt)) {
+    if ($stmt->execute()) {
         $message = "<p style='color:green;'>Coche añadido correctamente.</p>";
     } else {
-        $error_code = mysqli_errno($cn);
-        $error_msg = mysqli_error($cn);
+        $error_code = mysqli_errno($conexion);
+        $error_msg = mysqli_error($conexion);
 
         if ($error_code == 1062) {
             $message = "<p style='color:red;'>Este coche ya existe.</p>";
@@ -41,12 +51,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $message = "<p style='color:red;'>Error al añadir el coche: $error_msg</p>";
         }
     }
-
-    mysqli_stmt_close($stmt);
+    $stmt->close();
 }
 
 // Cerramos conexión con la base de datos
-mysqli_close($cn);
+$conexion->close();
 ?>
 
 <!DOCTYPE html>
@@ -88,6 +97,8 @@ mysqli_close($cn);
 
                 <label for="precio">Precio (Máx 12 cifras)</label>
                 <input type="number" id="precio" name="precio" min="1" max="999999999999" required>
+                
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
 
                 <button type="submit" id="item_add_submit">Añadir</button>
             </form>

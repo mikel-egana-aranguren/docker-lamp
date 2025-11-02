@@ -9,17 +9,25 @@ $dbname   = "database";
 $message = "";
 $message_color = "red";
 
+// Iniciar sesión (Necesario para el token)
+session_start();
+
+// Crear token CSRF si no existe
+if (!isset($_SESSION['csrf_token'])) {
+	$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 // Conexión con la base de datos
-$conn = new mysqli($hostname, $username, $password, $dbname);
-if ($conn->connect_error) {
-    $message = "Error de conexión a la base de datos: " . $conn->connect_error;
+$conexion = new mysqli($hostname, $username, $password, $dbname);
+if ($conexion->connect_error) {
+    $message = "Error de conexión a la base de datos: " . $conexion->connect_error;
 } else {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = $_POST['email'] ?? '';
         $passwd = $_POST['passwd'] ?? '';
 
         // Preparar consulta para buscar usuario
-        $stmt = $conn->prepare("SELECT contrasena, user FROM usuario WHERE correo = ?");
+        $stmt = $conexion->prepare("SELECT contrasena, user FROM usuario WHERE correo = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $stmt->store_result();
@@ -29,24 +37,23 @@ if ($conn->connect_error) {
         } else {
             $stmt->bind_result($db_pass, $user);
             $stmt->fetch();
-            if ($db_pass === $passwd) {
-                session_start();
+            if (password_verify($passwd, $db_pass)) {
+                session_regenerate_id(true);
                 $_SESSION['usuario'] = $user;
-
+                $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
                 $message = "Login correcto. Redirigiendo...";
                 $message_color = "green";
-
                 header("Location: items.php");
                 exit;
             } else { 
                 $message = "Contraseña incorrecta."; 
             }    
-            $stmt->close();
         }
+        $stmt->close();
     }
 }
 // Se cierra la conexión con la base de datos
-$conn->close();
+$conexion->close();
 ?>
 
 <!DOCTYPE html>
@@ -87,6 +94,8 @@ $conn->close();
 
                 <label for="passwd">Contraseña</label>
                 <input type="password" id="passwd" name="passwd" required>
+                
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
 
                 <button type="submit" id="login_submit">Confirmar</button>
             </form>

@@ -6,17 +6,22 @@ $username = "admin";
 $password = "test";
 $dbname   = "database";
 
+session_start();
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 // Conexión con la base de datos
-$cn = mysqli_connect($hostname, $username, $password, $dbname);
-if (!$cn) {
+$conexion = mysqli_connect($hostname, $username, $password, $dbname);
+if (!$conexion) {
     die("Error de conexión: " . mysqli_connect_error());
 }
 
 // Función para consultas SQL, para reutilizar
-function prepare_or_die($cn, $sql, $ctx = '') {
-    $stmt = mysqli_prepare($cn, $sql);
+function prepare_or_die($conexion, $sql, $ctx = '') {
+    $stmt = mysqli_prepare($conexion, $sql);
     if (!$stmt) {
-        die("Error en prepare() {$ctx}: " . mysqli_error($cn) . " — SQL: {$sql}");
+        die("Error en prepare() {$ctx}: " . mysqli_error($conexion) . " — SQL: {$sql}");
     }
     return $stmt;
 }
@@ -27,12 +32,16 @@ $usuario = null;
 
 if ($userKey !== '') {
     $sql = "SELECT * FROM `usuario` WHERE correo = ? OR telefono = ? OR dni = ? OR user = ? LIMIT 1";
-    $stmt = prepare_or_die($cn, $sql, 'SELECT usuario');
-    mysqli_stmt_bind_param($stmt, "ssss", $userKey, $userKey, $userKey, $userKey);
-    mysqli_stmt_execute($stmt);
+    $stmt = prepare_or_die($conexion, $sql, 'SELECT usuario');
+    $stmt->bind_param("ssss", $userKey, $userKey, $userKey, $userKey);
+    $stmt->execute();
     $res = mysqli_stmt_get_result($stmt);
     $usuario = mysqli_fetch_assoc($res);
-    mysqli_stmt_close($stmt);
+    $stmt->close();
+}
+
+if ($_SESSION['usuario'] !== $usuario['user']) {
+    die("No tienes permisos para modificar este usuario.");
 }
 
 // Usuario no existente
@@ -47,6 +56,9 @@ $message_color = "red";
 
 // Procesar envío del formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        die("Error de seguridad: token CSRF inválido.");
+    }
     $user_post   = $usuario['user'];
     $dni_post    = trim($_POST['dni'] ?? '');
     $nombre_post = trim($_POST['nombre'] ?? '');
@@ -61,9 +73,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dup_sql = "SELECT user, correo, dni, telefono 
                 FROM usuario 
                 WHERE (correo = ? OR dni = ? OR telefono = ?) AND user <> ?";
-    $dup_stmt = prepare_or_die($cn, $dup_sql, 'SELECT duplicados');
-    mysqli_stmt_bind_param($dup_stmt, "ssss", $correo, $dni_post, $telefono, $user_post);
-    mysqli_stmt_execute($dup_stmt);
+    $dup_stmt = prepare_or_die($conexion, $dup_sql, 'SELECT duplicados');
+    $dup_stmt->bind_param("ssss", $correo, $dni_post, $telefono, $user_post);
+    $dup_stmt->execute();
     $dup_res = mysqli_stmt_get_result($dup_stmt);
 
     if ($dup_user = mysqli_fetch_assoc($dup_res)) {
@@ -74,9 +86,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif ($dup_user['telefono'] === $telefono) {
             $errorMsg = "El teléfono ya está registrado por otro usuario.";
         }
-        mysqli_stmt_close($dup_stmt);
+        $dup_stmt->close();
     } else {
-        mysqli_stmt_close($dup_stmt);
+        $dup_stmt->close();
 
         // Actualización (con o sin contraseña)
         if ($passwd !== '') {
@@ -87,13 +99,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         SET `nombre`=?, `apellidos`=?, `dni`=?, `correo`=?, 
                             `telefono`=?, `fecha_nacimiento`=?, `contrasena`=? 
                         WHERE `user`=?";
-                $stmt = prepare_or_die($cn, $sql, 'UPDATE con contrasena');
-                mysqli_stmt_bind_param($stmt, "ssssssss", 
+                $stmt = prepare_or_die($conexion, $sql, 'UPDATE con contrasena');
+                
+                // Hashear la contraseña (usa BYCRYPT)
+                $passwd_hashed = password_hash($passwd, PASSWORD_BCRYPT);
+                
+                $stmt->bind_param("ssssssss", 
                     $nombre_post, $apellidos, $dni_post, $correo, 
-                    $telefono, $fecha_nac, $passwd, $user_post
+                    $telefono, $fecha_nac, $passwd_hashed, $user_post
                 );
-                mysqli_stmt_execute($stmt);
-                mysqli_stmt_close($stmt);
+                $stmt->execute();
+                $stmt->close();
                 $successMsg = "Datos actualizados (contraseña incluida).";
                 $message_color = "green";
             }
@@ -102,25 +118,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     SET `nombre`=?, `apellidos`=?, `dni`=?, `correo`=?, 
                         `telefono`=?, `fecha_nacimiento`=? 
                     WHERE `user`=?";
-            $stmt = prepare_or_die($cn, $sql, 'UPDATE sin contrasena');
-            mysqli_stmt_bind_param($stmt, "sssssss", 
+            $stmt = prepare_or_die($conexion, $sql, 'UPDATE sin contrasena');
+            $stmt->bind_param("sssssss", 
                 $nombre_post, $apellidos, $dni_post, $correo, 
                 $telefono, $fecha_nac, $user_post
             );
-            mysqli_stmt_execute($stmt);
-            mysqli_stmt_close($stmt);
+            $stmt->execute();
+            $stmt->close();
             $successMsg = "Datos actualizados.";
             $message_color = "green";
         }
 
         // Recargar datos actualizados
         $sql = "SELECT * FROM `usuario` WHERE user = ?";
-        $stmt = prepare_or_die($cn, $sql, 'SELECT recarga');
-        mysqli_stmt_bind_param($stmt, "s", $user_post);
-        mysqli_stmt_execute($stmt);
+        $stmt = prepare_or_die($conexion, $sql, 'SELECT recarga');
+        $stmt->bind_param("s", $user_post);
+        $stmt->execute();
         $res = mysqli_stmt_get_result($stmt);
         $usuario = mysqli_fetch_assoc($res);
-        mysqli_stmt_close($stmt);
+        $stmt->close();
     }
 }
 ?>
@@ -187,6 +203,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label for="contrasena_repeat">Repetir Contraseña</label>
                     <input type="password" id="contrasena_repeat" name="contrasena_repeat">
                 </details>
+                
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
 
                 <button type="submit" id="user_modify_submit">Guardar cambios</button>
             </form>

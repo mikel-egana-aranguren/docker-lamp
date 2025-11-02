@@ -10,9 +10,9 @@ $message = "";
 $message_color = "red";
 
 // Conexión con la base de datos
-$conn = new mysqli($hostname, $username, $password, $dbname);
-if ($conn->connect_error) {
-    $message = "Error de conexión a la base de datos: " . $conn->connect_error;
+$conexion = new mysqli($hostname, $username, $password, $dbname);
+if ($conexion->connect_error) {
+    $message = "Error de conexión a la base de datos: " . $conexion->connect_error;
 } else {
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $user       = trim($_POST['user'] ?? '');
@@ -39,14 +39,16 @@ if ($conn->connect_error) {
             $sql = "INSERT INTO usuario 
                     (user, dni, nombre, apellidos, correo, contrasena, telefono, fecha_nacimiento)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            $stmt = $conn->prepare($sql);
+            $stmt = $conexion->prepare($sql);
 
             if (!$stmt) {
-                $message = "Error al preparar la consulta: " . $conn->error;
+                $message = "Error al preparar la consulta: " . $conexion->error;
             } else {
+                // Hashear la contraseña (usa BYCRYPT)
+                $passwd_hashed = password_hash($passwd, PASSWORD_BCRYPT);
                 $stmt->bind_param(
                     "ssssssss",
-                    $user, $dni, $name, $surnames, $email, $passwd, $tlfn, $fNcto
+                    $user, $dni, $name, $surnames, $email, $passwd_hashed, $tlfn, $fNcto
                 );
 
                 if ($stmt->execute()) {
@@ -77,7 +79,7 @@ if ($conn->connect_error) {
 }
 
 // Se cierra la conexión con la base de datos
-$conn->close();
+$conexion->close();
 ?>
 
 <!DOCTYPE html>

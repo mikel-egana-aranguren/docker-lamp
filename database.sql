@@ -33,7 +33,7 @@ CREATE TABLE `item` (
   `combustible` text NOT NULL,
   `caballos` int(11) NOT NULL,
   `precio` int(11) NOT NULL,
-  `año` int(11) NOT NULL
+  `anio` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------

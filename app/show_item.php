@@ -7,9 +7,9 @@ $password = "test";
 $db = "database";
 
 // Conexión con la base de datos
-$conn = new mysqli($hostname, $username, $password, $db);
-if ($conn->connect_error) {
-    die("Error de conexión: " . $conn->connect_error);
+$conexion = new mysqli($hostname, $username, $password, $db);
+if ($conexion->connect_error) {
+    die("Error de conexión: " . $conexion->connect_error);
 }
 
 // Se obtiene el item al que hacemos referencia
@@ -17,10 +17,10 @@ $nombre = isset($_GET['item']) ? $_GET['item'] : '';
 
 // Obtener datos del ítem
 $sql = "SELECT * FROM item WHERE nombre = ?";
-$stmt = $conn->prepare($sql);
+$stmt = $conexion->prepare($sql);
 
 if (!$stmt) {
-    die("Error en la preparación de la consulta: " . $conn->error);
+    die("Error en la preparación de la consulta: " . $conexion->error);
 }
 $stmt->bind_param("s", $nombre);
 $stmt->execute();
@@ -29,7 +29,7 @@ $item = $result ? $result->fetch_assoc() : null;
 
 // Se cierra la conexión con la base de datos
 $stmt->close();
-$conn->close();
+$conexion->close();
 ?>
 
 <title><?= htmlspecialchars($nombre) ?></title>
@@ -49,7 +49,7 @@ $conn->close();
 <div class="container">
     <div class="content">
         <?php if ($item): ?>
-            <p><strong>Año:</strong> <?= htmlspecialchars($item['año']) ?></p>
+            <p><strong>Año:</strong> <?= htmlspecialchars($item['anio']) ?></p>
             <p><strong>Combustible:</strong> <?= htmlspecialchars($item['combustible']) ?></p>
             <p><strong>Caballos:</strong> <?= htmlspecialchars($item['caballos']) ?></p>
             <p><strong>Precio:</strong> <?= $item['precio'] ?>€</p>

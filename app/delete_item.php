@@ -6,10 +6,16 @@ $username = "admin";
 $password = "test";
 $db = "database";
 
+session_start();
+// Generación de token
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 // Conexión con la base de datos
-$conn = new mysqli($hostname, $username, $password, $db);
-if ($conn->connect_error) {
-    die("Error de conexión: " . $conn->connect_error);
+$conexion = new mysqli($hostname, $username, $password, $db);
+if ($conexion->connect_error) {
+    die("Error de conexión: " . $conexion->connect_error);
 }
 
 // Se obtiene el item al que hacemos referencia
@@ -17,7 +23,11 @@ $id = isset($_GET['item']) ? $_GET['item'] : '';
 
 // Se elimina el item de la base de datos
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $stmt = $conn->prepare("DELETE FROM item WHERE nombre = ?");
+    // Comprobación de token
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        die("Error de seguridad: token CSRF inválido.");
+    }
+    $stmt = $conexion->prepare("DELETE FROM item WHERE nombre = ?");
     $stmt->bind_param("s", $id);
     $stmt->execute();
     $stmt->close();
@@ -27,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Se obtiene la información del item
-$stmt = $conn->prepare("SELECT * FROM item WHERE nombre = ?");
+$stmt = $conexion->prepare("SELECT * FROM item WHERE nombre = ?");
 $stmt->bind_param("s", $id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -53,6 +63,7 @@ $stmt->close();
             <?php if ($item): ?>
               <p>¿Estás seguro de que deseas eliminar <strong><?= htmlspecialchars($item['nombre']) ?></strong>?</p>
               <form method="POST">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
                 <button type="submit" id="item_delete_submit">Confirmar</button>
                 <button type="button" onclick="window.location.href='items.php'">Cancelar</button>
               </form>
