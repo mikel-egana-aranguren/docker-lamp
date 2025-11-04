@@ -1,0 +1,11 @@
+<IfModule mod_headers.c>
+    Header always set Content-Security-Policy "\
+	default-src 'self'; \
+	script-src 'self'; \
+	style-src 'self'; \
+	img-src 'self'; \
+	font-src 'self'; \
+	form-action 'self'; \
+	frame-ancestors 'self'; \
+	base-uri 'self';"
+</IfModule>
