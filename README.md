@@ -20,7 +20,7 @@ $ docker rm -f web
 ```
 Ahora, construye la imagen y levanta entorno (cd al proyecto!!):
 ```bash
-$ docker build -t web .
+$ docker-compose build --no-cache web
 ```
 ```bash
 $ docker-compose up -d
