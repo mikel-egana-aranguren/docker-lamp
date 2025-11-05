@@ -1,2 +1,14 @@
 FROM php:7.2.2-apache
+
+# Instala la extensión mysqli
 RUN docker-php-ext-install mysqli
+
+# Habilita módulos necesarios
+RUN a2enmod rewrite headers
+
+# Fuerza que Apache use .htaccess en la carpeta del sitio
+RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf && \
+    sed -i '/<Directory \/var\/www\/html\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
+
+# (Opcional) Reinicia Apache al iniciar el contenedor
+CMD ["apache2-foreground"]
