@@ -30,21 +30,27 @@ if (isset($_POST['register_submit'])) {
     $contrasena=$_POST['contrasena'];
 
 	//guarda la instrucción de SQL que quere utilizar, en este caso un select
-	$sql = "SELECT usuario from usuarios where usuario = '" . $usuario . "'";
+	$stmt = $conn->prepare("SELECT idU FROM usuarios WHERE usuario = ?");
+	$stmt->bind_param("s", $usuario);
+	$stmt->execute();
 	//se ejecuta la instrucción
-	$result = $conn->query($sql);
+	$result = $stmt->get_result();
 	if ($result ->num_rows > 0){ //comprobar si hay otro usuario con ese nombre de usuario
-		echo "<script> window.alert('Escoja otro nombre de usuario, ese no está disponible'); </script>";}
+		echo "<script> window.alert('Escoja otro nombre de usuario, ese no está disponible'); </script>";
+		$stmt->close();
+	}
 	else{
+		$stmt->close();
 		//guarda la instrucción de SQL que quere utilizar, en este caso un insert
-		$sql = "INSERT INTO usuarios (nombre, apellido,numDni,letraDni,tlfn,fNacimiento,email,usuario,contrasena) VALUES ('". $nombre ."', '" . $apellido . "' , '" . $numDni . "', '" . $letraDni . "', '" . $tlfn . "' , '" . $fNacimiento . "' , '" . $email . "' , '" . $usuario . "' , '" . $contrasena . "'  )";
+		$stmt = $conn->prepare("INSERT INTO usuarios (nombre, apellido,numDni,letraDni,tlfn,fNacimiento,email,usuario,contrasena) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		$stmt->bind_param("sssssssss", $nombre, $apellido, $numDni, $letraDni, $tlfn, $fNacimiento, $email, $usuario, $contrasena);
     	//se comprueba si la instrucción se ha ejecutado de forma correcta
-		if ($conn->query($sql) === TRUE) {
+		if ($stmt->execute()) {
 			//se recoge el id del usuario para despues crear su sesión
-			$sql = "SELECT idU from usuarios where usuario = '" . $usuario . "' and contrasena='" . $contrasena . "'";
-			$result = $conn->query($sql);
-			$returnedValues = $result->fetch_assoc();
-			$_SESSION['user_id'] = $returnedValues['idU'];
+			$idUsuario = $stmt->insert_id;
+			$_SESSION['user_id'] = $idUsuario;
+			$stmt->close();
+			$conn->close();
 			echo "<script>
 			window.alert('Te has registrado correctamente');
 			window.location.href = 'login.php';
@@ -58,6 +64,7 @@ if (isset($_POST['register_submit'])) {
 		else {
 			//la instrucción no es válida
     		echo "Error: " . $sql . "<br>" . $conn->error;
+			$stmt->close();
     	}
 		
 	//se cierra la conexión

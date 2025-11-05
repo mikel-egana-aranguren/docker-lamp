@@ -24,20 +24,25 @@ if (isset($_POST['login_submit'])) {
     $contrasena=$_POST['contrasena'];
 
 	//guarda la instrucción de SQL que quere utilizar, en este caso un select
-	$sql = "SELECT idU, usuario, contrasena from usuarios where usuario = '" . $usuario . "'";
+	$stmt = $conn->prepare("SELECT idU, contrasena FROM usuarios WHERE usuario = ?");
+	$stmt->bind_param("s", $usuario);
+	$stmt->execute();
 	//se ejecuta la instrucción
-	$result = $conn->query($sql);
+	$result = $stmt->get_result();
     //pillamos la contraseña de la bd
     $row = $result->fetch_assoc();
 
 	if ($result->num_rows > 0 && $row['contrasena'] === $contrasena) {
 		$_SESSION['usuario'] = $usuario;
 		$_SESSION['idU'] = $row['idU'];
+		$stmt->close();
+		$conn->close();
 		header("Location: items.php");
 		exit();
 	} else {
 		echo "<script> window.alert('Nombre de usuario o contraseña incorrectos'); </script>";
 	}
+	$stmt->close();
 	$conn->close();
 }
 
