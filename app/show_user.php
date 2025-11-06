@@ -49,6 +49,7 @@ if (!$user) { http_response_code(404); die("Usuario no encontrado."); }
     <a href="modify_user.php?user=<?= urlencode($user['idU']) ?>">Modificar</a> |
     <a href="items.php">Volver</a>
     <form method="post" action="logout.php" style="display:inline;">
+      <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
       <button class="cerrarS"type="submit">Cerrar sesión</button>
     </form>
   </p>

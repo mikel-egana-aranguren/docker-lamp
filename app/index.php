@@ -14,6 +14,10 @@ index.php --> register.php :
                -php 
                -html (formulario) ---> js
 */
+  // generar un token CSRF si no existe
+  if (empty($_SESSION['csrf_token'])) {
+      $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+  }
   // phpinfo();
   $hostname = "db";
   $username = "admin";

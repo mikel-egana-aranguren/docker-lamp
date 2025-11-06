@@ -1,6 +1,10 @@
 <?php
 //inicar sesion php
 session_start();
+    // generar un token CSRF si no existe
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
 ?>
 
 <html>
@@ -30,7 +34,6 @@ session_start();
     if ($conn->connect_error) {
         die("Database connection failed: " . $conn->connect_error);
     }
-
     //obtener informacion de todas las pelis
     $query = mysqli_query($conn, "SELECT * FROM pelicula")
     or die (mysqli_error($conn));
@@ -45,10 +48,10 @@ session_start();
       <button class='btn-ver-info-peli'>{$row['titulo']}</button>
       <span style='margin: 0 10px;'>({$row['anio']})</span>
       ";
-      
+    if (isset($_SESSION['usuario'])) {
     echo "<a href='modify_item.php?id={$row['idPelicula']}' style='margin-left: 10px;' class='btn-modificar'>
     <img src='img/modificar.png' alt='Modificar' style='width:24px; height:24px; vertical-align:middle;'></a>";
-      
+    }
      echo "
       <dialog class='info-peli'>
        <td>Título: {$row['titulo']}</td><br>
@@ -62,7 +65,7 @@ session_start();
     ";
     }
   ?>
-
+<?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin'): ?>
   <!-- Botón para añadir película -->
   <button class='btn-add-pelicula'>Añadir película</button>
   <dialog class='add-peli-dialog'>
@@ -72,6 +75,7 @@ session_start();
       <label>Director: <input type="text" name="director" required></label><br>
       <label>Género: <input type="text" name="genero" required></label><br>
       <label>Duración: <input type="number" name="duracion" required> minutos</label><br><br>
+      <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
       <button class="guardar"type="submit">Guardar</button>
       <button type="button" class='btn-cerrar-add-peli'>Cerrar</button>
     </form>
@@ -89,7 +93,7 @@ session_start();
       document.querySelector('.add-peli-dialog').close();
     };
   </script>
-
+<?php endif; ?>  
   <script src='./js/ver_info_peli.js'></script>
  </body>
 </html>

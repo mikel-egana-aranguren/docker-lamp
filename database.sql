@@ -37,14 +37,17 @@ CREATE TABLE `usuarios` (
   `tlfn` TEXT NOT NULL,
   `fNacimiento` DATE NOT NULL,
   `email` TEXT NOT NULL,
+  `rol` TEXT NOT NULL DEFAULT 'user',
   PRIMARY KEY (`idU`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
-INSERT INTO `usuarios` (`usuario`, `contrasena`, `nombre`, `apellido`, `numDni`, `letraDni`, `tlfn`, `fNacimiento`, `email`) VALUES
-('admin', 'admin123', 'Admin', 'Admin', '12345678', 'A', '600123456', '1990-01-01', 'admin@gmail.com');
+INSERT INTO `usuarios`
+(`usuario`, `contrasena`, `nombre`, `apellido`, `numDni`, `letraDni`, `tlfn`, `fNacimiento`, `email`, `rol`)
+VALUES
+('admin', 'admin123', 'Admin', 'Admin', '12345678', 'A', '600123456', '1990-01-01', 'admin@gmail.com', 'admin');
 
 -- --------------------------------------------------------
 --
@@ -63,12 +66,12 @@ CREATE TABLE `pelicula` (
 --
 -- Volcado de datos para la tabla `pelicula`
 --
-INSERT INTO `pelicula` (`idPelicula`, `titulo`, `anio`, `genero`, `director`, `duracion`) VALUES
-(1, 'Interstellar', '2014', 'Ciencia Ficción', 'Christopher Nolan', 169),
-(2, 'Mamma Mia!', '2008', 'Musical', 'Phyllida Lloyd', 108),
-(3, 'Zohan', '2008', 'Comedia', 'Dennis Dugan', 112),
-(4, 'Wicked', '2024', 'Musical', 'Stephen Daldry', 150),
-(5, 'El gran Gatsby', '2013', 'Drama', 'Baz Luhrmann', 143);
+INSERT INTO `pelicula` (`titulo`, `anio`, `genero`, `director`, `duracion`) VALUES
+('Interstellar', '2014', 'Ciencia Ficción', 'Christopher Nolan', 169),
+('Mamma Mia!', '2008', 'Musical', 'Phyllida Lloyd', 108),
+('Zohan', '2008', 'Comedia', 'Dennis Dugan', 112),
+('Wicked', '2024', 'Musical', 'Stephen Daldry', 150),
+('El gran Gatsby', '2013', 'Drama', 'Baz Luhrmann', 143);
 
 COMMIT;
 

@@ -24,6 +24,11 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
 //PROCESAR EL FORMULARIO
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['modify_submit'])) {
+    // validar el token CSRF
+	if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+	http_response_code(403);
+	die('Error: CSRF token inválido.');
+	}
     $titulo = $_POST['titulo'];
     $anio = $_POST['anio'];
     $director = $_POST['director'];
@@ -184,15 +189,16 @@ $conn->close();
         
         <br>Duración (minutos):<br>
         <input type="number" name="duracion" id="duracion" placeholder="<?php echo htmlspecialchars($pelicula['duracion']); ?>">
-
+        	<input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
         <br><br>
         
         <input type="submit" value="Guardar Cambios" name="modify_submit" class="save-button">   
     </form>
-        
+    <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin'): ?>
     <div style="text-align:center; margin-top:20px;">
     <a href="delete_item.php?id=<?php echo $pelicula['idPelicula']; ?>" class="delete-button">Eliminar Película
     </a>
+    <?php endif; ?>
 </div>
 <div class="button-container" style="text-align:center; margin-top:10px;">
     <a href="items.php" class="button back-button">Volver</a>

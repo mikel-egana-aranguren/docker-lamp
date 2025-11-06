@@ -1,6 +1,10 @@
 <?php
 
 session_start(); //iniciar sesion con php
+// generar un token CSRF si no existe
+  if (empty($_SESSION['csrf_token'])) {
+      $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+  }
 ob_start();
 //parámetros para la conexión a la bd
 $servername = "db";
@@ -19,12 +23,17 @@ if ($conn->connect_error) {
 
 // comprobar si se ha enviado el formulario
 if (isset($_POST['login_submit'])) {
+	// validar el token CSRF
+	if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        http_response_code(403);
+        die('Error: CSRF token inválido.');
+    }
 	// guardar la información del formulario
     $usuario=$_POST['usuario'];
     $contrasena=$_POST['contrasena'];
 
 	//guarda la instrucción de SQL que quere utilizar, en este caso un select
-	$stmt = $conn->prepare("SELECT idU, contrasena FROM usuarios WHERE usuario = ?");
+	$stmt = $conn->prepare("SELECT idU, contrasena, rol  FROM usuarios WHERE usuario = ?");
 	$stmt->bind_param("s", $usuario);
 	$stmt->execute();
 	//se ejecuta la instrucción
@@ -32,9 +41,11 @@ if (isset($_POST['login_submit'])) {
     //pillamos la contraseña de la bd
     $row = $result->fetch_assoc();
 
-	if ($result->num_rows > 0 && $row['contrasena'] === $contrasena) {
+	if ($result->num_rows > 0 && password_verify($contrasena, $row['contrasena'])) {
+		//crear sesión
 		$_SESSION['usuario'] = $usuario;
 		$_SESSION['idU'] = $row['idU'];
+		$_SESSION['rol'] = $row['rol'];
 		$stmt->close();
 		$conn->close();
 		header("Location: items.php");
@@ -59,8 +70,9 @@ ob_end_flush();
 		<img src="/img/gatoMoviendoPatas.gif" alt="Gato" class="gato">
 	<form class="login" name="login_form" method="post" >
 		Nombre de usuario:<br><input type="text" name="usuario" required><br>
-		Contraseña:<br> <input type="text" name="contrasena" required> <br>
+		Contraseña:<br> <input type="password" name="contrasena" required> <br>
 		<br>
+		<input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
 		<input type="submit" value="Iniciar sesión" name="login_submit" class="btn_login">
 	</form>
 		
