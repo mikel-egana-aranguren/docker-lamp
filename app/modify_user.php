@@ -17,6 +17,11 @@ $mensaje = "";
 
 /* Si envían el formulario -> UPDATE */
 if (isset($_POST["user_modify_submit"])) {
+  // validar el token CSRF
+	if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        http_response_code(403);
+        die('Error: CSRF token inválido.');
+    }
   // Recibir campos (mismos nombres que en el form)
   $nombre      = trim($_POST["nombre"] ?? "");
   $apellido    = trim($_POST["apellido"] ?? "");
@@ -135,7 +140,7 @@ if (!$user) { http_response_code(404); die("Usuario no encontrado."); }
 
     Email:<br>
     <input type="text" name="email" value="<?= htmlspecialchars($user["email"]) ?>" required><br><br>
-
+    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
     <button class="guardar_modUser" id="user_modify_submit" name="user_modify_submit" type="submit">Guardar cambios</button>
   </form>
 
