@@ -1,5 +1,4 @@
 <?php
-
 session_start(); //iniciar sesion con php
 // generar un token CSRF si no existe
   if (empty($_SESSION['csrf_token'])) {
