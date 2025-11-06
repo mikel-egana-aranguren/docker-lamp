@@ -1,5 +1,5 @@
 <?php
-session_start(); 
+require_once 'session_config.php';
 
 // parametros paraconexion a la bd
 $servername = "db";

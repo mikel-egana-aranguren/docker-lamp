@@ -1,6 +1,6 @@
 <?php
 // /modify_user?user={id}
-session_start();
+require_once 'session_config.php';
 
 $servername = "db";
 $username   = "admin";
