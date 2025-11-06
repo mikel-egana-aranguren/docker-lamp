@@ -1,6 +1,10 @@
 <?php
 
 session_start(); //iniciar sesion con php
+// generar un token CSRF si no existe
+  if (empty($_SESSION['csrf_token'])) {
+      $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+  }
 //parámetros para la conexión a la bd
 $servername = "db";
 $username = "admin";
@@ -18,6 +22,12 @@ if ($conn->connect_error) {
 
 // comprobar si se ha enviado el formulario
 if (isset($_POST['register_submit'])) {
+
+	// validar el token CSRF
+	if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+	http_response_code(403);
+	die('Error: CSRF token inválido.');
+	}
 	// guardar la información del formulario
     $nombre = $_POST['nombre'];
     $apellido= $_POST['apellido'];
@@ -41,9 +51,11 @@ if (isset($_POST['register_submit'])) {
 	}
 	else{
 		$stmt->close();
+		//hashear la contraseña antes de guardarla
+		$hash = password_hash($contrasena, PASSWORD_DEFAULT);
 		//guarda la instrucción de SQL que quere utilizar, en este caso un insert
 		$stmt = $conn->prepare("INSERT INTO usuarios (nombre, apellido,numDni,letraDni,tlfn,fNacimiento,email,usuario,contrasena) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-		$stmt->bind_param("sssssssss", $nombre, $apellido, $numDni, $letraDni, $tlfn, $fNacimiento, $email, $usuario, $contrasena);
+		$stmt->bind_param("sssssssss", $nombre, $apellido, $numDni, $letraDni, $tlfn, $fNacimiento, $email, $usuario, $hash);
     	//se comprueba si la instrucción se ha ejecutado de forma correcta
 		if ($stmt->execute()) {
 			//se recoge el id del usuario para despues crear su sesión
@@ -63,7 +75,7 @@ if (isset($_POST['register_submit'])) {
 		} 
 		else {
 			//la instrucción no es válida
-    		echo "Error: " . $sql . "<br>" . $conn->error;
+    		echo "Error: " . $conn->error;
 			$stmt->close();
     	}
 		
@@ -89,7 +101,8 @@ if (isset($_POST['register_submit'])) {
 		Fecha de nacimiento:<br> <input type="date" name="fNacimiento"required/><br>
 		Email:<br> <input type="text" name="email" placeholder="email@xxx.yyy" required> <br>
 		Nombre de usuario<br><input type="text" name="usuario" required><br>
-		Contraseña:<br> <input type="text" name="contrasena" required> <br>
+		Contraseña:<br> <input type="password" name="contrasena" required> <br>
+		<input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
 		<input type="submit" value="Registrar" name="register_submit" class="btn_register">
 	</form>
 	<div class="button-container" >

@@ -19,6 +19,11 @@ if ($conn->connect_error) {
   echo "Error de conexión a la base de datos.";
   exit;
 }
+// validar el token CSRF
+	if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+	http_response_code(403);
+	die('Error: CSRF token inválido.');
+	}
 
 //Guardar datos
 $titulo   = isset($_POST['titulo']) ? trim($_POST['titulo']) : '';
