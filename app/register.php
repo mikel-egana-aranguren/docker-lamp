@@ -15,28 +15,43 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 //comprobar la conexión
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error); //si error -> mnsj por pantalla
+    error_log("Connection failed: " . $conn->connect_error); //si error -> mnsj por pantalla
+	die("Connection failed: ");
 }
 
 
 // comprobar si se ha enviado el formulario
 if (isset($_POST['register_submit'])) {
-
+	// comprobar que el método de la solicitud es POST
+	if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        http_response_code(405);
+        die('método incorrecto.');
+    }
+	// comprobar que no hay parámetros inesperados
+	$param_esperados = ['register_submit','csrf_token','nombre','apellido','numDni','letraDni','tlfn','fNacimiento','email','usuario','contrasena'];
+    foreach ($_POST as $param => $valor) {
+        if (!in_array($param, $param_esperados, true)) {
+            http_response_code(400);
+            die('parámetro no esperado');
+        }
+    }
 	// validar el token CSRF
 	if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
 	http_response_code(403);
 	die('Error: CSRF token inválido.');
 	}
 	// guardar la información del formulario
-    $nombre = $_POST['nombre'];
-    $apellido= $_POST['apellido'];
-    $numDni = $_POST['numDni'];
-    $letraDni = $_POST['letraDni'];
-    $tlfn=$_POST['tlfn'];
-    $fNacimiento=$_POST['fNacimiento'];
-    $email=$_POST['email'];
-    $usuario=$_POST['usuario'];
-    $contrasena=$_POST['contrasena'];
+
+	//sanitizar entradas
+    $nombre= htmlspecialchars(trim($_POST['nombre']));
+    $apellido = htmlspecialchars(trim($_POST['apellido']));
+    $numDni= htmlspecialchars(trim($_POST['numDni']));
+    $letraDni= htmlspecialchars(trim($_POST['letraDni']));
+    $tlfn= htmlspecialchars(trim($_POST['tlfn']));
+    $fNacimiento = htmlspecialchars(trim($_POST['fNacimiento']));
+    $email= filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
+    $usuario = htmlspecialchars(trim($_POST['usuario']));
+    $contrasena = $_POST['contrasena']; // esta no hay que hacerlo porque se va a hashear
 
 	//guarda la instrucción de SQL que quere utilizar, en este caso un select
 	$stmt = $conn->prepare("SELECT idU FROM usuarios WHERE usuario = ?");
@@ -74,7 +89,9 @@ if (isset($_POST['register_submit'])) {
 		} 
 		else {
 			//la instrucción no es válida
-    		echo "Error: " . $conn->error;
+    		error_log("DB query failed: " . $conn->error);
+			echo "Ha ocurrido un error al procesar el registro.";
+
 			$stmt->close();
     	}
 		
