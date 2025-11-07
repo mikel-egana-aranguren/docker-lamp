@@ -111,7 +111,6 @@ if (!$user) { http_response_code(404); die("Usuario no encontrado."); }
     <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
     <button class="guardar_modUser" id="user_modify_submit" name="user_modify_submit" type="submit">Guardar cambios</button>
   </form>
-
   <p><a href="show_user.php?user=<?= urlencode($user['idU']) ?>">Volver</a></p>
 </body>
 </html>

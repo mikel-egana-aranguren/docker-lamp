@@ -40,23 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['modify_submit'])) {
     $tipos_de_datos = '';
     $valores = [];
 	$sql_update = "UPDATE pelicula SET "; // Inicializar la consulta
-
-    // VALIDACIÓN (Solo si el campo no está vacío)
-    if (!empty($titulo) && strlen($titulo) < 2) $errors[] = "El título debe tener al menos 2 caracteres.";
-    if (!empty($anio) && (!preg_match('/^\d{4}$/', $anio) || (int)$anio < 1900 || (int)$anio > (int)date('Y'))) $errors[] = "El año debe ser entre 1900 y el año actual.";
-    if (!empty($director) && strlen($director) < 2) $errors[] = "El director debe tener al menos 2 caracteres.";
-    if (!empty($genero) && strlen($genero) < 2) $errors[] = "El género debe tener al menos 2 caracteres.";
-    if (!empty($duracion) && (!ctype_digit($duracion) || (int)$duracion < 30 || (int)$duracion >= 52000)) $errors[] = "La duración debe ser un número entero positivo asequible. El número mínimo es 30.";
-    //Convertir caracteres especiales de los errores en html
-    if (!empty($errors)) {
-        foreach ($errors as $err) 
-        {
-            echo "<p class='error-msg';>" . htmlspecialchars($err, ENT_QUOTES, 'UTF-8') . "</p>";
-        }
-        echo '<br><a href="items.php">Volver</a>';
-        $conn->close();
-        exit;
-    }
     
     // Verificamos cada campo. Si el usuario ha escrito algo, lo añadimos a la consulta.
     // .= para concatenar
@@ -111,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['modify_submit'])) {
             $stmt->close();
         } 
         else {
-                $mensaje = "<p class='error-msg';>Error al preparar la consulta: " . htmlspecialchars($conn->error) . "</p>";
+            $mensaje = "<p class='error-msg';>Error al preparar la consulta: " . htmlspecialchars($conn->error) . "</p>";
         }
     } 
     else {
@@ -137,13 +120,14 @@ $conn->close();
 <head>
     <title>Modificar Película</title>
     <link rel="stylesheet" href="inicioStyle.css">
+    <script src="js/validar_peli_modify.js"></script>
 </head>
 <body class="modify_item">
 
     <h1>Modificar: <?php echo htmlspecialchars($pelicula['titulo']); ?></h1>
     <h2> Rellena los campos que quieras cambiar</h2>
     
-    <form class="modify_item"name="modify_form" method="post" action="">
+    <form id="modify_item_form"class="modify_item"name="modify_form" method="post" action="">
         
         Título:<br>
         <input type="text" name="titulo" id="titulo" placeholder="<?php echo htmlspecialchars($pelicula['titulo']); ?>">

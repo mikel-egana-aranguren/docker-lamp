@@ -37,9 +37,9 @@ if (isset($_POST['login_submit'])) {
 	$stmt->execute();
 	//se ejecuta la instrucción
 	$result = $stmt->get_result();
-    //pillamos la contraseña de la bd
+    //extraemos la contraseña de la bd
     $row = $result->fetch_assoc();
-
+	
 	if ($result->num_rows > 0 && password_verify($contrasena, $row['contrasena'])) {
 		//crear sesión
 		$_SESSION['usuario'] = $usuario;
