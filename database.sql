@@ -47,7 +47,7 @@ CREATE TABLE `usuarios` (
 INSERT INTO `usuarios`
 (`usuario`, `contrasena`, `nombre`, `apellido`, `numDni`, `letraDni`, `tlfn`, `fNacimiento`, `email`, `rol`)
 VALUES
-('admin', 'admin123', 'Admin', 'Admin', '12345678', 'A', '600123456', '1990-01-01', 'admin@gmail.com', 'admin');
+('admin', '$2y$10$WLGh6pDHEtPkN8zlenGtC.VqyzBSo./ut9rbVi52evWpkJeH8Wl6i', 'Admin', 'Admin', '12345678', 'A', '600123456', '1990-01-01', 'admin@gmail.com', 'admin');
 
 -- --------------------------------------------------------
 --

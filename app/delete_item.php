@@ -46,13 +46,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h1>¿Estás segur@?</h1>
         <p>Esta acción no se puede deshacer.</p>
 
-        <div class="buttons-container" style="text-align:center; margin-top:20px;">
-            <form method="post" action="delete_item.php?id=<?php echo $id_pelicula; ?>" style="display: inline;">
+        <div class="buttons-container">
+            <form method="post" action="delete_item.php?id=<?php echo $id_pelicula; ?>" class="del-form">
                 <button type="submit" class="yes-button">Sí</button>
             </form>
 
             <a href="modify_item.php?id=<?php echo $id_pelicula; ?>" class="no-button">No, volver</a>
-            <img src="img/gatoBasura.png" alt="Gato en la basura" style="display:block; margin:20px auto; width:150px;">
+            <img src="img/gatoBasura.png" alt="Gato en la basura" class=trash-cat>
         </div>
     </div>
 

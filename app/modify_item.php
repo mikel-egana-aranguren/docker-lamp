@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['modify_submit'])) {
     if (!empty($errors)) {
         foreach ($errors as $err) 
         {
-            echo "<p style='color:red;'>" . htmlspecialchars($err, ENT_QUOTES, 'UTF-8') . "</p>";
+            echo "<p class='error-msg';>" . htmlspecialchars($err, ENT_QUOTES, 'UTF-8') . "</p>";
         }
         echo '<br><a href="items.php">Volver</a>';
         $conn->close();
@@ -61,92 +61,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['modify_submit'])) {
     // Verificamos cada campo. Si el usuario ha escrito algo, lo añadimos a la consulta.
     // .= para concatenar
 	if (!empty($titulo)) {
-        $campos_a_actualizar[] = "titulo = '$titulo'";          
+         $campos_a_actualizar[] = "titulo = ?"; 
+         $tipos_de_datos .= 's';                  // 's' = string
+         $valores[] = $titulo;               
     }
     if (!empty($anio)) {
-        $campos_a_actualizar[] = "anio = '$anio'";
+        $campos_a_actualizar[] = "anio = ?";
+        $tipos_de_datos .= 's';                 
+        $valores[] = $anio;
     }
     if (!empty($director)) {
-        $campos_a_actualizar[] = "director = '$director'";
+        $campos_a_actualizar[] = "director = ?";
+        $tipos_de_datos .= 's';
+        $valores[] = $director;
     }
     if (!empty($genero)) {
-        $campos_a_actualizar[] = "genero = '$genero'";
+        $campos_a_actualizar[] = "genero = ?";
+        $tipos_de_datos .= 's';
+        $valores[] = $genero;
     }
     if (!empty($duracion)) {
-        $campos_a_actualizar[] = "duracion = '$duracion'";
+        $campos_a_actualizar[] = "duracion = ?";
+        $tipos_de_datos .= 'i';
+        $valores[] = $duracion;
     }
-    // Solo ejecutamos la consulta si hay algo que actualizar
-    if (!empty($campos_a_actualizar)) {
-        $sql_update .= implode(', ', $campos_a_actualizar); // Une los campos con comas
-        $sql_update .= " WHERE idPelicula = $id_pelicula"; // Condición para modificar solo la película correcta. Poner ? en vez de $pelicula para mas seguro
-        
-        $tipos_de_datos .= 'i'; // Añadimos el tipo del ID
-        $valores[] = $id_pelicula; // Añadimos el valor del ID
+
+    if(!empty($campos_a_actualizar))
+    {
+        $sql_update .= implode(', ', $campos_a_actualizar); //unir los campos con comas a la sentencia SQL
+        $sql_update .= " WHERE idPelicula = ?"; //los campos se actualizan para la pelicula objetivo
+        $tipos_de_datos .= 'i'; //Agregar tipo de datos del id (int)
+        $valores[] = $id_pelicula; //Agregar el id de la peli
 
         //Ejecutar cambios
-        if($conn ->query($sql_update))
-        {
-            $conn->close();
-            header("Location: items.php");
-            exit();
-        }
-        else
-        {
-            $mensaje = "<p style='color:red;'>Error al guardar: " . htmlspecialchars($conn->errpr) . "</p>";
-        }
-
-        /*//Modificacion mas segura para otra entrega
-
-        // Verificamos cada campo. Si el usuario ha escrito algo, lo añadimos a la consulta.
-        // .= para concatenar
-	    if (!empty($titulo)) {
-            $campos_a_actualizar[] = "titulo = ?"; 
-            $tipos_de_datos .= 's';                  // 's' = string
-            $valores[] = $titulo;               
-        }
-        if (!empty($anio)) {
-            $campos_a_actualizar[] = "anio = ?";
-            $tipos_de_datos .= 's';                 
-            $valores[] = $anio;
-        }
-        if (!empty($director)) {
-            $campos_a_actualizar[] = "director = ?";
-            $tipos_de_datos .= 's';
-            $valores[] = $director;
-        }
-        if (!empty($genero)) {
-            $campos_a_actualizar[] = "genero = ?";
-            $tipos_de_datos .= 's';
-            $valores[] = $genero;
-        }
-        if (!empty($duracion)) {
-            $campos_a_actualizar[] = "duracion = ?";
-            $tipos_de_datos .= 'i';
-            $valores[] = $duracion;
-        }
-
-		$stmt = $conn->prepare($sql_update);
+	    $stmt = $conn->prepare($sql_update);
         if ($stmt) {
-            //$stmt->bind_param($tipos_de_datos, ...$valores);
+            $stmt->bind_param($tipos_de_datos, ...$valores);
             // Si la ejecución es exitosa...
             if ($stmt->execute()) {
-                
-                
                 // Cerramos la conexión y redirigimos al usuario.
+
                 $conn->close();
                 header("Location: items.php"); // Le decimos al navegador que vaya a items.php
-                exit(); // Detenemos el script para asegurar que la redirección ocurra.
-                
-            } else {
-                $mensaje = "<p style='color:red;'>Error al guardar: " . htmlspecialchars($stmt->error) . "</p>";
+                exit(); // Detenemos el script para asegurar que la redirección ocurra.   
+            } 
+            else {
+                $mensaje = "<p class='error-msg';>Error al guardar: " . htmlspecialchars($stmt->error) . "</p>";
             }
             $stmt->close();
-        } else {
-             $mensaje = "<p style='color:red;'>Error al preparar la consulta: " . htmlspecialchars($conn->error) . "</p>";
+        } 
+        else {
+                $mensaje = "<p class='error-msg';>Error al preparar la consulta: " . htmlspecialchars($conn->error) . "</p>";
         }
-        */
-    } else {
-        $mensaje = "<p style='color:orange;'>No se introdujo ningún dato para modificar.</p>";
+    } 
+    else {
+        $mensaje = "<p class='error-msg';>No se introdujo ningún dato para modificar.</p>";
     }
 }
 //CARGAR DATOS ACTUALES DE LA PELÍCULA 
@@ -157,6 +126,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     $pelicula = $result->fetch_assoc();
+
 } else {
     die("Error: La película con el ID proporcionado no existe.");
 }
@@ -170,7 +140,7 @@ $conn->close();
 </head>
 <body class="modify_item">
 
-    <h1 ">Modificar: <?php echo htmlspecialchars($pelicula['titulo']); ?></h1>
+    <h1>Modificar: <?php echo htmlspecialchars($pelicula['titulo']); ?></h1>
     <h2> Rellena los campos que quieras cambiar</h2>
     
     <form class="modify_item"name="modify_form" method="post" action="">
@@ -195,12 +165,12 @@ $conn->close();
         <input type="submit" value="Guardar Cambios" name="modify_submit" class="save-button">   
     </form>
     <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin'): ?>
-    <div style="text-align:center; margin-top:20px;">
+    <div >
     <a href="delete_item.php?id=<?php echo $pelicula['idPelicula']; ?>" class="delete-button">Eliminar Película
     </a>
     <?php endif; ?>
 </div>
-<div class="button-container" style="text-align:center; margin-top:10px;">
+<div class="button-container">
     <a href="items.php" class="button back-button">Volver</a>
 </div>
 

@@ -127,7 +127,9 @@ a.delete-button, button.btn-cerrar-add-peli , button.btn-cerrar-info-peli{
     padding: 5px 10px;
     cursor: pointer;
     margin-top: 10px;
-     margin: 20px auto;
+    margin: 20px auto;
+    text-align:center; 
+    margin-top:20px;
 }
 button.btn-cerrar-add-peli:hover , button.btn-cerrar-info-peli:hover, a.delete-button:hover {
   background-color: var(--btnRojoOscuro);
@@ -155,6 +157,7 @@ a.btn-modificar, a.miperf{
     border-radius: 10px; /* esquinas redondeadas */
     padding: 12px 12px;
     cursor: pointer;
+    margin-left: 10px;
 }
 button.btn-add-pelicula:hover , a.btn-modificar:hover, a.miperf:hover {
   background-color: var(--btnRosaOscuro);
@@ -208,4 +211,55 @@ form.login, form.register, form.modify_item, form.modUser{
     border-radius: 10px;
     width: 300px;
     margin: 0 auto;
+}
+
+.catalog
+{
+    text-align: center; 
+    margin-bottom: 1em;
+}
+
+.catalog span
+{
+    margin: 0 10px;
+}
+.img-mod
+{
+    width:20px; 
+    height:20px; 
+    vertical-align:middle;
+}
+.mi-perfil
+{
+    width:70px; 
+    height:70px; 
+    vertical-align:middle;
+}
+.buttons-container
+{
+    text-align:center; 
+    margin-top:20px;
+}
+.del-form
+{
+    display: inline;
+}
+.trash-cat
+{
+    display:block; 
+    margin:20px auto; 
+    width:150px;
+}
+.button-container
+{
+    text-align:center; 
+    margin-top:10px;
+}
+.error-msg
+{
+    color:red;
+}
+.close-sesion
+{
+    display:inline;
 }

@@ -14,7 +14,7 @@ session_start();
  <body class="items">
   <?php if (isset($_SESSION['usuario'])): ?>
       <p>
-        <a class="miperf"href="show_user.php?user=<?= intval($_SESSION['idU']) ?>"> <img src='img/miperfilgato.png' style='width:70px; height: 70px; vertical-align:middle;'>Mi perfil</a>
+        <a class="miperf"href="show_user.php?user=<?= intval($_SESSION['idU']) ?>"> <img src='img/miperfilgato.png' class='mi-perfil'>Mi perfil</a>
         <?php $ruta="items.php"; ?>
       </p>
   <?php else: ?>
@@ -44,13 +44,13 @@ session_start();
     
     while ($row = mysqli_fetch_array($query)) {
     echo "
-    <div class='catalog' style='text-align: center; margin-bottom: 1em;'>
+    <div class='catalog'>
       <button class='btn-ver-info-peli'>{$row['titulo']}</button>
-      <span style='margin: 0 10px;'>({$row['anio']})</span>
+      <span>({$row['anio']})</span>
       ";
     if (isset($_SESSION['usuario'])) {
-    echo "<a href='modify_item.php?id={$row['idPelicula']}' style='margin-left: 10px;' class='btn-modificar'>
-    <img src='img/modificar.png' alt='Modificar' style='width:24px; height:24px; vertical-align:middle;'></a>";
+    echo "<a href='modify_item.php?id={$row['idPelicula']}' class='btn-modificar'>
+    <img src='img/modificar.png' alt='Modificar' class='img-mod'></a>";
     }
      echo "
       <dialog class='info-peli'>

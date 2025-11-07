@@ -32,36 +32,7 @@ if (isset($_POST["user_modify_submit"])) {
   $email       = trim($_POST["email"] ?? "");
 
 
-  if ($nombre==="" || $apellido==="" || $numDni==="" || $letraDni==="" || $tlfn==="" || $fNacimiento==="" || $email==="") 
-  {
-    $mensaje = "Faltan campos obligatorios.";
-  } 
-  else 
-  {
-    if($conn->query(
-
-      "UPDATE usuarios
-       SET nombre='$nombre', apellido='$apellido', numDni='$numDni', letraDni='$letraDni', tlfn='$tlfn', fNacimiento='$fNacimiento', email='$email'
-       WHERE idU='$userId'"
-
-    ))
-    {
-      echo "<script>
-              alert('Datos actualizados correctamente');
-              window.location.href='show_user.php?user=".$userId."';
-            </script>";
-      $conn->close();
-      exit();
-    }
-    else
-    {
-      $mensaje = "Error al actualizar: " . $conn->error;
-    }
-  }
-
-
-  /* //Mas seguridad para otra entrega
-  // Validaciones mínimas (servidor)
+// Validaciones mínimas (servidor)
   if ($nombre==="" || $apellido==="" || $numDni==="" || $letraDni==="" || $tlfn==="" || $fNacimiento==="" || $email==="") {
     $mensaje = "Faltan campos obligatorios.";
   } else {
@@ -85,10 +56,7 @@ if (isset($_POST["user_modify_submit"])) {
     }
     $stmt->close();
   }
-    */
 }
-
-
 
 /* Obtener datos actuales para pre-rellenar el formulario */
 $stmt = $conn->prepare(

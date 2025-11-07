@@ -1,6 +1,5 @@
 FROM php:7.2.2-apache
 
-
 # Instala la extensión mysqli
 RUN docker-php-ext-install mysqli
 
@@ -14,15 +13,6 @@ RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/Allo
 # Desactivar la cabecera X-Powered-By de PHP
 RUN echo 'expose_php = Off' > /usr/local/etc/php/conf.d/security.ini
 
-# Configurar cabeceras de seguridad
-RUN echo '<IfModule mod_headers.c>' > /etc/apache2/conf-available/security-headers.conf && \
-    echo '  Header always set X-Frame-Options "DENY"' >> /etc/apache2/conf-available/security-headers.conf && \
-    echo '  Header always set Content-Security-Policy "frame-ancestors '\''none'\''"' >> /etc/apache2/conf-available/security-headers.conf && \
-    echo '  Header always set X-Content-Type-Options "nosniff"' >> /etc/apache2/conf-available/security-headers.conf && \
-    echo '  Header always set X-XSS-Protection "1; mode=block"' >> /etc/apache2/conf-available/security-headers.conf && \
-    echo '</IfModule>' >> /etc/apache2/conf-available/security-headers.conf && \
-    a2enconf security-headers
-    
-# (Opcional) Reinicia Apache al iniciar el contenedor
+# Reinicia Apache al iniciar el contenedor
 CMD ["apache2-foreground"]
 
