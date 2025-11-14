@@ -60,21 +60,21 @@ def test_modify_item_sql_injection():
 
             r = session.post("http://localhost:81/modify_item?item=" + str(i), data=data, allow_redirects=True)
 
-            # Verificar si la respuesta contiene indicios de SQL Injection
+            # ---- VERIFICAR ERRORES SQL EN LA RESPUESTA ----
             sql_indicators = ["SQL syntax", "mysql", "mysqli", "ORA-", "ODBC", "you have an error in your sql syntax"]
             if any(e.lower() in r.text.lower() for e in sql_indicators):
                 print(f"[!] VULNERABLE (error-based POST) - {payload}")
                 continue
 
-            # Ahora comprobamos si aparece en el listado
-            try:
-                items_page = session.get("http://localhost:81/items").text
-                if titulo_random in items_page:
-                    print(f"[!] POSIBLE VULNERABILIDAD - Payload reflejado y item creado: {payload}")
-                else:
-                    print(f"[+] Protegido - Payload bloqueado o item no creado: {payload}")
-            except Exception as e:
-                print(f"[!] Error al comprobar listado: {e}")
+        # ---- VERIFICAR SI EL ITEM APARECE EN EL LISTADO ----
+        try:
+            items_page = session.get("http://localhost:81/items").text
+            if titulo_random in items_page:
+                print(f"[!] POSIBLE VULNERABILIDAD - Payload reflejado y item creado: {payload}")
+            else:
+                print(f"[+] Protegido - Payload bloqueado o item no creado: {payload}")
+        except Exception as e:
+            print(f"[!] Error al comprobar listado: {e}")
 
 
 def main():
