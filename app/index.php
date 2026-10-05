@@ -1,10 +1,10 @@
 <?php
   echo '<h1>Yeah, it works!<h1>';
   // phpinfo();
-  $hostname = "db";
-  $username = "admin";
-  $password = "test";
-  $db = "database";
+  $hostname = "";
+  $username = "";
+  $password = "";
+  $db = "";
 
   $conn = mysqli_connect($hostname,$username,$password,$db);
   if ($conn->connect_error) {
